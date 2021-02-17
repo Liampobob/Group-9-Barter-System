@@ -14,3 +14,12 @@ yarn-error.log*
 # Editor directories and files
 .idea
 .vscode
+
+# Flutter/Dart/Pub related
+**/doc/api/
+.dart_tool/
+.flutter-plugins
+.packages
+.pub-cache/
+.pub/
+/build/

@@ -39,3 +39,7 @@ You may need to install jest to run tests:
 ```
 npm install -g jest
 ```
+
+## Mobile Aplication
+
+To setup your environment follow the steps at https://flutter.dev/docs/get-started/install
