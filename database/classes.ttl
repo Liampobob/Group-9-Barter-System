@@ -1,0 +1,52 @@
+# sets up prefixes
+@prefix rdf:	<http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:	<http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:	<http://www.w3.org/2001/XMLSchema#> .
+
+@prefix barc:	<https://www.barter.ie/database/classes#> .
+@prefix barp:	<https://www.barter.ie/database/predicates#> .
+
+# sets up classes
+barc:User		a					rdfs:Class ;
+				rdfs:isDefinedBy	barc: ;
+				rdfs:label			"User" ;
+				rdfs:comment		"" .
+
+barc:Worker		rdfs:subClassOf		barc:Class ;
+				rdfs:isDefinedBy	barc: ;
+				rdfs:label			"Worker" ;
+				rdfs:comment		"" .
+
+
+barc:Post		a					rdfs:Class ;
+				rdfs:isDefinedBy	barc: ;
+				rdfs:label			"Post" ;
+				rdfs:comment		"" .
+
+barc:Job		rdfs:subClassOf		barc:Post ;
+				rdfs:isDefinedBy	barc: ;
+				rdfs:label			"Job" ;
+				rdfs:comment		"" .
+
+barc:Event		rdfs:subClassOf		barc:Post ;
+				rdfs:isDefinedBy	barc: ;
+				rdfs:label			"Event" ;
+				rdfs:comment		"" .
+
+
+barc:Location	a					rdfs:Class ;
+				rdfs:isDefinedBy	barc: ;
+				rdfs:label			"Location" ;
+				rdfs:comment		"contains long and lat as floats" .
+
+
+barc:Camp		a					rdfs:Class ;
+				rdfs:isDefinedBy	barc: ;
+				rdfs:label			"Camp" ;
+				rdfs:comment		"" .
+
+
+barc:WorkHistory a					rdfs:Class ;
+				rdfs:isDefinedBy	barc: ;
+				rdfs:label			"WorkHistory" ;
+				rdfs:comment		"" .
