@@ -68,3 +68,15 @@ npm run build
 
 And copy the contents of `web/dist` into `mobile/assets/webapp`
 
+## Setup for backend
+Base Requirements
+# Python3.9
+# pip3.9 (comes with python)
+
+Install Django
+
+```pip install django```
+
+To start the backend, navigate to /backend 
+
+```python manage.py runservcer```
