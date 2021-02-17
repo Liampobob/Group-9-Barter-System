@@ -9,6 +9,8 @@
 .history
 .svn/
 
+assets/webapp/
+
 # IntelliJ related
 *.iml
 *.ipr

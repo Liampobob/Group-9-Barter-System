@@ -43,3 +43,28 @@ npm install -g jest
 ## Mobile Aplication
 
 To setup your environment follow the steps at https://flutter.dev/docs/get-started/install
+
+### For development
+Run the web application locally as specified above (using the `npm run serve` script)
+
+Run the flutter application from your IDE.
+
+### For Production:
+
+To update the HTML displayed in the app, run
+
+```
+./compile_web.sh
+```
+(Note - I haven't been able to test it yet)
+
+Then build the application.
+
+
+If you use windows or can't run the script, you'll want to run in the web directory
+```
+npm run build
+```
+
+And copy the contents of `web/dist` into `mobile/assets/webapp`
+
