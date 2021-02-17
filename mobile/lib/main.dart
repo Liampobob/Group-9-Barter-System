@@ -1,4 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:webview_flutter/webview_flutter.dart';
+import 'package:flutter/services.dart';
 
 void main() {
   runApp(MyApp());
@@ -14,54 +18,39 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MyHomePage(title: 'Welcome!'),
+      home: WebViewExample(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
-  final String title;
-
+class WebViewExample extends StatefulWidget {
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  WebViewExampleState createState() => WebViewExampleState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
+class WebViewExampleState extends State<WebViewExample> {
+  @override
+  void initState() {
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+    return FutureBuilder(
+      future: DefaultAssetBundle.of(context).loadString('assets/webapp/index.html'), // async work
+      builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+        switch (snapshot.connectionState) {
+          case ConnectionState.waiting: return Text('Loading....');
+          default:
+            if (snapshot.hasError)
+              return Text('Error: ${snapshot.error}');
+            else {
+              // final String contentBase64 = base64Encode(const Utf8Encoder().convert(snapshot.data));
+              //               return WebView(initialUrl: 'data:text/html;base64,$contentBase64', javascriptMode: JavascriptMode.unrestricted);
+              return WebView(initialUrl: 'http://10.0.2.2:8080', javascriptMode: JavascriptMode.unrestricted);
+            }
+        }
+      },
     );
   }
 }
