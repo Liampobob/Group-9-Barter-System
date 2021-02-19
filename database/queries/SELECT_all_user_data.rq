@@ -1,0 +1,22 @@
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX barc: <https://www.barter.ie/database/classes#>
+PREFIX barp: <https://www.barter.ie/database/predicates#>
+
+# see what user data is available in the database
+SELECT ?id ?name ?prop ?node
+WHERE {
+	?user	barp:id ?id ;
+			barp:name ?name .
+	{
+
+		?node	?p ?user .
+		?p		rdfs:label ?plabel .
+		BIND(CONCAT("<-- ", STR(?plabel)) AS ?prop) .
+	}
+	UNION
+	{
+		?user	?p ?node .
+		?p		rdfs:label ?plabel .
+		BIND(CONCAT(STR(?plabel), " -->") AS ?prop) .
+	}
+} ORDER BY ?name

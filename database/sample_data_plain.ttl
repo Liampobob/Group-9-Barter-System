@@ -1,0 +1,83 @@
+# sets up prefixes
+@prefix rdf:	<http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:	<http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:	<http://www.w3.org/2001/XMLSchema#> .
+
+@prefix barc:	<https://www.barter.ie/database/classes#> .
+@prefix barp:	<https://www.barter.ie/database/predicates#> .
+
+@prefix bard:	<https://www.barter.ie/database/data#> .
+# set up instances
+bard:kakuma		a	barc:Camp ;
+				barp:inCountry "Kenya" .
+
+bard:user14		a	barc:User ;
+				barp:id "14"^^xsd:integer ;
+				barp:location bard:loc14 ;
+				barp:name "John Smith" ;
+				barp:username "johnasmith" ;
+				barp:password "password123" ;
+				barp:inCamp bard:kakuma ;
+				barp:primaryLanguage "English" ;
+				barp:spokenLanguage "French" ;
+				barp:spokenLanguage "Arabic" .
+bard:loc14		a	barc:Location ;
+				barp:latitude "3.722477"^^xsd:float ;
+				barp:longitude "34.863106"^^xsd:float .
+
+bard:user199	a	barc:Worker ;
+				barp:id "199"^^xsd:integer ;
+				barp:skillTag "plumbing" ;
+				barp:attachedPicture "image_user199.jpg" ;
+				barp:location bard:loc199 ;
+				barp:name "M Chuol" ;
+				barp:username "chuolm4" ;
+				barp:password "password456" ;
+				barp:inCamp bard:kakuma ;
+				barp:primaryLanguage "Bari" ;
+				barp:spokenLanguage "Arabic" ;
+				barp:hasHistory bard:Hist199_1 .
+bard:loc199		a	barc:Location ;
+				barp:latitude "3.722497"^^xsd:float;
+				barp:longitude "34.862817"^^xsd:float .
+bard:Hist199_1	a	barc:WorkHistory ;
+				barp:title "Choul and Sons" ;
+				barp:skillTag "plumbing" ;
+				barp:description "worked with my father and brother fixing sinks and showers" ;
+				barp:startDate "2014-05-09T00:00:00" ;
+				barp:endDate "2016-07-20T00:00:00" .
+
+bard:job455		a	barc:Job ;
+				barp:id "455"^^xsd:integer ;
+				barp:title "Leaking Sink" ;
+				barp:skillTag "plumbing" ;
+				barp:description "sink is leaking" ;
+				barp:attachedPicture "image_job455.jpg" ;
+				barp:location bard:loc14 ;
+				barp:datePosted "2021-01-12T16:14:45"^^xsd:datetime ;
+				barp:status "complete" ;
+				barp:dateAccepted "2021-01-12T17:56:08"^^xsd:datetime ;
+				barp:dateCompleted "2021-01-12T20:01:05"^^xsd:datetime ;
+				barp:postedBy bard:user14 ;
+				barp:hasWorker bard:user199 .
+
+bard:rev2657	a	barc:Review ;
+				barp:id	"2657"^^xsd:integer ;
+				barp:title "good job" ;
+				barp:skillTag "plumbing" ;
+				barp:description "arrived quickly and sink fixed well" ;
+				barp:rating "4"^^xsd:integer ;
+				barp:postedBy bard:user14 ;
+				barp:aboutWorker bard:user199 ;
+				barp:aboutJobEvent bard:job455 .
+
+bard:job19833	a	barc:Job ;
+				barp:id "19833"^^xsd:integer ;
+				barp:title "Leaking Sink" ;
+				barp:skillTag "plumbing" ;
+				barp:description "sink is leaking" ;
+				barp:attachedPicture "image_job19833.jpg" ;
+				barp:location bard:loc14 ;
+				barp:datePosted "2021-02-01T14:30:52"^^xsd:datetime ;
+				barp:status "open" ;
+				barp:postedBy bard:user14 .

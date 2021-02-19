@@ -33,6 +33,11 @@ barc:Event		rdfs:subClassOf		barc:Post ;
 				rdfs:label			"Event" ;
 				rdfs:comment		"" .
 
+barc:Review		rdfs:subClassOf		barc:Post ;
+				rdfs:isDefinedBy	barc: ;
+				rdfs:label			"Review" ;
+				rdfs:comment		"" .
+
 
 barc:Location	a					rdfs:Class ;
 				rdfs:isDefinedBy	barc: ;

@@ -35,11 +35,11 @@ barp:description	a					rdf:predicate ; # domain: post,workhistory ; range: strin
 					rdfs:domain			barc:Post , barc:WorkHistory ;
 					rdfs:range			xsd:string .
 
-barp:attachedPicture a					rdf:predicate ; # domain: user,job ; range: string (image -> numpy array -> string)
+barp:attachedPicture a					rdf:predicate ; # domain: user,post ; range: string (image -> numpy array -> string)
 					rdfs:isDefinedBy	barp: ;
 					rdfs:label			"attachedPicture" ;
 					rdfs:comment		"Subject has an image Object as numpy array string" ;
-					rdfs:domain			barc:User, barc:Job ;
+					rdfs:domain			barc:User, barc:Post ;
 					rdfs:range			xsd:string .
 
 barp:location		a					rdf:predicate ; # domain: user,post ; range: Location
@@ -52,6 +52,13 @@ barp:location		a					rdf:predicate ; # domain: user,post ; range: Location
 
 
 # predicates with User Subject
+barp:name		a					rdf:predicate ; # range: string (encrypt)
+					rdfs:isDefinedBy	barp: ;
+					rdfs:label			"name" ;
+					rdfs:comment		"User Subject has encrypted name string Object" ;
+					rdfs:domain			barc:User ;
+					rdfs:range			xsd:string .
+
 barp:username		a					rdf:predicate ; # range: string (encrypt)
 					rdfs:isDefinedBy	barp: ;
 					rdfs:label			"username" ;
@@ -87,23 +94,20 @@ barp:spokenLanguage	a					rdf:predicate ; # range: string
 					rdfs:domain			barc:User ;
 					rdfs:range			xsd:string .
 
-
+barp:postedReview	a					rdf:predicate ; # range: Review
+					rdfs:isDefinedBy	barp: ;
+					rdfs:label			"postedReview" ;
+					rdfs:comment		"User Subject has posted Review Object" ;
+					rdfs:domain			barc:User ;
+					rdfs:range			barc:Review .
 
 # predicates with Worker Subject
-barp:workerSkill	a					rdf:predicate ; # range: string
-					rdfs:isDefinedBy	barp: ;
-					rdfs:label			"workerSkill" ;
-					rdfs:comment		"Worker Subject is a worker with skill string Object" ;
-					rdfs:domain			barc:Worker ;
-					rdfs:range			xsd:string .
-
 barp:hasHistory		a					rdf:predicate ; # range: WorkHistory
 					rdfs:isDefinedBy	barp: ;
 					rdfs:label			"hasHistory" ;
 					rdfs:comment		"Worker Subject has history WorkHistory Object" ;
 					rdfs:domain			barc:Worker ;
 					rdfs:range			barc:WorkHistory .
-
 
 
 # predicates with Post Subject
@@ -114,6 +118,12 @@ barp:datePosted		a					rdf:predicate ; # range: datetime
 					rdfs:domain			barc:Post ;
 					rdfs:range			xsd:datetime .
 
+barp:postedBy		a					rdf:predicate ; # range: User
+					rdfs:isDefinedBy	barp: ;
+					rdfs:label			"postedBy" ;
+					rdfs:comment		"Post Subject was posted by User Object" ;
+					rdfs:domain			barc:Post ;
+					rdfs:range			barc:User .
 
 # predicates with Job Subject
 barp:status			a					rdf:predicate ; # range: string ("open", "accepted", "complete")
@@ -137,16 +147,10 @@ barp:dateCompleted	a					rdf:predicate ; # range: datetime
 					rdfs:domain			barc:Job ;
 					rdfs:range			barc:User .
 
-barp:hasClient		a					rdf:predicate ; # range: User
-					rdfs:isDefinedBy	barp: ;
-					rdfs:label			"client" ;
-					rdfs:comment		"Job Subject has client User Object" ;
-					rdfs:domain			barc:Job ;
-					rdfs:range			barc:User .
 
 barp:hasWorker		a					rdf:predicate ; # range: Worker
 					rdfs:isDefinedBy	barp: ;
-					rdfs:label			"worker" ;
+					rdfs:label			"hasWorker" ;
 					rdfs:comment		"Job Subject has worker Worker Object" ;
 					rdfs:domain			barc:Job ;
 					rdfs:range			barc:Worker .
@@ -159,9 +163,51 @@ barp:eventDate		a					rdf:predicate ; # range: datetime
 					rdfs:domain			barc:Event ;
 					rdfs:range			xsd:datetime .
 
+barp:eventHolder	a					rdf:predicate ; # range: Worker
+					rdfs:isDefinedBy	barp: ;
+					rdfs:label			"eventHolder" ;
+					rdfs:comment		"Event Subject is held by Worker Object" ;
+					rdfs:domain			barc:Event ;
+					rdfs:range			barc:Worker .
+
+# predicates with Review Subject
+barp:rating			a					rdf:predicate ; # range: integer
+					rdfs:isDefinedBy	barp: ;
+					rdfs:label			"rating" ;
+					rdfs:comment		"Review Subject has rating integer Object" ;
+					rdfs:domain			barc:Review ;
+					rdfs:range			xsd:integer .
+
+barp:aboutWorker	a					rdf:predicate ; # range: Worker
+					rdfs:isDefinedBy	barp: ;
+					rdfs:label			"aboutWorker" ;
+					rdfs:comment		"Review Subject concerns Worker Object" ;
+					rdfs:domain			barc:Review ;
+					rdfs:range			barc:Worker .
+
+barp:aboutJobEvent	a					rdf:predicate ; # range: Job, Event
+					rdfs:isDefinedBy	barp: ;
+					rdfs:label			"aboutJobEvent" ;
+					rdfs:comment		"Review Subject concerns Job or Event Object" ;
+					rdfs:domain			barc:Review ;
+					rdfs:range			barc:Job , barc:Event .
+
+
 # predicates with Location Subject
-barp:longitude
-barp:latitude
+barp:latitude		a					rdf:predicate ; # range: float
+rdfs:isDefinedBy	barp: ;
+rdfs:label			"longitude" ;
+rdfs:comment		"Location Subject has latitude float Object" ;
+rdfs:domain			barc:Location ;
+rdfs:range			xsd:float .
+
+barp:longitude		a					rdf:predicate ; # range: float
+					rdfs:isDefinedBy	barp: ;
+					rdfs:label			"longitude" ;
+					rdfs:comment		"Location Subject has longitude float Object" ;
+					rdfs:domain			barc:Location ;
+					rdfs:range			xsd:float .
+
 
 # predicates with Camp Subject
 barp:inCountry		a					rdf:predicate ; # range: string
