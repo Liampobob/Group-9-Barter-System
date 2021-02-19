@@ -2,13 +2,17 @@ PREFIX barp: <https://www.barter.ie/database/predicates#>
 PREFIX bard: <https://www.barter.ie/database/data#>
 
 # find all "open" jobs in the worker's camp
-SELECT ?jobID ?jobTitle ?jobDate
+SELECT ?jobID ?jobTitle ?jobDate ?skill
 WHERE {
     ?job barp:id ?jobID ;
          barp:title ?jobTitle ;
          barp:datePosted ?jobDate ;
          barp:postedBy ?client ;
-         barp:status "open" .
-    bard:user199 barp:inCamp ?camp .
+         barp:status "open"
+		 barp:skillTag ?skill .
+    ?worker barp:id ?id ;
+            barp:inCamp ?camp ;
+			barp:skillTag ?skill .
+    FILTER(?id = 199)
     ?client barp:inCamp ?camp .
 }

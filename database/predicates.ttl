@@ -194,19 +194,19 @@ barp:aboutJobEvent	a					rdf:predicate ; # range: Job, Event
 
 
 # predicates with Location Subject
-barp:latitude		a					rdf:predicate ; # range: float
+barp:latitude		a					rdf:predicate ; # range: decimal
 rdfs:isDefinedBy	barp: ;
 rdfs:label			"longitude" ;
-rdfs:comment		"Location Subject has latitude float Object" ;
+rdfs:comment		"Location Subject has latitude decimal Object" ;
 rdfs:domain			barc:Location ;
-rdfs:range			xsd:float .
+rdfs:range			xsd:decimal .
 
-barp:longitude		a					rdf:predicate ; # range: float
+barp:longitude		a					rdf:predicate ; # range: decimal
 					rdfs:isDefinedBy	barp: ;
 					rdfs:label			"longitude" ;
-					rdfs:comment		"Location Subject has longitude float Object" ;
+					rdfs:comment		"Location Subject has longitude decimal Object" ;
 					rdfs:domain			barc:Location ;
-					rdfs:range			xsd:float .
+					rdfs:range			xsd:decimal .
 
 
 # predicates with Camp Subject
