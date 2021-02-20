@@ -94,13 +94,6 @@ barp:spokenLanguage	a					rdf:predicate ; # range: string
 					rdfs:domain			barc:User ;
 					rdfs:range			xsd:string .
 
-barp:postedReview	a					rdf:predicate ; # range: Review
-					rdfs:isDefinedBy	barp: ;
-					rdfs:label			"postedReview" ;
-					rdfs:comment		"User Subject has posted Review Object" ;
-					rdfs:domain			barc:User ;
-					rdfs:range			barc:Review .
-
 # predicates with Worker Subject
 barp:hasHistory		a					rdf:predicate ; # range: WorkHistory
 					rdfs:isDefinedBy	barp: ;
@@ -138,14 +131,14 @@ barp:dateAccepted	a					rdf:predicate ; # range: datetime
 					rdfs:label			"dateAccepted" ;
 					rdfs:comment		"Job Subject was accepted by worker on date datetime Object" ;
 					rdfs:domain			barc:Job ;
-					rdfs:range			barc:User .
+					rdfs:range			xsd:datetime .
 
 barp:dateCompleted	a					rdf:predicate ; # range: datetime
 					rdfs:isDefinedBy	barp: ;
 					rdfs:label			"dateCompleted" ;
 					rdfs:comment		"Job Subject has completed by worker on date datetime Object" ;
 					rdfs:domain			barc:Job ;
-					rdfs:range			barc:User .
+					rdfs:range			xsd:datetime .
 
 
 barp:hasWorker		a					rdf:predicate ; # range: Worker
@@ -195,11 +188,11 @@ barp:aboutJobEvent	a					rdf:predicate ; # range: Job, Event
 
 # predicates with Location Subject
 barp:latitude		a					rdf:predicate ; # range: decimal
-rdfs:isDefinedBy	barp: ;
-rdfs:label			"longitude" ;
-rdfs:comment		"Location Subject has latitude decimal Object" ;
-rdfs:domain			barc:Location ;
-rdfs:range			xsd:decimal .
+					rdfs:isDefinedBy	barp: ;
+					rdfs:label			"longitude" ;
+					rdfs:comment		"Location Subject has latitude decimal Object" ;
+					rdfs:domain			barc:Location ;
+					rdfs:range			xsd:decimal .
 
 barp:longitude		a					rdf:predicate ; # range: decimal
 					rdfs:isDefinedBy	barp: ;
