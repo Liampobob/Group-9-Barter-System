@@ -1,5 +1,5 @@
 import store from "@/store";
-import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
+import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import Home from "../views/Home.vue";
 /*
  * Note: Lazy loading some routes generate a specific file for the routes which are lazy loaded.
@@ -29,7 +29,7 @@ const routes: Array<RouteRecordRaw> = [
 ];
 
 const router = createRouter({
-  history: createWebHashHistory(),
+  history: createWebHistory(),
   routes,
 });
 
