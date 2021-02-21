@@ -41,7 +41,7 @@ export default class Login extends Vue {
         }
         store.dispatch("userStore/login", response.authResponse);
       },
-      { scope: "public_profile,email" }
+      { scope: "email" }
     );
     return false;
   }

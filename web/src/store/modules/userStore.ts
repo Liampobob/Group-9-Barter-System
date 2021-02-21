@@ -35,8 +35,11 @@ const userStore: Module<UserState, RootState> = {
       commit(UserActions.LOG_OUT);
     },
     login({ commit }, payload: fb.AuthResponse) {
-      commit(UserActions.LOGIN, payload);
-      router.push({ name: ROUTE_NAMES.HOME });
+      window.FB.api("/me?scope=email", function (response) {
+        console.log(response); // TODO - get email from facebook
+        commit(UserActions.LOGIN, payload);
+        router.push({ name: ROUTE_NAMES.HOME });
+      });
     },
     errorLogin({ commit }) {
       commit(UserActions.ERROR_LOGIN, { error: "Facebook login failed!" });
