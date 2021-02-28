@@ -1,6 +1,7 @@
 import { Module } from "vuex";
 import { RootState, UserState } from "@/types/stores";
 import { ROUTE_NAMES, router } from "@/router";
+import axios from "@/shared/axios";
 
 export enum UserActions {
   LOGIN = "LOGIN",
@@ -34,12 +35,12 @@ const userStore: Module<UserState, RootState> = {
     logout({ commit }) {
       commit(UserActions.LOG_OUT);
     },
-    login({ commit }, payload: fb.AuthResponse) {
-      window.FB.api("/me?scope=email", function (response) {
-        console.log(response); // TODO - get email from facebook
+    async login({ commit }, payload: fb.AuthResponse) {
+      const resp = await axios.post('auth', {accessToken: payload.accessToken});
+      console.log(resp);
+        // TODO - get email from facebook
         commit(UserActions.LOGIN, payload);
         router.push({ name: ROUTE_NAMES.HOME });
-      });
     },
     errorLogin({ commit }) {
       commit(UserActions.ERROR_LOGIN, { error: "Facebook login failed!" });

@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "vue-cli-service serve --https",
-    "serve": "vue-cli-service serve --https",
+    "start": "vue-cli-service serve --https --port 8080",
+    "serve": "vue-cli-service serve --https --port 8080",
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint",

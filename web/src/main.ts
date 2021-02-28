@@ -7,6 +7,8 @@ import "@/assets/main.scss";
 declare global {
   interface Window {
     fbAsyncInit: () => void;
+    // eslint-disable-next-line
+    FB: any;
   }
 }
 
