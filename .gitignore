@@ -1,6 +1,7 @@
 .DS_Store
 node_modules/
 dist/
+__pycache__
 
 # local env files
 .env.local
@@ -14,7 +15,7 @@ yarn-error.log*
 # Editor directories and files
 .idea
 .vscode
-
+.pyc
 # Flutter/Dart/Pub related
 **/doc/api/
 .dart_tool/

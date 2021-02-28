@@ -75,8 +75,8 @@ Base Requirements
 
 Install Django
 
-```pip install django```
+```pip install -r dependencies.txt```
 
 To start the backend, navigate to /backend 
 
-```python manage.py runservcer```
+```python manage.py runserver```
