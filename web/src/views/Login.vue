@@ -5,6 +5,11 @@
         <div class="columns is-centered">
           <div class="column is-5-tablet is-4-desktop is-3-widescreen">
             <div class="has-text-centered">
+              <input ref="searchBar is-medium is-rounded  " class="input" type="text" v-model="username" placeholder="Username">
+              <input ref="searchBar is-medium is-rounded  " class="input" type="text" v-model="password" placeholder="Password">
+              <button class="button default-login" @click="loginDefaultPathway">
+                Login
+              </button>
               <button class="button is-info" @click="logInWithFacebook">
                 <i class="fab fa-facebook-f mr-1"></i>
                 Login with Facebook
@@ -32,6 +37,12 @@ import store from "@/store";
   },
 })
 export default class Login extends Vue {
+
+  async loginDefaultPathway() {
+    // API call to backend to verify username and password.
+    //Store relevent user info (user id etc)
+  }
+
   async logInWithFacebook() {
     window.FB.login(
       function(response: any) {
@@ -59,9 +70,11 @@ export default class Login extends Vue {
       // Automatically log the user in from Facebook if the facebok login session is still open
       window.FB.getLoginStatus(function(response: any) {
         if (response.authResponse) {
+          // console.log(response.authResponse);
           store.dispatch("userStore/login", response.authResponse);
         }
       });
+      console.log("done");
     };
   }
 

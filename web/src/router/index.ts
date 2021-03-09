@@ -6,6 +6,9 @@ export enum ROUTE_NAMES {
   HOME = "HOME",
   LOGIN = "LOGIN",
   ABOUT = "ABOUT",
+  SEARCH = "SEARCH",
+  LISTINGS = "LISTINGS",
+  PROFILE = "PROFILE",
 }
 /*
  * Note: Lazy loading some routes generate a specific file for the routes which are lazy loaded.
@@ -31,6 +34,24 @@ const routes: Array<RouteRecordRaw> = [
     name: ROUTE_NAMES.LOGIN,
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/Login.vue"),
+  },
+  {
+    path: "/search",
+    name: ROUTE_NAMES.SEARCH,
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../views/Search.vue"),
+  },
+  {
+    path: "/listings",
+    name: ROUTE_NAMES.LISTINGS,
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../views/Listings.vue"),
+  },
+  {
+    path: "/profile",
+    name: ROUTE_NAMES.PROFILE,
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../views/Profile.vue"),
   },
 ];
 
