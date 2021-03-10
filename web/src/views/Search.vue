@@ -21,8 +21,8 @@
 <script lang="ts">
 
 import { Vue, Component } from "vue-class-component";
-import store from "@/store";
-import Listing from "@/types/Listing";
+import { Listing } from "@/types/Listing";
+
 @Component
 export default class Search extends Vue {
   terms = '';
@@ -36,11 +36,11 @@ export default class Search extends Vue {
 
     const tmpListing : Listing = {
       title: this.terms,
-      text: this.terms,
+      description: this.terms,
     }
     console.log(tmpListing);
     //store listing
-    store.dispatch("listingsStore/setListings", []);
+    this.$store.dispatch("listingsStore/setListings", []);
   }
 }
 </script>
