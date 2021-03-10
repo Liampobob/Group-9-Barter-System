@@ -4,13 +4,12 @@
       <div class="container">
         <div class="columns is-centered">
           <div class="column is-5-tablet is-4-desktop is-3-widescreen">
-            <div class="has-text-centered">
-              <input ref="searchBar is-medium is-rounded  " class="input" type="text" v-model="searchTerms" placeholder="Search">
-              <button class="button default-login" @click="searchForListings">
-                Search
-              </button>
-
-            </div>
+            <ul id="listings">
+              <div v-for="(listing, index) in getListings" :key="listing.title" class="content">
+                <h1>{{index+1}}: {{ listing.title }}</h1>
+                <h3>{{ listing.description }}</h3>
+              </div>
+            </ul>
           </div>
         </div>
       </div>
@@ -21,6 +20,7 @@
 <script lang="ts">
 
 import { Options, Vue, Component } from "vue-class-component";
+import { mapGetters } from "vuex";
 import { Listing } from "@/types/Listing";
 @Options({
   components: {},
@@ -30,9 +30,6 @@ import { Listing } from "@/types/Listing";
 })
 @Component
 export default class Listings extends Vue {
-  
-  listings : Listing[] = getListings();
-
 
   searchForListings() {
     // API call to backend to get listings

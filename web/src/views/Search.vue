@@ -5,7 +5,7 @@
         <div class="columns is-centered">
           <div class="column is-5-tablet is-4-desktop is-3-widescreen">
             <div class="has-text-centered">
-              <input ref="searchBar is-medium is-rounded  " class="input" type="text" v-model="searchTerms" placeholder="Search">
+              <input ref="searchBar is-medium is-rounded  " class="input" type="text" v-model="searchTerms" placeholder="Search for listings">
               <button class="button default-login" @click="searchForListings">
                 Search
               </button>
@@ -38,9 +38,16 @@ export default class Search extends Vue {
       title: this.terms,
       description: this.terms,
     }
-    console.log(tmpListing);
+    const tmpListing2 : Listing = {
+      title: 'Job2',
+      description: 'Description2',
+    }
+    const tmpListing3 : Listing = {
+      title: 'Job3',
+      description: 'Description3',
+    }
     //store listing
-    this.$store.dispatch("listingsStore/setListings", []);
+    this.$store.dispatch("listingsStore/setListings", [tmpListing,tmpListing2,tmpListing3]);
   }
 }
 </script>
