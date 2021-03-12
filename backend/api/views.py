@@ -4,19 +4,12 @@ from django.views.decorators.csrf import csrf_exempt
 import requests
 import json
 
-from api.models import User
 import logging
-
-def test(request):
-    return HttpResponse("Hello, world.")
-
-def status(request):
-    return JsonResponse({'status_code':'200', 'status':'Probably Working'})
 
 @csrf_exempt
 def auth(request):
     if request.method != 'POST':
-        return JsonResponse({'error': 'Only POST request are allowed'}, status=400)
+        return JsonResponse({'error': 'Only POST requests are allowed'}, status=405)
 
     data = json.loads(request.body)
     accessToken = data.get('accessToken', None)
@@ -39,20 +32,3 @@ def auth(request):
     # TODO : set auth cookie here
 
     return JsonResponse({'status_code':'200', 'status':'Probably Working'})
-
-
-def test_db(request):
-    logger = logging.getLogger('console')
-    s = User(username='sastaffo',
-             password='testpass',
-             name='Sarah Stafford-Langan',
-             phone_number='0810008989',
-             isBusiness=False,
-             bio = "test bio!")
-    s.save()
-    users = User.objects.filter(isBusiness=False)
-    context = {}
-    for u in users:
-        context[u.username] = u.to_dict()
-    logger.info(json.dumps(context, indent=2))
-    return JsonResponse(context)

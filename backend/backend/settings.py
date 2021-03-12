@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',
     'api.apps.ApiConfig',
+    'query.apps.QueryConfig',
 ]
 
 MIDDLEWARE = [
