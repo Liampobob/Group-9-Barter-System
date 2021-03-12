@@ -1,8 +1,11 @@
 from django.urls import path
 
-from query import business_queries, user_queries
+from query import business_queries, user_queries, views
 
 urlpatterns = [
+    # test_db: no parameters
+    path('', views.test_db),
+
     # selectSingleUser: required:username
     path('selectUser', user_queries.select_user),
 
