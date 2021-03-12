@@ -3,12 +3,20 @@ from datetime import datetime as dt
 
 # Create your models here.
 
+class UserManager(models.Manager):
+	def get_users(self):
+		return super().get_queryset()
+
 class User(models.Model):
 	username = models.SlugField(max_length=32, primary_key=True)
 	password = models.CharField(max_length=20)
+	name = models.CharField(max_length=80)
 	phone_number = models.CharField(max_length=20)
 	latitude = models.FloatField(null=True)
 	longitude = models.FloatField(null=True)
+	isBusiness = models.BooleanField(default=False)
+	bio = models.TextField()
+
 
 	def __str__(self):
 		return self.username
@@ -17,6 +25,21 @@ class User(models.Model):
 	def location(self):
 		return (self.latitude, self.longitude)
 
+	def to_dict(self):
+		d = {
+			'username' : self.username,
+			'name' : self.name,
+			'phone_number' : self.phone_number,
+			'is_business' : self.isBusiness,
+			'bio' : self.bio,
+			'location' : {
+				'latitude' : self.latitude,
+				'longitude' : self.longitude,
+			},
+		}
+		return d
+"""
+# not part of MVP
 class JobManager(models.Manager):
 	def get_jobs_with_client(self, username):
 		return super().get_queryset().filter(client_username=username)
@@ -26,15 +49,6 @@ class JobManager(models.Manager):
 			(status=Job.Status.OPEN)
 			| (status=Job.Status.URGENT)
 		)
-		"""
-		def getAllOpenUrgentJobs():
-			q = Job.objects.filter(
-				Q(status=Job.Status.OPEN)
-				| Q(status=Job.Status.URGENT)
-			)
-			q_str = str(q.query)
-			return q_str
-		"""
 
 class Job(models.Model):
 	class Status(models.TextChoices):
@@ -59,3 +73,4 @@ class Job(models.Model):
 	)
 	date_closed = models.DateField(null=True, blank=True)
 	worker_usernames = models.ManyToManyField(User)
+"""
