@@ -94,6 +94,10 @@ Install Docker Compose [here](https://docs.docker.com/compose/install/)
 
 ### To start the database, run:
 
+`./run_db.sh`
+This will start the docker container, wait until it is initialised and execute model migrations automatically.
+
+You can also do it manually:
 `docker-compose up -d`
 
 -d will let the process run in the background.
