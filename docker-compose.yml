@@ -1,11 +1,11 @@
 version: '3.7'
 services:
-    database:
+    barter_db:
         restart: 'always'
         image: mysql:5.7
         container_name: barter_db
         volumes:
-            - $MYSQL_DATA:/var/lib/mysql
+            - ${PWD}/data/:/var/lib/mysql
         environment:
             #to connect : 
             #mysql --host=127.0.0.1 --port=8088 -uadmin -pdzalekaxDf0JRN9VTPLI9JyvimB
