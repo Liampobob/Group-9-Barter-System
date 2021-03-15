@@ -24,3 +24,5 @@ yarn-error.log*
 .pub-cache/
 .pub/
 /build/
+
+data/*
