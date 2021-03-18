@@ -2,6 +2,7 @@ import { Module } from "vuex";
 import { RootState, UserState } from "@/types/stores";
 import { ROUTE_NAMES, router } from "@/router";
 import axios from "@/shared/axios";
+import { User } from "@/types/User";
 
 export enum UserActions {
   LOGIN = "LOGIN",
@@ -12,20 +13,15 @@ export enum UserActions {
 const userStore: Module<UserState, RootState> = {
   namespaced: true,
   state: {
-    user: { name: "" },
-    isLoggedIn: false, // TODO load JWT from local storage
+    user: undefined,
     error: "",
-    auth: undefined,
   },
   mutations: {
-    [UserActions.LOGIN](state: UserState, payload: fb.AuthResponse) {
-      console.log(payload);
-      state.isLoggedIn = true;
-      state.auth = payload; // TODO : pass tokens to server
+    [UserActions.LOGIN](state: UserState, payload: User) {
+      state.user = payload;
     },
     [UserActions.LOG_OUT](state: UserState) {
-      state.isLoggedIn = false;
-      state.auth = undefined;
+      state.user = undefined;
     },
     [UserActions.ERROR_LOGIN](state: UserState, error: string) {
       state.error = error;
@@ -35,11 +31,11 @@ const userStore: Module<UserState, RootState> = {
     logout({ commit }) {
       commit(UserActions.LOG_OUT);
     },
-    async login({ commit }, payload: fb.AuthResponse) {
+    async fbLogin({ commit }, payload: fb.AuthResponse) {
       const resp = await axios.post('auth', {accessToken: payload.accessToken});
-      console.log(resp);
+      console.log(resp.data['user']);
         // TODO - get email from facebook
-        commit(UserActions.LOGIN, payload);
+        commit(UserActions.LOGIN, resp.data['user']);
         router.push({ name: ROUTE_NAMES.HOME });
     },
     errorLogin({ commit }) {
@@ -47,7 +43,8 @@ const userStore: Module<UserState, RootState> = {
     },
   },
   getters: {
-    isLoggedIn: (state) => state.isLoggedIn,
+    isLoggedIn: (state) => !!state.user,
+    user: (state) => state.user,
     error: (state) => state.error,
   },
 };

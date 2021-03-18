@@ -5,13 +5,18 @@ from api.serializers import WorkerSerializer
 import requests
 import json
 from rest_framework import status as status_codes
-
+import api.db_helper as db_helper
+from query.models import User
+from django.contrib.auth import login
 
 def test(request):
     return HttpResponse("Hello, world.")
 
 
 def status(request):
+    if not request.user.is_authenticated:
+        return JsonResponse({'status': 'NOPE'},
+                        status=status_codes.HTTP_200_OK)
     return JsonResponse({'status': 'Probably Working'},
                         status=status_codes.HTTP_200_OK)
 
@@ -35,17 +40,29 @@ def auth(request):
                             status=status_codes.HTTP_401_UNAUTHORIZED)
 
     userData = json.loads(response.content)
-    accessToken = userData.get('name', None)
+    name = userData.get('name', None)
     userID = userData.get('id', None)
 
-    if userID == None or accessToken == None:
+    if userID == None or name == None:
         return JsonResponse(
             {'error': 'Error when retrieving user details from facebook'},
             status=status_codes.HTTP_500_INTERNAL_SERVER_ERROR)
 
-    # TODO : set auth cookie here
+    user = db_helper.get_user_by_fb_id(userID)
+    # Register user automatically if does not exist already
+    if user == None:
+        # register user
+        user = User(username=userID,  # TODO : let user set a username
+                 password=None,
+                 name=name,
+                 phone_number=None,
+                 isBusiness=False,
+                 bio=None)
+        user.save()
 
-    return JsonResponse({'status': 'work in progress'},
+    # Set auth cookie to request
+    login(request, user)
+    return JsonResponse({'user': user.to_dict()},
                         status=status_codes.HTTP_200_OK)
 
 

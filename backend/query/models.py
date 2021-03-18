@@ -3,41 +3,47 @@ from datetime import datetime as dt
 
 # Create your models here.
 
+
 class UserManager(models.Manager):
-	def get_users(self):
-		return super().get_queryset()
+    def get_users(self):
+        return super().get_queryset()
+
 
 class User(models.Model):
-	username = models.SlugField(max_length=32, primary_key=True)
-	password = models.CharField(max_length=20)
-	name = models.CharField(max_length=80, null=True)
-	phone_number = models.CharField(max_length=20, null=True)
-	latitude = models.FloatField(null=True)
-	longitude = models.FloatField(null=True)
-	isBusiness = models.BooleanField(default=False)
-	bio = models.TextField()
+    username = models.SlugField(max_length=32, primary_key=True)
+    password = models.CharField(max_length=20, null=True)
+    facebook_id = models.CharField(max_length=32, null=True)
+    name = models.CharField(max_length=80, null=True)
+    phone_number = models.CharField(max_length=20, null=True)
+    latitude = models.FloatField(null=True)
+    longitude = models.FloatField(null=True)
+    isBusiness = models.BooleanField(default=False)
+    bio = models.TextField(null=True)
+    last_login = models.DateTimeField(null=True)
+
+    def __str__(self):
+        return self.username
+
+    @property
+    def location(self):
+        return (self.latitude, self.longitude)
+
+    def to_dict(self):
+        d = {
+            'username': self.username,
+            'name': self.name,
+            'phone_number': self.phone_number,
+            'is_business': self.isBusiness,
+            'bio': self.bio,
+            'facebook_id': self.facebook_id,
+            'location': {
+                'latitude': self.latitude,
+                'longitude': self.longitude,
+            },
+        }
+        return d
 
 
-	def __str__(self):
-		return self.username
-
-	@property
-	def location(self):
-		return (self.latitude, self.longitude)
-
-	def to_dict(self):
-		d = {
-			'username' : self.username,
-			'name' : self.name,
-			'phone_number' : self.phone_number,
-			'is_business' : self.isBusiness,
-			'bio' : self.bio,
-			'location' : {
-				'latitude' : self.latitude,
-				'longitude' : self.longitude,
-			},
-		}
-		return d
 """
 # not part of MVP
 class JobManager(models.Manager):

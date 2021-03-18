@@ -12,7 +12,7 @@ def select_user(request):
     if request.method != 'GET':
         return JsonResponse({ 'message' : 'only GET requests allowed' }, status=405)
 
-    u_name = request.data['username']
+    u_name = request.GET['username']
     try:
         u = User.objects.get(username=u_name)
         return JsonResponse({ 'message' : 'user found', 'user' : u.to_dict() }, status=200)
