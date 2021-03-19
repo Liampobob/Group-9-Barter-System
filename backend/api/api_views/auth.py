@@ -60,3 +60,30 @@ class FBAuthAPI(generics.CreateAPIView):
         token, _ = Token.objects.get_or_create(user=user)
         return JsonResponse({'user': user.to_dict(), 'token': token.key},
                             status=status_codes.HTTP_200_OK)
+
+
+class AuthAPI(generics.CreateAPIView):
+    """Auth API"""
+    permission_classes = []  # don't need auth
+
+    @csrf_exempt
+    def post(self, request):
+        data = json.loads(request.body)
+        username = data.get('username', None)
+        password = data.get('password', None)
+
+        if username == None or password == None:
+            return JsonResponse(
+                {'error': 'Valid Username and Password must be provided'},
+                status=status_codes.HTTP_400_BAD_REQUEST)
+
+        user = db_helper.get_by_username_password(username=username, password=password)
+
+        if user == None:
+            return JsonResponse({'error': 'user not found'}, status=status_codes.HTTP_401_UNAUTHORIZED)            
+
+        # Set auth cookie to request & get / generate auth token
+        login(request, user)
+        token, _ = Token.objects.get_or_create(user=user)
+        return JsonResponse({'user': user.to_dict(), 'token': token.key},
+                            status=status_codes.HTTP_200_OK)

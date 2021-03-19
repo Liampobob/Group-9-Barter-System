@@ -87,14 +87,16 @@ To start the backend, navigate to /backend
 `python manage.py runserver`
 
 ## Sending authentificated requests:
+You can generate an auth token by sending a POST request to: `/api/auth` with the following parameters:
 
-You can generate an auth token by sending a POST request to: `/api/fb_auth` with the following parameters:
+`{ 'username': 'value', 'password': 'value' }`
+
+You can also generate an auth token by sending a POST request to: `/api/fb_auth` with the following parameters:
 
 `{ 'accessToken': 'value' }`
 
 with the value being a facebook access token.
 
-(TODO: Non facebook authentification support).
 
 The response will contain an authentification token as well as the user profile:
 
