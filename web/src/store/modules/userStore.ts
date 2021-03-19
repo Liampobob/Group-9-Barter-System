@@ -15,13 +15,18 @@ const userStore: Module<UserState, RootState> = {
   state: {
     user: undefined,
     error: "",
+    token: localStorage.getItem('token') ?? undefined,
   },
   mutations: {
-    [UserActions.LOGIN](state: UserState, payload: User) {
-      state.user = payload;
+    [UserActions.LOGIN](state: UserState, payload: { user: User, token: string }) {
+      localStorage.setItem('token', payload.token);
+      state.user = payload.user;
+      state.token = payload.token;
     },
     [UserActions.LOG_OUT](state: UserState) {
       state.user = undefined;
+      state.token = undefined;
+      localStorage.setItem('token', '');
     },
     [UserActions.ERROR_LOGIN](state: UserState, error: string) {
       state.error = error;
@@ -32,20 +37,20 @@ const userStore: Module<UserState, RootState> = {
       commit(UserActions.LOG_OUT);
     },
     async fbLogin({ commit }, payload: fb.AuthResponse) {
-      const resp = await axios.post('auth', {accessToken: payload.accessToken});
-      console.log(resp.data['user']);
-        // TODO - get email from facebook
-        commit(UserActions.LOGIN, resp.data['user']);
-        router.push({ name: ROUTE_NAMES.HOME });
+      const { data } = await axios.post('fb_auth', { accessToken: payload.accessToken });
+      // TODO - get email from facebook if possible
+      commit(UserActions.LOGIN, { user: data['user'], token: data['token'] });
+      router.push({ name: ROUTE_NAMES.HOME });
     },
     errorLogin({ commit }) {
       commit(UserActions.ERROR_LOGIN, { error: "Facebook login failed!" });
     },
   },
   getters: {
-    isLoggedIn: (state) => !!state.user,
+    isLoggedIn: (state) => !!state.token,
     user: (state) => state.user,
     error: (state) => state.error,
+    token: (state) => state.token ?? ''
   },
 };
 

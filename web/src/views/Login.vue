@@ -34,7 +34,7 @@ import store from "@/store";
 export default class Login extends Vue {
   async logInWithFacebook() {
     window.FB.login(
-      function(response: any) {
+      function (response: any) {
         if (!response.authResponse) {
           store.dispatch("userStore/errorLogin");
           return;
@@ -47,7 +47,7 @@ export default class Login extends Vue {
   }
 
   async initFacebook() {
-    window.fbAsyncInit = function() {
+    window.fbAsyncInit = function () {
       window.FB.init({
         appId: "774102783534474", //You will need to change this
         cookie: true, // This is important, it's not enabled by default
@@ -57,7 +57,7 @@ export default class Login extends Vue {
       });
 
       // Automatically log the user in from Facebook if the facebok login session is still open
-      window.FB.getLoginStatus(function(response: any) {
+      window.FB.getLoginStatus(function (response: any) {
         if (response.authResponse) {
           store.dispatch("userStore/fbLogin", response.authResponse);
         }

@@ -7,6 +7,7 @@ export enum ROUTE_NAMES {
   LOGIN = "LOGIN",
   ABOUT = "ABOUT",
 }
+
 /*
  * Note: Lazy loading some routes generate a specific file for the routes which are lazy loaded.
  * This enables for loading a specific file instead of the whole bundle for some routes.
