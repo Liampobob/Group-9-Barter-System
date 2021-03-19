@@ -1,5 +1,6 @@
 from django.db import models
 from datetime import datetime as dt
+from django.contrib import auth
 
 # Create your models here.
 
@@ -9,9 +10,7 @@ class UserManager(models.Manager):
         return super().get_queryset()
 
 
-class User(models.Model):
-    username = models.SlugField(max_length=32, primary_key=True)
-    password = models.CharField(max_length=20, null=True)
+class User(auth.models.User):
     facebook_id = models.CharField(max_length=32, null=True)
     name = models.CharField(max_length=80, null=True)
     phone_number = models.CharField(max_length=20, null=True)
@@ -19,7 +18,6 @@ class User(models.Model):
     longitude = models.FloatField(null=True)
     isBusiness = models.BooleanField(default=False)
     bio = models.TextField(null=True)
-    last_login = models.DateTimeField(null=True)
 
     def __str__(self):
         return self.username
