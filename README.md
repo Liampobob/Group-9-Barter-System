@@ -86,6 +86,45 @@ To start the backend, navigate to /backend
 
 `python manage.py runserver`
 
+## Sending authentificated requests:
+You can generate an auth token by sending a POST request to: `/api/auth` with the following parameters:
+
+`{ 'username': 'value', 'password': 'value' }`
+
+You can also generate an auth token by sending a POST request to: `/api/fb_auth` with the following parameters:
+
+`{ 'accessToken': 'value' }`
+
+with the value being a facebook access token.
+
+
+The response will contain an authentification token as well as the user profile:
+
+```
+{
+    'token': 'value',
+    'user': { user_instance }
+}
+```
+
+Then to make authentificated requests using postman, make sure to include the following header:
+
+`Authorization: Token <YOUR_TOKEN>`
+
+The token is stored on the frontend's localStorage such as to preserve user sessions.
+
+#### To test you are authentificated properly, send a GET request to:
+`/api/auth_health`
+
+You should see a similar response:
+
+```
+{
+    "status": "user is authentificated",
+    "username": "d4c2975740c44f5598ed68c59ed5cf5a"
+}
+```
+
 # DB With Docker
 
 Install Docker [here](https://www.docker.com/products/docker-desktop)
@@ -119,4 +158,3 @@ Or you can also use the container to login:
 `docker exec -it barter_db mysql -uadmin -pdzalekaxDf0JRN9VTPLI9JyvimB`
 
 Note: there also is a root user, its password is set within the .env file.
-

@@ -2,6 +2,7 @@ import { Module } from "vuex";
 import { RootState, UserState } from "@/types/stores";
 import { ROUTE_NAMES, router } from "@/router";
 import axios from "@/shared/axios";
+import { User } from "@/types/User";
 
 export enum UserActions {
   LOGIN = "LOGIN",
@@ -12,20 +13,20 @@ export enum UserActions {
 const userStore: Module<UserState, RootState> = {
   namespaced: true,
   state: {
-    user: { name: "" },
-    isLoggedIn: false, // TODO load JWT from local storage
+    user: undefined,
     error: "",
-    auth: undefined,
+    token: localStorage.getItem('token') ?? undefined,
   },
   mutations: {
-    [UserActions.LOGIN](state: UserState, payload: fb.AuthResponse) {
-      console.log(payload);
-      state.isLoggedIn = true;
-      state.auth = payload; // TODO : pass tokens to server
+    [UserActions.LOGIN](state: UserState, payload: { user: User, token: string }) {
+      localStorage.setItem('token', payload.token);
+      state.user = payload.user;
+      state.token = payload.token;
     },
     [UserActions.LOG_OUT](state: UserState) {
-      state.isLoggedIn = false;
-      state.auth = undefined;
+      state.user = undefined;
+      state.token = undefined;
+      localStorage.setItem('token', '');
     },
     [UserActions.ERROR_LOGIN](state: UserState, error: string) {
       state.error = error;
@@ -35,20 +36,30 @@ const userStore: Module<UserState, RootState> = {
     logout({ commit }) {
       commit(UserActions.LOG_OUT);
     },
-    async login({ commit }, payload: fb.AuthResponse) {
-      const resp = await axios.post('auth', {accessToken: payload.accessToken});
-      console.log(resp);
-        // TODO - get email from facebook
-        commit(UserActions.LOGIN, payload);
+    async fbLogin({ commit }, payload: fb.AuthResponse) {
+      const { data } = await axios.post('fb_auth', { accessToken: payload.accessToken });
+      // TODO - get email from facebook if possible
+      commit(UserActions.LOGIN, { user: data['user'], token: data['token'] });
+      router.push({ name: ROUTE_NAMES.HOME });
+    },
+    async auth({ commit }, payload: { username: string, password: string }) {
+      try {
+        const { data, status } = await axios.post('auth', payload);
+        commit(UserActions.LOGIN, { user: data['user'], token: data['token'] });
         router.push({ name: ROUTE_NAMES.HOME });
+      } catch (err: any) {
+        commit(UserActions.ERROR_LOGIN, { error: 'No user match the provided credentials' });
+      }
     },
     errorLogin({ commit }) {
       commit(UserActions.ERROR_LOGIN, { error: "Facebook login failed!" });
     },
   },
   getters: {
-    isLoggedIn: (state) => state.isLoggedIn,
+    isLoggedIn: (state) => !!state.token,
+    user: (state) => state.user,
     error: (state) => state.error,
+    token: (state) => state.token ?? ''
   },
 };
 

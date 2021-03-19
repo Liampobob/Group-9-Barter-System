@@ -4,11 +4,56 @@
       <div class="container">
         <div class="columns is-centered">
           <div class="column is-5-tablet is-4-desktop is-3-widescreen">
-            <div class="has-text-centered">
-              <button class="button is-info" @click="logInWithFacebook">
-                <i class="fab fa-facebook-f mr-1"></i>
-                Login with Facebook
-              </button>
+            <div class="box has-text-centered">
+              <div class="field">
+                <label class="label">Username</label>
+                <div class="control has-icons-left">
+                  <input
+                    class="input"
+                    type="text"
+                    placeholder="Username"
+                    v-model="username"
+                  />
+                  <span class="icon is-small is-left">
+                    <i class="fas fa-user"></i>
+                  </span>
+                </div>
+              </div>
+              <div class="field">
+                <label class="label">Password</label>
+                <div class="control has-icons-left">
+                  <input
+                    class="input"
+                    type="password"
+                    placeholder="Password"
+                    v-model="password"
+                  />
+                  <span class="icon is-small is-left">
+                    <i class="fas fa-key"></i>
+                  </span>
+                </div>
+              </div>
+              <div v-if="errors.length" class="mb-3">
+                <article class="message is-danger">
+                  <div class="message-header">
+                    <p v-for="error of errors" v-bind:key="error">
+                      {{ error }}
+                    </p>
+                  </div>
+                </article>
+              </div>
+              <div class="buttons are-medium">
+                <button class="button is-grey" @click="login">
+                  <i class="fas fa-sign-in-alt mr-1"></i>
+                  Login
+                </button>
+              </div>
+              <div class="buttons are-medium">
+                <button class="button is-info" @click="logInWithFacebook">
+                  <i class="fab fa-facebook-f mr-1"></i>
+                  Login with Facebook
+                </button>
+              </div>
               <p class="help is-danger is-size-6">{{ error?.error }}</p>
             </div>
           </div>
@@ -32,14 +77,33 @@ import store from "@/store";
   },
 })
 export default class Login extends Vue {
+  username = "";
+  password = "";
+  errors: string[] = [];
+
+  async login() {
+    this.errors = [];
+    if (!this.username) {
+      this.errors.push("username cannot be empty");
+    }
+    if (!this.password) {
+      this.errors.push("password cannot be empty");
+    }
+    if (this.errors.length === 0) {
+      const username = this.username.trim();
+      const password = this.password.trim();
+      store.dispatch("userStore/auth", { username, password });
+    }
+  }
+
   async logInWithFacebook() {
     window.FB.login(
-      function(response: any) {
+      function (response: any) {
         if (!response.authResponse) {
           store.dispatch("userStore/errorLogin");
           return;
         }
-        store.dispatch("userStore/login", response.authResponse);
+        store.dispatch("userStore/fbLogin", response.authResponse);
       },
       { scope: "email" }
     );
@@ -47,7 +111,7 @@ export default class Login extends Vue {
   }
 
   async initFacebook() {
-    window.fbAsyncInit = function() {
+    window.fbAsyncInit = function () {
       window.FB.init({
         appId: "774102783534474", //You will need to change this
         cookie: true, // This is important, it's not enabled by default
@@ -57,11 +121,12 @@ export default class Login extends Vue {
       });
 
       // Automatically log the user in from Facebook if the facebok login session is still open
-      window.FB.getLoginStatus(function(response: any) {
-        if (response.authResponse) {
-          store.dispatch("userStore/login", response.authResponse);
-        }
-      });
+      // uncomment to enable
+      // window.FB.getLoginStatus(function (response: any) {
+      //   if (response.authResponse) {
+      //     store.dispatch("userStore/fbLogin", response.authResponse);
+      //   }
+      // });
     };
   }
 

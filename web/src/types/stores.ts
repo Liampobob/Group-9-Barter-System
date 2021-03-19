@@ -1,14 +1,13 @@
 import { User } from "./User";
 
-export interface RootState {}
+export interface RootState { }
 
 export interface SampleState {
-  user: User;
+  user: User | undefined;
 }
 
 export interface UserState {
-  user: User;
-  auth: fb.AuthResponse | undefined;
-  isLoggedIn: boolean;
+  user?: User;
+  token?: string;
   error: String;
 }

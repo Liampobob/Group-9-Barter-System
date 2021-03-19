@@ -1,10 +1,13 @@
 from django.urls import path
 
-from api import api
+from api.api_views.auth import FBAuthAPI, AuthAPI
+from api.api_views.health import HealthAPI, AuthHealthAPI
+from api.api_views.business import BusinessAPI
 
 urlpatterns = [
-    path('test', api.test, name='test'),
-    path('status', api.status, name='status'),
-    path('auth', api.auth, name='auth'),
-    path('create_business', api.create_business, name='create_business'),
+    path('auth', AuthAPI.as_view(), name='auth'),
+    path('fb_auth', FBAuthAPI.as_view(), name='fb_auth'),
+    path('health', HealthAPI.as_view(), name='health'),
+    path('auth_health', AuthHealthAPI.as_view(), name='health_api'),
+    path('business', BusinessAPI.as_view(), name='business_api')
 ]
