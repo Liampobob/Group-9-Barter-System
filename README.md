@@ -158,7 +158,3 @@ Or you can also use the container to login:
 `docker exec -it barter_db mysql -uadmin -pdzalekaxDf0JRN9VTPLI9JyvimB`
 
 Note: there also is a root user, its password is set within the .env file.
-
-```
-
-```
