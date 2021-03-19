@@ -103,7 +103,7 @@ export default class Login extends Vue {
           store.dispatch("userStore/errorLogin");
           return;
         }
-        store.dispatch("userStore/login", response.authResponse);
+        store.dispatch("userStore/fbLogin", response.authResponse);
       },
       { scope: "email" }
     );
@@ -121,11 +121,12 @@ export default class Login extends Vue {
       });
 
       // Automatically log the user in from Facebook if the facebok login session is still open
-      window.FB.getLoginStatus(function (response: any) {
-        if (response.authResponse) {
-          // store.dispatch("userStore/fbLogin", response.authResponse);
-        }
-      });
+      // uncomment to enable
+      // window.FB.getLoginStatus(function (response: any) {
+      //   if (response.authResponse) {
+      //     store.dispatch("userStore/fbLogin", response.authResponse);
+      //   }
+      // });
     };
   }
 
