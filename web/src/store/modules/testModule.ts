@@ -15,7 +15,7 @@ export enum SampleActions {
 const testModule: Module<SampleState, RootState> = {
   namespaced: true,
   state: {
-    user: {name: ''}
+    user: undefined
   },
   mutations: {
     [SampleActions.CHANGE_NAME](state: SampleState, user: User) {
@@ -24,7 +24,6 @@ const testModule: Module<SampleState, RootState> = {
   },
   actions: {
     changeName({commit, state}) {
-      console.log(state.user.name);
       commit(SampleActions.CHANGE_NAME, {name: 'hello!'});
     }
   },

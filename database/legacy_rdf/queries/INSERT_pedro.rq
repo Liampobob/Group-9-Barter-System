@@ -6,7 +6,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 # insert a new worker into the DB
 INSERT DATA {
     bard:user7556 a barc:Worker ;
-                  barp:id "7556"^^xsd:float ;
+                  barp:id 7556 ;
                   barp:skillTag "electrician" ;
                   barp:name "Pedro Castillo" ;
                   barp:username "pcastillo" ;
@@ -15,6 +15,6 @@ INSERT DATA {
                   barp:primaryLanguage "Arabic" ;
                   barp:location bard:loc7556 .
     bard:loc7556  a barc:Location ;
-                  barp:latitude "3.722455"^^xsd:float;
-				  barp:longitude "34.862811"^^xsd:float .
+                  barp:latitude 3.722455;
+				  barp:longitude 34.862811 .
 }

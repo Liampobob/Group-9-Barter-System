@@ -5,3 +5,4 @@ entrypoints==0.3
 pylint==2.7.1
 requests==2.25.1
 sqlparse==0.4.1
+mysqlclient==2.0.3
