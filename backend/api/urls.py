@@ -13,6 +13,6 @@ urlpatterns = [
     path('auth_health', AuthHealthAPI.as_view(), name='health_api'),
     path('business', BusinessAPI.as_view(), name='business_api'),
     path('search', SearchAPI.as_view(), name='search_api'),
-    path('addJobs', CreateJobsAPI.as_view(), name='add_jobs')
+    path('addJobs', CreateJobsAPI.as_view(), name='add_jobs'),
     path('worker', WorkerAPI.as_view(), name='worker_api')
 ]
