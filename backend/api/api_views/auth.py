@@ -6,6 +6,7 @@ from query.models import User
 from django.contrib.auth import login
 from rest_framework.authtoken.models import Token
 from rest_framework import generics
+from api.serializers import UserSerializer
 import requests
 import json
 import uuid
@@ -77,13 +78,48 @@ class AuthAPI(generics.CreateAPIView):
                 {'error': 'Valid Username and Password must be provided'},
                 status=status_codes.HTTP_400_BAD_REQUEST)
 
-        user = db_helper.get_by_username_password(username=username, password=password)
+        user = db_helper.get_by_username_password(
+            username=username, password=password)
 
         if user == None:
-            return JsonResponse({'error': 'user not found'}, status=status_codes.HTTP_401_UNAUTHORIZED)            
+            return JsonResponse({'error': 'user not found'}, status=status_codes.HTTP_401_UNAUTHORIZED)
 
         # Set auth cookie to request & get / generate auth token
         login(request, user)
         token, _ = Token.objects.get_or_create(user=user)
         return JsonResponse({'user': user.to_dict(), 'token': token.key},
                             status=status_codes.HTTP_200_OK)
+
+
+class RegisterAPI(generics.CreateAPIView):
+    """Auth API"""
+    permission_classes = []  # don't need auth
+
+    @csrf_exempt
+    def post(self, request):
+        data = json.loads(request.body)
+        serializer = UserSerializer(data=data)
+        if not serializer.is_valid():
+            return JsonResponse({'errors': serializer.errors},
+                                status=status_codes.HTTP_400_BAD_REQUEST)
+
+        clean_data = serializer.validated_data
+
+        try:
+            User.objects.get(username=clean_data['username'])
+            return JsonResponse({'errors': 'Username already taken!'},
+                                status=status_codes.HTTP_403_FORBIDDEN)
+        except User.DoesNotExist:
+            pass
+
+        model = User(username=clean_data['username'],
+                     password=clean_data['password'],
+                     name=clean_data['name'],
+                     phone_number=clean_data['phone_number'],
+                     latitude=clean_data['latitude'],
+                     longitude=clean_data['longitude'],
+                     bio=clean_data['bio'],
+                     isBusiness=False)
+
+        model.save()
+        return JsonResponse({'user': model.to_dict()}, status=status_codes.HTTP_200_OK)

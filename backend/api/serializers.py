@@ -1,9 +1,40 @@
 from rest_framework import serializers
+from query.models import User
 import json
 import re
 
 sorted_days_of_week = ['monday', 'tuesday', 'wednesday',
                        'thursday', 'friday', 'saturday', 'sunday']
+
+
+class UserSerializer(serializers.Serializer):
+    name = serializers.CharField(required=True, max_length=128)
+    phone_number = serializers.CharField(required=True, max_length=128)
+    latitude = serializers.FloatField(required=False, default=None)
+    longitude = serializers.FloatField(required=False, default=None)
+    bio = serializers.CharField(required=False, max_length=256, default='')
+    username = serializers.CharField(required=True, max_length=128)
+    password = serializers.CharField(required=True, max_length=128)
+
+    def validate(self, data):
+        """
+        Check that the model is valid.
+        """
+        if not data['username']:
+            raise serializers.ValidationError("username cannot be empty")
+
+        data['username'] = re.sub(
+            r"\s", "", data['username']).lower()
+
+        if not data['password']:
+            raise serializers.ValidationError("password cannot be empty")
+
+        if not data['name']:
+            raise serializers.ValidationError("name cannot be empty")
+        if not data['phone_number']:
+            raise serializers.ValidationError("phone_number cannot be empty")
+
+        return data
 
 
 class BusinessSerializer(serializers.Serializer):
