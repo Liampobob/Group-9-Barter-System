@@ -9,6 +9,7 @@ export enum ROUTE_NAMES {
   SEARCH = "SEARCH",
   LISTINGS = "LISTINGS",
   PROFILE = "PROFILE",
+  REGISTER = "REGISTER"
 }
 
 /*
@@ -35,6 +36,12 @@ const routes: Array<RouteRecordRaw> = [
     name: ROUTE_NAMES.LOGIN,
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/Login.vue"),
+  },
+  {
+    path: "/register",
+    name: ROUTE_NAMES.REGISTER,
+    component: () =>
+      import(/* webpackChunkName: "register" */ "../views/Register.vue"),
   },
   {
     path: "/search",

@@ -122,4 +122,9 @@ class RegisterAPI(generics.CreateAPIView):
                      isBusiness=False)
 
         model.save()
-        return JsonResponse({'user': model.to_dict()}, status=status_codes.HTTP_200_OK)
+
+        # Set auth cookie to request & get / generate auth token
+        login(request, model)
+        token, _ = Token.objects.get_or_create(user=model)
+        return JsonResponse({'user': model.to_dict(), 'token': token.key},
+                            status=status_codes.HTTP_200_OK)

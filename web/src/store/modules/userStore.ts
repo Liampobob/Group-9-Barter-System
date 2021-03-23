@@ -54,6 +54,17 @@ const userStore: Module<UserState, RootState> = {
     errorLogin({ commit }) {
       commit(UserActions.ERROR_LOGIN, { error: "Facebook login failed!" });
     },
+    async register({ commit }, payload: { username: string, password: string, phone_number: string, bio: string, name: string }) {
+      try {
+        const { data } = await axios.post('register', payload);
+        commit(UserActions.LOGIN, { user: data['user'], token: data['token'] });
+        router.push({ name: ROUTE_NAMES.HOME });
+        return null;
+      } catch (err: any) {
+        commit(UserActions.ERROR_LOGIN, { error: 'No user match the provided credentials' });
+        return { errors: err.message }
+      }
+    }
   },
   getters: {
     isLoggedIn: (state) => !!state.token,

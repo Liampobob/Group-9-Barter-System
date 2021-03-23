@@ -55,6 +55,9 @@
                 </button>
               </div>
               <p class="help is-danger is-size-6">{{ error?.error }}</p>
+              <router-link class="has-text-link" :to="{ path: '/register' }"
+                >Register</router-link
+              >
             </div>
           </div>
         </div>
