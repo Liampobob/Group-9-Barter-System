@@ -2,7 +2,7 @@ from django.http import JsonResponse
 from rest_framework import status as status_codes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import generics
-from api.serializers import WorkerSerializer
+from api.serializers import BusinessSerializer
 from query.models import Business
 import json
 
@@ -13,7 +13,7 @@ class BusinessAPI(generics.CreateAPIView):
 
     def post(self, request):
         data = json.loads(request.body)
-        serializer = WorkerSerializer(data=data)
+        serializer = BusinessSerializer(data=data)
         if serializer.is_valid():
             clean_data = serializer.validated_data
             model = Business(user_id=request.user.id, business_name=clean_data['business_name'], working_days=clean_data['working_days'], work_tags=clean_data['work_tags'],

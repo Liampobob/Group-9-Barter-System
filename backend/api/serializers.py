@@ -6,7 +6,7 @@ sorted_days_of_week = ['monday', 'tuesday', 'wednesday',
                        'thursday', 'friday', 'saturday', 'sunday']
 
 
-class WorkerSerializer(serializers.Serializer):
+class BusinessSerializer(serializers.Serializer):
     business_name = serializers.CharField(required=True, max_length=128)
     working_days = serializers.CharField(required=True, max_length=128)
     work_tags = serializers.CharField(required=True, max_length=256)
