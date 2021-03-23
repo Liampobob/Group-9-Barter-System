@@ -77,12 +77,6 @@ import store from "@/store";
   },
 })
 export default class Login extends Vue {
-<<<<<<< HEAD
-
-  async loginDefaultPathway() {
-    // API call to backend to verify username and password.
-    //Store relevent user info (user id etc)
-=======
   username = "";
   password = "";
   errors: string[] = [];
@@ -100,7 +94,6 @@ export default class Login extends Vue {
       const password = this.password.trim();
       store.dispatch("userStore/auth", { username, password });
     }
->>>>>>> dd8246ee983e826c978b359b058a4ce97f958d2e
   }
 
   async logInWithFacebook() {
