@@ -44,10 +44,10 @@ const userStore: Module<UserState, RootState> = {
     },
     async auth({ commit }, payload: { username: string, password: string }) {
       try {
-        const { data, status } = await axios.post('auth', payload);
+        const { data } = await axios.post('auth', payload);
         commit(UserActions.LOGIN, { user: data['user'], token: data['token'] });
         router.push({ name: ROUTE_NAMES.HOME });
-      } catch (err: any) {
+      } catch (err) {
         commit(UserActions.ERROR_LOGIN, { error: 'No user match the provided credentials' });
       }
     },
@@ -60,7 +60,7 @@ const userStore: Module<UserState, RootState> = {
         commit(UserActions.LOGIN, { user: data['user'], token: data['token'] });
         router.push({ name: ROUTE_NAMES.HOME });
         return null;
-      } catch (err: any) {
+      } catch (err) {
         commit(UserActions.ERROR_LOGIN, { error: 'No user match the provided credentials' });
         return { errors: err.message }
       }

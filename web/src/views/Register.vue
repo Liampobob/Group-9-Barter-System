@@ -90,7 +90,7 @@ export default class Register extends Vue {
   name = "";
   phone = "";
   bio = "";
-  errors = [];
+  errors: string[] = [];
 
   async register() {
     this.errors = [];
@@ -111,6 +111,7 @@ export default class Register extends Vue {
       const username = this.username.trim();
       const password = this.password.trim();
       const name = this.name.trim();
+      /* eslint-disable @typescript-eslint/camelcase */
       const phone_number = this.phone.trim();
       const bio = this.bio.trim();
       const resp = await store.dispatch("userStore/register", {
