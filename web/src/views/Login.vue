@@ -121,22 +121,12 @@ export default class Login extends Vue {
       });
 
       // Automatically log the user in from Facebook if the facebok login session is still open
-<<<<<<< HEAD
-      window.FB.getLoginStatus(function(response: any) {
-        if (response.authResponse) {
-          // console.log(response.authResponse);
-          store.dispatch("userStore/login", response.authResponse);
-        }
-      });
-      console.log("done");
-=======
       // uncomment to enable
       // window.FB.getLoginStatus(function (response: any) {
       //   if (response.authResponse) {
       //     store.dispatch("userStore/fbLogin", response.authResponse);
       //   }
       // });
->>>>>>> dd8246ee983e826c978b359b058a4ce97f958d2e
     };
   }
 

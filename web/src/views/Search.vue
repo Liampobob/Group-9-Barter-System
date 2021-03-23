@@ -5,11 +5,49 @@
         <div class="columns is-centered">
           <div class="column is-5-tablet is-4-desktop is-3-widescreen">
             <div class="has-text-centered">
+              <div class="dropdown">
+                <div class="dropdown-trigger">
+                  <button class="button" aria-haspopup="true" aria-controls="dropdown-menu" @click="setDropdown()">
+                    <span>{{selectedItem}}</span>
+                    <span class="icon is-small">
+                      <i class="fas fa-angle-down" aria-hidden="true"></i>
+                    </span>
+                  </button>
+                </div>
+                <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                  <div class="dropdown-content">
+                    <div class="dropdown-item">
+                      <button class="button" @click="() => {selectedItem = 'All';}">
+                        All
+                      </button>
+                    </div>
+                    <div class="dropdown-item">
+                      <button class="button" @click="() => {selectedItem = 'Jobs';}">
+                        Jobs
+                      </button>
+                    </div>
+                    <div class="dropdown-item">
+                      <button class="button" @click="() => {selectedItem = 'Classes';}">
+                        Classes
+                      </button>
+                    </div>
+                    <div class="dropdown-item">
+                      <button class="button" @click="() => {selectedItem = 'To Sell';}">
+                        To Sell
+                      </button>
+                    </div>
+                    <div class="dropdown-item">
+                      <button class="button" @click="() => {selectedItem = 'To Buy';}">
+                        To Buy
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
               <input ref="searchBar is-medium is-rounded  " class="input" type="text" v-model="searchTerms" placeholder="Search for listings">
               <button class="button default-login" @click="searchForListings">
                 Search
               </button>
-
             </div>
           </div>
         </div>
@@ -20,34 +58,30 @@
 
 <script lang="ts">
 
-import { Vue, Component } from "vue-class-component";
-import { Listing } from "@/types/Listing";
+import { Vue } from "vue-class-component";
+import store from "@/store";
 
-@Component
 export default class Search extends Vue {
   terms = '';
-
   get searchTerms() {return this.terms;}
-
   set searchTerms(terms) {this.terms = terms;}
+
+  dropdownItem = 'All';
+  get selectedItem() {return this.dropdownItem;}
+  set selectedItem(newSelectedItem: string) {this.dropdownItem = newSelectedItem; this.setDropdown()}
+
+  setDropdown() {
+    const dropdown = document.querySelector('.dropdown');
+    console.log(dropdown);
+    if(dropdown != null)
+      dropdown.classList.toggle('is-active');
+  }
 
   async searchForListings() {
     // API call to backend to get listings
 
-    const tmpListing : Listing = {
-      title: this.terms,
-      description: this.terms,
-    }
-    const tmpListing2 : Listing = {
-      title: 'Job2',
-      description: 'Description2',
-    }
-    const tmpListing3 : Listing = {
-      title: 'Job3',
-      description: 'Description3',
-    }
     //store listing
-    this.$store.dispatch("listingsStore/setListings", [tmpListing,tmpListing2,tmpListing3]);
+    store.dispatch("listingsStore/searchListings", {terms: this.terms, category:this.dropdownItem});
   }
 }
 </script>

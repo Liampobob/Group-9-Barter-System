@@ -41,6 +41,22 @@ class User(auth.models.User):
         }
         return d
 
+class Listing(models.Model):
+    title = models.CharField(max_length=80, null=False)
+    category = models.CharField(max_length=12, null=False)
+    description = models.CharField(max_length=1024, null=False)
+
+    def __str__(self):
+        return self.title
+
+    def to_dict(self):
+        d = {
+            'title': self.title,
+            'description': self.description,
+            'category': self.category
+        }
+        return d
+
 
 """
 # not part of MVP
