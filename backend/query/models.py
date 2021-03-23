@@ -58,6 +58,38 @@ class Listing(models.Model):
         return d
 
 
+class BusinessManager(models.Manager):
+    def get_businesses(self):
+        return super().get_queryset()
+
+    def get_user_business(self, user_id):
+        return super().get_queryset().filter(user_id=user_id)
+
+
+class Business(models.Model):
+    user_id = models.IntegerField(null=False)
+    business_name = models.CharField(null=True, max_length=128)
+    working_days = models.CharField(null=True, max_length=128)
+    work_tags = models.CharField(null=True, max_length=256)
+    description = models.CharField(null=True, max_length=256)
+    contact = models.CharField(null=True, max_length=128)
+    start_time = models.IntegerField(null=True)
+    end_time = models.IntegerField(null=True)
+
+    def to_dict(self):
+        d = {
+            'user_id': self.user_id,
+            'business_name': self.business_name,
+            'working_days': self.working_days,
+            'work_tags': self.work_tags,
+            'description': self.description,
+            'contact': self.contact,
+            'start_time': self.start_time,
+            'end_time': self.end_time
+        }
+        return d
+
+
 """
 # not part of MVP
 class JobManager(models.Manager):

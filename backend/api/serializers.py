@@ -1,12 +1,16 @@
 from rest_framework import serializers
 import json
+import re
 
-class WorkerSerializer(serializers.Serializer):
-    name = serializers.CharField(required=True, max_length=128)
+sorted_days_of_week = ['monday', 'tuesday', 'wednesday',
+                       'thursday', 'friday', 'saturday', 'sunday']
+
+
+class BusinessSerializer(serializers.Serializer):
     business_name = serializers.CharField(required=True, max_length=128)
-    #working_days = serializers.CharField(required=True, many=True, )
-    #work_tags = serializers.CharField(required=True, max_length=128)
-    description = serializers.CharField(required=True, max_length=128)
+    working_days = serializers.CharField(required=True, max_length=128)
+    work_tags = serializers.CharField(required=True, max_length=256)
+    description = serializers.CharField(required=True, max_length=256)
     contact = serializers.CharField(required=True, max_length=128)
     start_time = serializers.IntegerField(required=True, min_value=0)
     end_time = serializers.IntegerField(required=True, min_value=0)
@@ -15,8 +19,6 @@ class WorkerSerializer(serializers.Serializer):
         """
         Check that the model is valid.
         """
-        if not data['name']:
-            raise serializers.ValidationError("Name cannot be empty")
         if not data['business_name']:
             raise serializers.ValidationError("business_name cannot be empty")
         if not data['description']:
@@ -27,6 +29,10 @@ class WorkerSerializer(serializers.Serializer):
             raise serializers.ValidationError("start_time cannot be empty")
         if type(data['end_time']) != int:
             raise serializers.ValidationError("end_time cannot be empty")
+        if not data['working_days']:
+            raise serializers.ValidationError("working_days cannot be empty")
+        if not data['work_tags']:
+            raise serializers.ValidationError("work_tags cannot be empty")
         """
         Check that the start date and the end date are valid (<24).
         """
@@ -39,7 +45,27 @@ class WorkerSerializer(serializers.Serializer):
         """
         Check that the start date is before the end date.
         """
-        if data['start_time'] > data['end_time']:
+        if data['start_time'] >= data['end_time']:
+            raise serializers.ValidationError(
+                "start_time must be before end_time")
+
+        """
+        Check that the working_days is a csv of days.
+        """
+        working_days = re.sub(
+            r"\s", "", data['working_days']).lower().split(",")
+        working_days = set(working_days)  # keep unique days
+        for day in working_days:
+            if day not in sorted_days_of_week:
+                raise serializers.ValidationError(
+                    "Day: %s must be a valid day. Field should be a comma separated list of days" % (day))
+        if len(working_days) > 7:
+            raise serializers.ValidationError(
+                "working_days cannot be more than 7 days")
+        data['working_days'] = ','.join(
+            sorted(working_days, key=sorted_days_of_week.index))
+
+        if data['start_time'] >= data['end_time']:
             raise serializers.ValidationError(
                 "start_time must be before end_time")
         return data

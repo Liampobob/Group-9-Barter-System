@@ -87,6 +87,7 @@ To start the backend, navigate to /backend
 `python manage.py runserver`
 
 ## Sending authentificated requests:
+
 You can generate an auth token by sending a POST request to: `/api/auth` with the following parameters:
 
 `{ 'username': 'value', 'password': 'value' }`
@@ -96,7 +97,6 @@ You can also generate an auth token by sending a POST request to: `/api/fb_auth`
 `{ 'accessToken': 'value' }`
 
 with the value being a facebook access token.
-
 
 The response will contain an authentification token as well as the user profile:
 
@@ -114,6 +114,7 @@ Then to make authentificated requests using postman, make sure to include the fo
 The token is stored on the frontend's localStorage such as to preserve user sessions.
 
 #### To test you are authentificated properly, send a GET request to:
+
 `/api/auth_health`
 
 You should see a similar response:
@@ -158,3 +159,27 @@ Or you can also use the container to login:
 `docker exec -it barter_db mysql -uadmin -pdzalekaxDf0JRN9VTPLI9JyvimB`
 
 Note: there also is a root user, its password is set within the .env file.
+
+## Backend API Details
+
+#### GET A User Profile:
+
+Sending a GET request to `http://localhost:8000/api/worker?username<user>` will return the user profile for the specified username.
+
+#### Business Creation API:
+
+Sending a POST request to `http://localhost:8000/api/business` with the following body:
+
+```
+{
+    "business_name": "My Business!", // Name for the business
+    "working_days": "monday, tuesday, sunday", // A comma separated list of days the business is open
+    "work_tags": "business tes ", // currently just a text field
+    "description": "My Business Description", // business description
+    "contact": "0627111111 or petits@tcd.ie", // text field for contact details
+    "start_time": 8, // opening time for the business (0 - 24)
+    "end_time": 20 // closing time for the business (0 - 24)
+}
+```
+
+Will register a business for the logged in user.
