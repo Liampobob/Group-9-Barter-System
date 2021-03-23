@@ -162,6 +162,10 @@ Note: there also is a root user, its password is set within the .env file.
 
 ## Backend API Details
 
+#### GET A User Profile:
+
+Sending a GET request to `http://localhost:8000/api/worker?username<user>` will return the user profile for the specified username.
+
 #### Business Creation API:
 
 Sending a POST request to `http://localhost:8000/api/business` with the following body:
