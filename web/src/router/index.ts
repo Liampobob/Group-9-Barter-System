@@ -1,6 +1,12 @@
 import store from "@/store";
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import Home from "../views/Home.vue";
+import About from "../views/About.vue";
+import Register from "../views/Register.vue";
+import Search from "../views/Search.vue";
+import Worker from "../views/Worker.vue";
+import Profile from "../views/Profile.vue";
+import Listings from "../views/Listings.vue";
 
 export enum ROUTE_NAMES {
   HOME = "HOME",
@@ -9,7 +15,8 @@ export enum ROUTE_NAMES {
   SEARCH = "SEARCH",
   LISTINGS = "LISTINGS",
   PROFILE = "PROFILE",
-  REGISTER = "REGISTER"
+  REGISTER = "REGISTER",
+  WORKER = "WORKER"
 }
 
 /*
@@ -28,39 +35,39 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: "/about",
     name: ROUTE_NAMES.ABOUT,
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/About.vue"),
+    component: () => About,
   },
   {
     path: "/login",
     name: ROUTE_NAMES.LOGIN,
     component: () =>
-      import(/* webpackChunkName: "about" */ "../views/Login.vue"),
+      import(/* webpackChunkName: "login" */ "../views/Login.vue"),
   },
   {
     path: "/register",
     name: ROUTE_NAMES.REGISTER,
-    component: () =>
-      import(/* webpackChunkName: "register" */ "../views/Register.vue"),
+    component: () => Register
   },
   {
     path: "/search",
     name: ROUTE_NAMES.SEARCH,
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/Search.vue"),
+    component: () => Search
   },
   {
     path: "/listings",
     name: ROUTE_NAMES.LISTINGS,
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/Listings.vue"),
+    component: () => Listings
   },
   {
     path: "/profile",
     name: ROUTE_NAMES.PROFILE,
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/Profile.vue"),
+    component: () => Profile
   },
+  {
+    path: "/worker/:username",
+    name: ROUTE_NAMES.WORKER,
+    component: () => Worker
+  }
 ];
 
 export const router = createRouter({

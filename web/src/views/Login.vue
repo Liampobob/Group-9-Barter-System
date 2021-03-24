@@ -72,7 +72,7 @@
 
 import { Options, Vue } from "vue-class-component";
 import { mapGetters } from "vuex";
-import store from "@/store";
+
 @Options({
   components: {},
   computed: {
@@ -95,7 +95,7 @@ export default class Login extends Vue {
     if (this.errors.length === 0) {
       const username = this.username.trim();
       const password = this.password.trim();
-      store.dispatch("userStore/auth", { username, password });
+      this.$store.dispatch("userStore/auth", { username, password });
     }
   }
 
@@ -103,10 +103,10 @@ export default class Login extends Vue {
     window.FB.login(
       function (response: any) {
         if (!response.authResponse) {
-          store.dispatch("userStore/errorLogin");
+          this.$store.dispatch("userStore/errorLogin");
           return;
         }
-        store.dispatch("userStore/fbLogin", response.authResponse);
+        this.$store.dispatch("userStore/fbLogin", response.authResponse);
       },
       { scope: "email" }
     );
@@ -127,7 +127,7 @@ export default class Login extends Vue {
       // uncomment to enable
       // window.FB.getLoginStatus(function (response: any) {
       //   if (response.authResponse) {
-      //     store.dispatch("userStore/fbLogin", response.authResponse);
+      //     this.$store.dispatch("userStore/fbLogin", response.authResponse);
       //   }
       // });
     };
@@ -146,7 +146,7 @@ export default class Login extends Vue {
   }
 
   async mounted() {
-    if (store.getters["userStore/isLoggedIn"]) {
+    if (this.$store.getters["userStore/isLoggedIn"]) {
       // Redirect to home if user is logged in.
       this.$router.push("/");
     }
