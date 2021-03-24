@@ -76,7 +76,7 @@ import store from "@/store";
 @Options({
   components: {},
   computed: {
-    ...mapGetters("userStore", ["error"]),
+    ...mapGetters("userStore", ["error", "token"]),
   },
 })
 export default class Login extends Vue {
@@ -146,6 +146,10 @@ export default class Login extends Vue {
   }
 
   async mounted() {
+    if (store.getters["userStore/isLoggedIn"]) {
+      // Redirect to home if user is logged in.
+      this.$router.push("/");
+    }
     await this.loadFacebookSDK(document, "script", "facebook-jssdk");
     await this.initFacebook();
   }

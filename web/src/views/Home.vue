@@ -5,6 +5,7 @@
       Execute a store action
     </button>
     <button class="button is-primary" v-on:click="call()">Call backend</button>
+    <button class="button is-secondary" v-on:click="signout()">Sign out</button>
   </div>
 </template>
 
@@ -35,5 +36,9 @@ import axios from "@/shared/axios";
     },
   },
 })
-export default class Home extends Vue {}
+export default class Home extends Vue {
+  signout() {
+    this.$store.dispatch("userStore/logout");
+  }
+}
 </script>

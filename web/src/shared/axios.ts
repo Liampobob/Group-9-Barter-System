@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export default axios.create({
+const instance = axios.create({
   baseURL: "http://localhost:8000/api/",
   headers: {
     "Content-type": "application/json",
@@ -16,9 +16,18 @@ axios.defaults.xsrfCookieName = 'csrftoken'
 axios.defaults.xsrfHeaderName = 'X-CSRFToken'
 axios.defaults.withCredentials = true
 
+// Set the AUTH token for any authentificated request
+instance.interceptors.request.use(function (config) {
+  const token = localStorage.getItem('token');
+  config.headers.Authorization = token ? `Token ${token}` : '';
+  return config;
+});
+
 const auth_headers = {
   "Content-type": "application/json",
   "Authorization": `Token ${localStorage.getItem('token')}`
 }
+
+export default instance;
 
 export { auth_headers };

@@ -26,6 +26,7 @@ const userStore: Module<UserState, RootState> = {
     [UserActions.LOG_OUT](state: UserState) {
       state.user = undefined;
       state.token = undefined;
+      state.error = "";
       localStorage.setItem('token', '');
     },
     [UserActions.ERROR_LOGIN](state: UserState, error: string) {
@@ -35,6 +36,7 @@ const userStore: Module<UserState, RootState> = {
   actions: {
     logout({ commit }) {
       commit(UserActions.LOG_OUT);
+      router.push({ name: ROUTE_NAMES.LOGIN });
     },
     async fbLogin({ commit }, payload: fb.AuthResponse) {
       const { data } = await axios.post('fb_auth', { accessToken: payload.accessToken });
