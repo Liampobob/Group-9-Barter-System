@@ -35,7 +35,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: "/about",
     name: ROUTE_NAMES.ABOUT,
-    component: () => About,
+    component: About,
   },
   {
     path: "/login",
@@ -46,27 +46,27 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: "/register",
     name: ROUTE_NAMES.REGISTER,
-    component: () => Register
+    component: Register
   },
   {
     path: "/search",
     name: ROUTE_NAMES.SEARCH,
-    component: () => Search
+    component: Search
   },
   {
     path: "/listings",
     name: ROUTE_NAMES.LISTINGS,
-    component: () => Listings
+    component: Listings
   },
   {
     path: "/profile",
     name: ROUTE_NAMES.PROFILE,
-    component: () => Profile
+    component: Profile
   },
   {
     path: "/worker/:username",
     name: ROUTE_NAMES.WORKER,
-    component: () => Worker
+    component: Worker
   }
 ];
 

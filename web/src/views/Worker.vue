@@ -62,7 +62,7 @@ export default class Worker extends Vue {
         username: this.username,
       });
     }
-    if (resp["error"]) {
+    if (resp?.["error"]) {
       this.error = resp["error"];
     }
   }
