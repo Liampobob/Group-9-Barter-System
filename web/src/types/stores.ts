@@ -11,8 +11,9 @@ export interface UserState {
   user?: User;
   token?: string;
   error: String;
+  selectedUser?: User;
 }
 
-export interface ListingsState{
+export interface ListingsState {
   listings: Listing[];
 }

@@ -8,6 +8,7 @@ export enum UserActions {
   LOGIN = "LOGIN",
   LOG_OUT = "LOG_OUT",
   ERROR_LOGIN = "ERROR_LOGIN",
+  LOAD_USER = "LOAD_USER"
 }
 
 const userStore: Module<UserState, RootState> = {
@@ -16,6 +17,7 @@ const userStore: Module<UserState, RootState> = {
     user: undefined,
     error: "",
     token: localStorage.getItem('token') ?? undefined,
+    selectedUser: undefined
   },
   mutations: {
     [UserActions.LOGIN](state: UserState, payload: { user: User, token: string }) {
@@ -31,6 +33,9 @@ const userStore: Module<UserState, RootState> = {
     },
     [UserActions.ERROR_LOGIN](state: UserState, error: string) {
       state.error = error;
+    },
+    [UserActions.LOAD_USER](state: UserState, payload: User) {
+      state.selectedUser = payload;
     },
   },
   actions: {
@@ -66,13 +71,22 @@ const userStore: Module<UserState, RootState> = {
         commit(UserActions.ERROR_LOGIN, { error: 'No user match the provided credentials' });
         return { errors: err.message }
       }
+    },
+    async getWorker({ commit }, payload: { username: string }) {
+      try {
+        const { data } = await axios.get(`worker?username=${payload.username}`);
+        commit(UserActions.LOAD_USER, data['user']);
+      } catch (err) {
+        return {error: 'An error occured.'}
+      }
     }
   },
   getters: {
     isLoggedIn: (state) => !!state.token,
     user: (state) => state.user,
     error: (state) => state.error,
-    token: (state) => state.token ?? ''
+    token: (state) => state.token ?? '',
+    selectedUser: (state) => state.selectedUser
   },
 };
 
