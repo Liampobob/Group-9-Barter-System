@@ -41,7 +41,6 @@
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
-import { User } from "@/types/User";
 
 @Options({
   components: {},
@@ -56,9 +55,10 @@ export default class Worker extends Vue {
   error = "";
 
   async mounted() {
-    this.username = this.$route.params["username"] ?? "";
+    this.username = (this.$route.params["username"] as string) ?? "";
+    let resp;
     if (this.username) {
-      var resp = await this.$store.dispatch("userStore/getWorker", {
+      resp = await this.$store.dispatch("userStore/getWorker", {
         username: this.username,
       });
     }

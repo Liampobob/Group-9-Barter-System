@@ -101,7 +101,7 @@ export default class Login extends Vue {
 
   async logInWithFacebook() {
     window.FB.login(
-      function (response: any) {
+      (response: any) => {
         if (!response.authResponse) {
           this.$store.dispatch("userStore/errorLogin");
           return;
