@@ -16,3 +16,15 @@ class WorkerAPI(generics.CreateAPIView):
         user = User.objects.get(username=username)
         print(user)
         return JsonResponse({'user': user.to_dict()}, status=status_codes.HTTP_200_OK)
+
+class UserAPI(generics.CreateAPIView):
+    """User API Class"""
+    permission_classes = [IsAuthenticated]  # require auth
+
+    def get(self, request):
+        username = request.user.username
+        if not username:
+            return JsonResponse({'error': 'username not found'}, status=status_codes.HTTP_400_BAD_REQUEST)
+        user = User.objects.get(username=username)
+        print(user)
+        return JsonResponse({'user': user.to_dict()}, status=status_codes.HTTP_200_OK)

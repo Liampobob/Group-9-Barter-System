@@ -8,7 +8,8 @@ export enum UserActions {
   LOGIN = "LOGIN",
   LOG_OUT = "LOG_OUT",
   ERROR_LOGIN = "ERROR_LOGIN",
-  LOAD_USER = "LOAD_USER"
+  LOAD_USER = "LOAD_USER",
+  LOAD_ME = "LOAD_ME"
 }
 
 const userStore: Module<UserState, RootState> = {
@@ -24,6 +25,9 @@ const userStore: Module<UserState, RootState> = {
       localStorage.setItem('token', payload.token);
       state.user = payload.user;
       state.token = payload.token;
+    },
+    [UserActions.LOAD_ME](state: UserState, payload: { user: User }) {
+      state.user = payload.user;
     },
     [UserActions.LOG_OUT](state: UserState) {
       state.user = undefined;
@@ -76,6 +80,14 @@ const userStore: Module<UserState, RootState> = {
       try {
         const { data } = await axios.get(`worker?username=${payload.username}`);
         commit(UserActions.LOAD_USER, data['user']);
+      } catch (err) {
+        return {error: 'An error occured.'}
+      }
+    },
+    async loadProfile({commit}) {
+      try {
+        const { data } = await axios.get(`me`);
+        commit(UserActions.LOAD_ME, data);
       } catch (err) {
         return {error: 'An error occured.'}
       }
