@@ -10,8 +10,8 @@ import logging
 
 def test_db(request):
     logger = logging.getLogger('console')
-    s = User(username='sastaffo',
-             password='testpass',
+    s = User(username='username',
+             password='password',
              name='Sarah Stafford-Langan',
              phone_number='0810008989',
              isBusiness=False,

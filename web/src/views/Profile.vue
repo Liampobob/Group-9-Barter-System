@@ -1,9 +1,11 @@
 <template>
-  <div>
-    <div class="columns is-mobile is-centered">
-      <div class="column is-half">
-        <div class="box">
-          <div class="" v-if="selectedUser">
+  <section class="hero is-primary is-fullheight">
+    <div class="hero-body">
+      <div class="container">
+        <div class="columns is-centered">
+          <div class="column is-5-tablet is-4-desktop is-3-widescreen">
+            <div class="box has-text-centered">
+              <div class="" v-if="selectedUser">
             <label class="label">My Profile</label>
             <div class="field">
               <label class="label">Name</label>
@@ -27,11 +29,14 @@
               <p>{{ selectedUser.bio }}</p>
             </div>
           </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  </section>
 </template>
+
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";

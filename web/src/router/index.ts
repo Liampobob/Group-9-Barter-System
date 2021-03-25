@@ -8,7 +8,7 @@ import Worker from "../views/Worker.vue";
 import Profile from "../views/Profile.vue";
 import Listings from "../views/Listings.vue";
 import Listing from "../views/Listing.vue";
-import MyProfile from "../views/MyProfile.vue";
+import SignOut from "../views/SignOut.vue";
 
 export enum ROUTE_NAMES {
   HOME = "HOME",
@@ -20,7 +20,7 @@ export enum ROUTE_NAMES {
   PROFILE = "PROFILE",
   REGISTER = "REGISTER",
   WORKER = "WORKER",
-  MY_PROFILE = "MY_PROFILE"
+  SIGN_OUT = "SIGN_OUT"
 }
 
 /*
@@ -76,6 +76,11 @@ const routes: Array<RouteRecordRaw> = [
     path: "/profile",
     name: ROUTE_NAMES.PROFILE,
     component: Profile
+  },
+  {
+    path: "/signout",
+    name: ROUTE_NAMES.SIGN_OUT,
+    component: SignOut
   }
 ];
 
