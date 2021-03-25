@@ -5,8 +5,8 @@
         <div class="columns is-centered">
           <div class="column is-5-tablet is-4-desktop is-3-widescreen">
               <div class="box">
-                  <h1>{{theListing.title}}</h1>
-                  <h3>{{theListing.description}}</h3>
+                  <h1>Title: {{theListing.title}}</h1>
+                  <h3>Description: {{theListing.description}}</h3>
               </div>
           </div>
         </div>

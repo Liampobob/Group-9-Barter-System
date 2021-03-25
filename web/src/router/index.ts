@@ -68,19 +68,14 @@ const routes: Array<RouteRecordRaw> = [
     component: Listing
   },
   {
-    path: "/profile",
-    name: ROUTE_NAMES.PROFILE,
-    component: Profile
-  },
-  {
     path: "/worker/:username",
     name: ROUTE_NAMES.WORKER,
     component: Worker
   },
   {
-    path: "/me",
-    name: ROUTE_NAMES.MY_PROFILE,
-    component: MyProfile
+    path: "/profile",
+    name: ROUTE_NAMES.PROFILE,
+    component: Profile
   }
 ];
 

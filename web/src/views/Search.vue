@@ -97,9 +97,6 @@ export default class Search extends Vue {
   }
 
   async searchForListings() {
-    // API call to backend to get listings
-
-    //store listing
     store.dispatch("listingsStore/searchListings", {terms: this.terms, category:this.dropdownItem});
   }
 }

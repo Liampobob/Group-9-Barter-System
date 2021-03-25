@@ -1,10 +1,10 @@
 <template>
   <div>
-    <HelloWorld v-bind:msg="getUser" />
-    <button class="button is-primary" v-on:click="changeName()">
+    <!-- <HelloWorld v-bind:msg="getUser" /> -->
+    <!-- <button class="button is-primary" v-on:click="changeName()">
       Execute a store action
     </button>
-    <button class="button is-primary" v-on:click="call()">Call backend</button>
+    <button class="button is-primary" v-on:click="call()">Call backend</button> -->
     <button class="button is-secondary" v-on:click="signout()">Sign out</button>
   </div>
 </template>
