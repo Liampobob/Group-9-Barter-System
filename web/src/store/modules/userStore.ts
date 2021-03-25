@@ -20,7 +20,7 @@ const userStore: Module<UserState, RootState> = {
     selectedUser: undefined
   },
   mutations: {
-    [UserActions.LOGIN](state: UserState, payload: { user: User, token: string }) {
+    [UserActions.LOGIN](state: UserState, payload: { user: User; token: string }) {
       localStorage.setItem('token', payload.token);
       state.user = payload.user;
       state.token = payload.token;
@@ -49,7 +49,7 @@ const userStore: Module<UserState, RootState> = {
       commit(UserActions.LOGIN, { user: data['user'], token: data['token'] });
       router.push({ name: ROUTE_NAMES.HOME });
     },
-    async auth({ commit }, payload: { username: string, password: string }) {
+    async auth({ commit }, payload: { username: string; password: string }) {
       try {
         const { data } = await axios.post('auth', payload);
         commit(UserActions.LOGIN, { user: data['user'], token: data['token'] });
@@ -61,7 +61,7 @@ const userStore: Module<UserState, RootState> = {
     errorLogin({ commit }) {
       commit(UserActions.ERROR_LOGIN, { error: "Facebook login failed!" });
     },
-    async register({ commit }, payload: { username: string, password: string, phone_number: string, bio: string, name: string }) {
+    async register({ commit }, payload: { username: string; password: string; phone_number: string; bio: string; name: string }) {
       try {
         const { data } = await axios.post('register', payload);
         commit(UserActions.LOGIN, { user: data['user'], token: data['token'] });

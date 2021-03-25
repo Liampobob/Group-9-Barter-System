@@ -23,11 +23,11 @@ instance.interceptors.request.use(function (config) {
   return config;
 });
 
-const auth_headers = {
+const authHeaders = {
   "Content-type": "application/json",
   "Authorization": `Token ${localStorage.getItem('token')}`
 }
 
 export default instance;
 
-export { auth_headers };
+export { authHeaders };

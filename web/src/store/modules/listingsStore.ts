@@ -20,9 +20,9 @@ const listingsStore: Module<ListingsState, RootState> = {
         commit("Set", newListings);
         router.push({ name: ROUTE_NAMES.LISTINGS });
     },
-    async searchListings({ commit }, searchInfo: {terms: string, category: string}) {
+    async searchListings({ commit }, searchInfo: {terms: string; category: string}) {
       const { data } = await axios.post('search', searchInfo);
-      commit("Set", data['data'].map((a: {title: string, description: string}) => { return {title: a.title, description: a.description};}));
+      commit("Set", data['data'].map((a: {title: string; description: string}) => { return {title: a.title, description: a.description};}));
       router.push({ name: ROUTE_NAMES.LISTINGS });
     },
   },
