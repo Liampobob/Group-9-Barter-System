@@ -1,3 +1,22 @@
+<style>
+  .dropdown {
+  width: 100%;
+  }
+  .dropdown-trigger {
+    width: 100%;
+  }
+  .dropdown-menu {
+  width: 100%;
+  }
+  .dropdown-content {
+  width: 100%;
+  }
+  .dropdown-item {
+    width: 100%;
+  }
+</style>
+
+
 <template>
   <section class="hero is-primary is-fullheight">
     <div class="hero-body">
@@ -5,39 +24,39 @@
         <div class="columns is-centered">
           <div class="column is-5-tablet is-4-desktop is-3-widescreen">
             <div class="has-text-centered">
-              <div class="dropdown is-fullwidth">
-                <div class="dropdown-trigger is-fullwidth">
-                  <button class="button is-medium is-fullwidth" aria-haspopup="true" aria-controls="dropdown-menu" @click="setDropdown()">
+              <div class="dropdown">
+                <div class="dropdown-trigger">
+                  <button class="button is-fullwidth" aria-haspopup="true" aria-controls="dropdown-menu" @click="setDropdown()">
                     <span>{{selectedItem}}</span>
                     <span class="icon is-medium">
                       <i class="fas fa-angle-down" aria-hidden="true"></i>
                     </span>
                   </button>
                 </div>
-                <div class="dropdown-menu is-fullwidth" id="dropdown-menu" role="menu">
-                  <div class="dropdown-content is-fullwidth">
+                <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                  <div class="dropdown-content">
                     <div class="dropdown-item is-fullwidth">
-                      <button class="button is-medium is-fullwidth" @click="() => {selectedItem = 'All';}">
+                      <button class="button is-fullwidth is-inverted" @click="() => {selectedItem = 'All';}">
                         All
                       </button>
                     </div>
                     <div class="dropdown-item is-fullwidth">
-                      <button class="button is-medium is-fullwidth" @click="() => {selectedItem = 'Jobs';}">
+                      <button class="button is-fullwidth is-inverted" @click="() => {selectedItem = 'Jobs';}">
                         Jobs
                       </button>
                     </div>
                     <div class="dropdown-item is-fullwidth">
-                      <button class="button is-medium is-fullwidth" @click="() => {selectedItem = 'Classes';}">
+                      <button class="button is-fullwidth is-inverted" @click="() => {selectedItem = 'Classes';}">
                         Classes
                       </button>
                     </div>
                     <div class="dropdown-item is-fullwidth">
-                      <button class="button is-medium is-fullwidth" @click="() => {selectedItem = 'To Sell';}">
+                      <button class="button is-fullwidth is-inverted" @click="() => {selectedItem = 'To Sell';}">
                         To Sell
                       </button>
                     </div>
                     <div class="dropdown-item is-fullwidth">
-                      <button class="button is-medium is-fullwidth" @click="() => {selectedItem = 'To Buy';}">
+                      <button class="button is-fullwidth is-inverted" @click="() => {selectedItem = 'To Buy';}">
                         To Buy
                       </button>
                     </div>
@@ -45,7 +64,7 @@
                 </div>
               </div>
               <input ref="searchBar is-large is-rounded  " class="input" type="text" v-model="searchTerms" placeholder="Search for listings">
-              <button class="button is-fullwidth is-medium" @click="searchForListings">
+              <button class="button is-fullwidth" @click="searchForListings">
                 Search
               </button>
             </div>
