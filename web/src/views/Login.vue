@@ -43,13 +43,13 @@
                 </article>
               </div>
               <div class="buttons are-medium">
-                <button class="button is-grey" @click="login">
+                <button class="button is-grey is-fullwidth" @click="login">
                   <i class="fas fa-sign-in-alt mr-1"></i>
                   Login
                 </button>
               </div>
               <div class="buttons are-medium">
-                <button class="button is-info" @click="logInWithFacebook">
+                <button class="button is-info is-fullwidth" @click="logInWithFacebook">
                   <i class="fab fa-facebook-f mr-1"></i>
                   Login with Facebook
                 </button>

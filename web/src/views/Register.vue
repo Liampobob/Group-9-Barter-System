@@ -69,7 +69,7 @@
               </article>
             </div>
           </form>
-          <button class="button is-primary" @click="register">Register</button>
+          <button class="button is-primary is-fullwidth" @click="register">Register</button>
         </div>
       </div>
     </div>
