@@ -11,7 +11,6 @@ const listingsStore: Module<ListingsState, RootState> = {
   },
   mutations: {
     ["Set"](state: ListingsState, newListings: Listing[]) {
-      console.log(newListings);
       state.listings = newListings; // TODO : pass tokens to server
     },
   },

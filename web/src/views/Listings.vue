@@ -4,12 +4,15 @@
       <div class="container">
         <div class="columns is-centered">
           <div class="column is-5-tablet is-4-desktop is-3-widescreen">
-            <ul id="listings">
-              <div v-for="(listing, index) in getListings" :key="listing.title" class="content">
-                <h1>{{index+1}}: {{ listing.title }}</h1>
-                <h3>{{ listing.description }}</h3>
-              </div>
-            </ul>
+            <div class="box">
+              <ul id="listings">
+                <div v-for="(listing, index) in getListings" :key="listing.title" class="column">
+                  <button class="button is-fullwidth is-inverted" @click="() => {openListing(listing.title);}">
+                      {{index+1}}: {{ listing.title }} | {{ listing.description }}
+                  </button>
+                </div>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
@@ -21,8 +24,6 @@
 
 import { Options, Vue } from "vue-class-component";
 import { mapGetters } from "vuex";
-import { Listing } from "@/types/Listing";
-import store from "@/store";
 @Options({
   components: {},
   computed: {
@@ -30,9 +31,8 @@ import store from "@/store";
   },
 })
 export default class Listings extends Vue {
-  
-  searchForListings() {
-    // API call to backend to get listings
+  openListing(title: string) {
+    this.$router.push("/listing/" + title);
   }
 }
 </script>
