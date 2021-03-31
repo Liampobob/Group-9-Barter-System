@@ -9,4 +9,4 @@
     <router-link to="/signout">Sign Out</router-link>
     <router-view />
   </div>
-</template>
+</template> 
