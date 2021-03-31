@@ -41,9 +41,17 @@ class User(auth.models.User):
         }
         return d
 
+
 class Listing(models.Model):
+    CATEGORIES = (
+        ('J', 'Job'),
+        ('C', 'Class'),
+        ('B', 'toBuy'),
+        ('S', 'toSell'),
+        ('O', 'CBO'),
+    )
     title = models.CharField(max_length=80, null=False)
-    category = models.CharField(max_length=12, null=False)
+    category = models.CharField(max_length=1, null=False, choices=CATEGORIES)
     description = models.CharField(max_length=1024, null=False)
 
     def __str__(self):

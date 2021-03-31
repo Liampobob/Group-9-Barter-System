@@ -27,10 +27,10 @@ import store from "@/store";
 export default class Listings extends Vue {
     title = '';
     error = '';
-    listing: Listing = {title: '', description: ''};
+    listing: Listing = {title: '', category:'', description: ''};
 
     get theListing() {return this.listing;}
-  
+
     async mounted() {
         this.title = (this.$route.params["title"] as string) ?? "";
         let resp;
