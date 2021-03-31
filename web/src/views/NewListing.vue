@@ -39,20 +39,20 @@
         </div>
       </form>
     </div>
-  </div>
+  </section>
 </template>
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
 import { Listing } from "@/types/Listing";
-import store from "@store";
+import store from "@/store";
 @Options({
   components: {},
   computed: {},
 })
 export default class NewListing extends Vue {
   title = '';
-  categories = Object[] = [
+  categories: any[] = [
     { value: 'J', text: "Job"},
     { value: 'C', text: "Class"},
     { value: 'B', text: "To Buy"},
