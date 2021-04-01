@@ -8,6 +8,7 @@ import Worker from "../views/Worker.vue";
 import Profile from "../views/Profile.vue";
 import Listings from "../views/Listings.vue";
 import Listing from "../views/Listing.vue";
+import NewListing from "../views/NewListing.vue";
 import SignOut from "../views/SignOut.vue";
 
 export enum ROUTE_NAMES {
@@ -17,6 +18,7 @@ export enum ROUTE_NAMES {
   SEARCH = "SEARCH",
   LISTINGS = "LISTINGS",
   LISTING = "LISTING",
+  NEW_LISTING = "NEW_LISTING",
   PROFILE = "PROFILE",
   REGISTER = "REGISTER",
   WORKER = "WORKER",
@@ -56,6 +58,11 @@ const routes: Array<RouteRecordRaw> = [
     path: "/search",
     name: ROUTE_NAMES.SEARCH,
     component: Search
+  },
+  {
+    path: "/newListing",
+    name: ROUTE_NAMES.NEW_LISTING,
+    component: NewListing
   },
   {
     path: "/listings",
