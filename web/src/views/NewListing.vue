@@ -1,43 +1,61 @@
 <template>
   <section class="hero is-primary is-fullheight">
     <div class="hero-body">
-      <form class="box">
-        <div class="field" id="input_title">
-          <label class="label">Title</label>
-          <div class="control">
-            <input
-              v-model="title"
-              class="input"
-              type="text"
-              placeholder="Post Title"
-            />
+      <div class="container">
+        <div class="columns is-centered">
+          <div class="column is-5-tablet is-4-desktop is-3-widescreen">
+            <div class="has-text-centered">
+              <div class="field" id="input_title">
+                <label class="label">Title</label>
+                <div class="control">
+                  <input
+                    v-model="title"
+                    class="input"
+                    type="text"
+                    placeholder="Post Title"
+                  />
+                </div>
+              </div>
+              <div class="field">
+                <label class="label">Category</label>
+                <div class="dropdown">
+                  <div class="dropdown-trigger">
+                    <button class="button is-fullwidth" aria-haspopup="true" aria-controls="dropdown-menu" @click="setDropdown()">
+                      <span>{{ selectedItem }}</span>
+                      <span class="icon is-medium">
+                        <i class="fas fa-angle-down" aria-hidden="true"></i>
+                      </span>
+                    </button>
+                    <div class="dropdown-menu" id="dropdown-menu-vfor" role="menu">
+                      <div class="dropdown-content" v-for="c in categories" v-bind:key="c">
+                        <div class="dropdown-item is-fullwidth">
+                          <button class="button is-fullwidth is-inverted" @click="() => {selectedCategory = c; setDropdown();}">
+                            {{ c }}
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="field" id="input_description">
+                <label class="label">Description</label>
+                <div class="control">
+                  <textarea
+                    v-model="description"
+                    class="input is-fullwidth"
+                    type="text"
+                    placeholder="Description"
+                  />
+                </div>
+              </div>
+              <div class="is-fullwidth" id="submit_button">
+                <button class="button is-fullwidth" type="button" v-on:click="submit()">Submit</button>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="field" id="select_category">
-          <label class="label">Category</label>
-          <div class="control">
-            <select v-model="selected_category">
-              <option v-for="c in categories" :value="c.value" v-bind:key="c.value">
-                {{ c.text }}
-              </option>
-            </select>
-          </div>
-        </div>
-        <div class="field" id="input_description">
-          <label class="label">Description</label>
-          <div class="control">
-            <input
-              v-model="description"
-              class="input"
-              type="text"
-              placeholder="Description"
-            />
-          </div>
-        </div>
-        <div class="button" id="submit_button">
-          <button type="button" v-on:click="submit()">Submit</button>
-        </div>
-      </form>
+      </div>
     </div>
   </section>
 </template>
@@ -52,14 +70,18 @@ import store from "@/store";
 })
 export default class NewListing extends Vue {
   title = '';
-  categories: any[] = [
-    { value: 'J', text: "Job"},
-    { value: 'C', text: "Class"},
-    { value: 'B', text: "To Buy"},
-    { value: 'S', text: "To Sell"},
-    { value: 'O', text: "CBO"},
-  ];
-  selected_category = '';
+
+  categories = [ "Job", "Class", "To Buy", "To Sell", "CBO"];
+  selectedCategory = 'Job';
+  get selectedItem() {return this.selectedCategory;}
+  set selectedItem(newSelectedItem: string) {this.selectedCategory = newSelectedItem; this.setDropdown()}
+  setDropdown() {
+    const dropdown = document.querySelector('.dropdown');
+    console.log(dropdown);
+    if(dropdown != null)
+      dropdown.classList.toggle('is-active');
+  }
+
   description = '';
   errors: string[] = [];
 
@@ -68,7 +90,7 @@ export default class NewListing extends Vue {
     if (!this.title) {
       this.errors.push("title cannot be empty");
     }
-    if (!this.selected_category) {
+    if (!this.selectedCategory) {
       this.errors.push("category must be selected");
     }
     if (!this.description) {
@@ -77,7 +99,7 @@ export default class NewListing extends Vue {
 
     if (this.errors.length === 0) {
       const title = this.title;
-      const category = this.selected_category;
+      const category = this.selectedCategory;
       const description = this.description;
       const resp = await store.dispatch("", {
         title,
