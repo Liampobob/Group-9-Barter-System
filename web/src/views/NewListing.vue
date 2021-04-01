@@ -61,6 +61,7 @@
 </template>
 
 <script lang="ts">
+
 import { Options, Vue } from "vue-class-component";
 import { Listing } from "@/types/Listing";
 import store from "@/store";
@@ -74,7 +75,7 @@ export default class NewListing extends Vue {
   categories = [ "Job", "Class", "To Buy", "To Sell", "CBO"];
   selectedCategory = 'Job';
   get selectedItem() {return this.selectedCategory;}
-  set selectedItem(newSelectedItem: string) {this.selectedCategory = newSelectedItem; this.setDropdown()}
+  set selectedItem(newSelectedItem: string) { this.selectedCategory = newSelectedItem; this.setDropdown(); }
   setDropdown() {
     const dropdown = document.querySelector('.dropdown');
     console.log(dropdown);
@@ -115,3 +116,9 @@ export default class NewListing extends Vue {
 }
 
 </script>
+
+<style>
+  textarea.input {
+    height: 200px;
+  }
+</style>
