@@ -4,7 +4,7 @@
       <div class="container">
         <div class="columns is-centered">
           <div class="column is-5-tablet is-4-desktop is-3-widescreen">
-            <div class="has-text-centered">
+            <form class="box">
               <div class="field" id="input_title">
                 <label class="label">Title</label>
                 <div class="control">
@@ -50,8 +50,10 @@
                 </div>
               </div>
               <div class="is-fullwidth" id="submit_button">
-                <button class="button is-fullwidth" type="button" v-on:click="submit()">Submit</button>
+                <button class="button is-primary is-fullwidth" type="button" v-on:click="submit()">Submit</button>
               </div>
+            </form>
+            <div class="has-text-centered">
             </div>
           </div>
         </div>
