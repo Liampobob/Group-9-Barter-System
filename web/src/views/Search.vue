@@ -27,38 +27,18 @@
               <div class="dropdown">
                 <div class="dropdown-trigger">
                   <button class="button is-fullwidth" aria-haspopup="true" aria-controls="dropdown-menu" @click="setDropdown()">
-                    <span>{{selectedItem}}</span>
+                    <span>{{ selectedItem }}</span>
                     <span class="icon is-medium">
                       <i class="fas fa-angle-down" aria-hidden="true"></i>
                     </span>
                   </button>
-                </div>
-                <div class="dropdown-menu" id="dropdown-menu" role="menu">
-                  <div class="dropdown-content">
-                    <div class="dropdown-item is-fullwidth">
-                      <button class="button is-fullwidth is-inverted" @click="() => {selectedItem = 'All';}">
-                        All
-                      </button>
-                    </div>
-                    <div class="dropdown-item is-fullwidth">
-                      <button class="button is-fullwidth is-inverted" @click="() => {selectedItem = 'Jobs';}">
-                        Jobs
-                      </button>
-                    </div>
-                    <div class="dropdown-item is-fullwidth">
-                      <button class="button is-fullwidth is-inverted" @click="() => {selectedItem = 'Classes';}">
-                        Classes
-                      </button>
-                    </div>
-                    <div class="dropdown-item is-fullwidth">
-                      <button class="button is-fullwidth is-inverted" @click="() => {selectedItem = 'To Sell';}">
-                        To Sell
-                      </button>
-                    </div>
-                    <div class="dropdown-item is-fullwidth">
-                      <button class="button is-fullwidth is-inverted" @click="() => {selectedItem = 'To Buy';}">
-                        To Buy
-                      </button>
+                  <div class="dropdown-menu" id="dropdown-menu-vfor" role="menu">
+                    <div class="dropdown-content" v-for="c in categories" v-bind:key="c">
+                      <div class="dropdown-item is-fullwidth">
+                        <button class="button is-fullwidth is-inverted" @click="() => {selectedCategory = c; setDropdown();}">
+                          {{ c }}
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -85,9 +65,10 @@ export default class Search extends Vue {
   get searchTerms() {return this.terms;}
   set searchTerms(terms) {this.terms = terms;}
 
-  dropdownItem = 'All';
-  get selectedItem() {return this.dropdownItem;}
-  set selectedItem(newSelectedItem: string) {this.dropdownItem = newSelectedItem; this.setDropdown()}
+  categories = [ "All", "Jobs", "Classes", "To Buy", "To Sell", "CBOs"];
+  selectedCategory = 'All';
+  get selectedItem() {return this.selectedCategory;}
+  set selectedItem(newSelectedItem: string) {this.selectedCategory = newSelectedItem; this.setDropdown()}
 
   setDropdown() {
     const dropdown = document.querySelector('.dropdown');
@@ -97,7 +78,7 @@ export default class Search extends Vue {
   }
 
   async searchForListings() {
-    store.dispatch("listingsStore/searchListings", {terms: this.terms, category:this.dropdownItem});
+    store.dispatch("listingsStore/searchListings", {terms: this.terms, category:this.selectedCategory});
   }
 }
 </script>
