@@ -26,3 +26,5 @@ yarn-error.log*
 /build/
 
 data/*
+
+backend/query/migrations/*

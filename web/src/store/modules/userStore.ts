@@ -72,7 +72,7 @@ const userStore: Module<UserState, RootState> = {
         router.push({ name: ROUTE_NAMES.LISTINGS });
         return null;
       } catch (err) {
-        commit(UserActions.ERROR_LOGIN, { error: 'No user match the provided credentials' });
+        commit(UserActions.ERROR_LOGIN, { error: 'Error in request' });
         return { errors: err.message }
       }
     },
@@ -81,15 +81,15 @@ const userStore: Module<UserState, RootState> = {
         const { data } = await axios.get(`worker?username=${payload.username}`);
         commit(UserActions.LOAD_USER, data['user']);
       } catch (err) {
-        return {error: 'An error occured.'}
+        return { error: 'An error occured.' }
       }
     },
-    async loadProfile({commit}) {
+    async loadProfile({ commit }) {
       try {
         const { data } = await axios.get(`me`);
         commit(UserActions.LOAD_ME, data);
       } catch (err) {
-        return {error: 'An error occured.'}
+        return { error: 'An error occured.' }
       }
     }
   },

@@ -70,10 +70,15 @@
                 </article>
               </div>
               <div class="is-fullwidth">
-                <button class="button is-primary is-fullwidth" @click="register">Register</button>
+                <button
+                  type="button"
+                  class="button is-primary is-fullwidth"
+                  @click="register"
+                >
+                  Register
+                </button>
               </div>
             </form>
-
           </div>
         </div>
       </div>
@@ -137,7 +142,7 @@ export default class Register extends Vue {
 </script>
 
 <style>
-  textarea.input {
-    height: 200px;
-  }
+textarea.input {
+  height: 200px;
+}
 </style>
