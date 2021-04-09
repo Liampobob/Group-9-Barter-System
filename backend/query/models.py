@@ -5,6 +5,31 @@ from django.contrib import auth
 # Create your models here.
 
 
+class BusinessReviewsManager(models.Manager):
+    def get_reviews(self):
+        return super().get_queryset()
+
+class BusinessReviews(models.Model):
+    user_id = models.IntegerField(null=False)
+    business_id = models.IntegerField(null=False)
+    review_text = models.CharField(null=False, max_length=256)
+    stars = models.PositiveIntegerField(null=False)
+    time = models.TimeField(auto_now=True)
+
+    def __str__(self):
+        return self.review_text
+
+    def to_dict(self):
+        d = {
+            'user_id': self.user_id,
+            'business_id': self.business_id,
+            'review_text': self.review_text,
+            'stars': self.stars,
+            'time': self.time
+        }
+        return d
+
+
 class UserManager(models.Manager):
     def get_users(self):
         return super().get_queryset()

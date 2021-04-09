@@ -100,3 +100,27 @@ class BusinessSerializer(serializers.Serializer):
             raise serializers.ValidationError(
                 "start_time must be before end_time")
         return data
+
+
+class ReviewSerializer(serializers.Serializer):
+    business_id = serializers.IntegerField(required=True)
+    review_text = serializers.CharField(required=True, max_length=256)
+    stars = serializers.IntegerField(required=True, max_value=5, min_value=0)
+
+    def validate(self, data):
+        """
+        Check that the model is valid.
+        """
+        if not data['business_id']:
+            raise serializers.ValidationError("business_id cannot be empty")
+        if not data['review_text']:
+            raise serializers.ValidationError("review_text cannot be empty")
+        if type(data['stars']) != int:
+            raise serializers.ValidationError("stars cannot be empty")
+        """
+        Check that the start date and the end date are valid (<24).
+        """
+        if data['stars'] > 5 or data['stars'] < 0:
+            raise serializers.ValidationError(
+                "start_time must be between 0 and 5")
+        return data
