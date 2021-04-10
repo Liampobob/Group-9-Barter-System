@@ -96,6 +96,13 @@
                     </span>
                   </button>
                 </div>
+                <div v-if="error">
+                  <article class="message is-danger">
+                    <div class="message-body">
+                      {{ error }}
+                    </div>
+                  </article>
+                </div>
               </div>
             </div>
           </div>
@@ -121,17 +128,30 @@ import { User } from "@/types/User";
 export default class MyProfile extends Vue {
   editing = false;
   editedProfile: User | undefined;
+  error = "";
 
   edit(newValue: boolean) {
     this.editedProfile = newValue
       ? { ...this.$store.getters["userStore/user"] }
       : undefined;
     this.editing = newValue;
+    this.error = "";
   }
 
-  saveEditFields() {
+  async saveEditFields() {
+    const status = await this.$store.dispatch("userStore/patchUser", {
+      username: this.editedProfile!.username,
+      name: this.editedProfile!.name,
+      bio: this.editedProfile?.bio ?? "",
+      phone_number: this.editedProfile?.phone_number ?? undefined,
+    });
+    if (status.error) {
+      this.error = "An error occured.";
+      return;
+    }
     this.editing = false;
     this.editedProfile = undefined;
+    this.error = "";
   }
 
   mounted() {
