@@ -4,7 +4,7 @@
       <div class="container">
         <div class="columns is-centered">
           <div class="column is-5-tablet is-4-desktop is-3-widescreen">
-            <form class="box">
+            <div class="box">
               <div class="field" id="input_title">
                 <label class="label">Title</label>
                 <div class="control">
@@ -20,16 +20,37 @@
                 <label class="label">Category</label>
                 <div class="dropdown">
                   <div class="dropdown-trigger">
-                    <button class="button is-fullwidth" aria-haspopup="true" aria-controls="dropdown-menu" @click="setDropdown()">
+                    <button
+                      class="button is-fullwidth"
+                      aria-haspopup="true"
+                      aria-controls="dropdown-menu"
+                      @click="setDropdown()"
+                    >
                       <span>{{ selectedItem }}</span>
                       <span class="icon is-medium">
                         <i class="fas fa-angle-down" aria-hidden="true"></i>
                       </span>
                     </button>
-                    <div class="dropdown-menu" id="dropdown-menu-vfor" role="menu">
-                      <div class="dropdown-content" v-for="c in categories" v-bind:key="c">
+                    <div
+                      class="dropdown-menu"
+                      id="dropdown-menu-vfor"
+                      role="menu"
+                    >
+                      <div
+                        class="dropdown-content"
+                        v-for="c in categories"
+                        v-bind:key="c"
+                      >
                         <div class="dropdown-item is-fullwidth">
-                          <button class="button is-fullwidth is-inverted" @click="() => {selectedCategory = c; setDropdown();}">
+                          <button
+                            class="button is-fullwidth is-inverted"
+                            @click="
+                              () => {
+                                selectedCategory = c;
+                                setDropdown();
+                              }
+                            "
+                          >
                             {{ c }}
                           </button>
                         </div>
@@ -50,11 +71,16 @@
                 </div>
               </div>
               <div class="is-fullwidth" id="submit_button">
-                <button class="button is-primary is-fullwidth" type="button" v-on:click="submit()">Submit</button>
+                <button
+                  class="button is-primary is-fullwidth"
+                  type="button"
+                  v-on:click="submit()"
+                >
+                  Submit
+                </button>
               </div>
-            </form>
-            <div class="has-text-centered">
             </div>
+            <div class="has-text-centered"></div>
           </div>
         </div>
       </div>
@@ -63,7 +89,6 @@
 </template>
 
 <script lang="ts">
-
 import { Options, Vue } from "vue-class-component";
 import { Listing } from "@/types/Listing";
 import store from "@/store";
@@ -72,23 +97,28 @@ import store from "@/store";
   computed: {},
 })
 export default class NewListing extends Vue {
-  title = '';
+  title = "";
 
-  categories = [ "Job", "Class", "To Buy", "To Sell", "CBO"];
-  selectedCategory = 'Job';
-  get selectedItem() {return this.selectedCategory;}
-  set selectedItem(newSelectedItem: string) { this.selectedCategory = newSelectedItem; this.setDropdown(); }
+  categories = ["Job", "Class", "To Buy", "To Sell", "CBO"];
+  selectedCategory = "Job";
+  get selectedItem() {
+    return this.selectedCategory;
+  }
+  set selectedItem(newSelectedItem: string) {
+    this.selectedCategory = newSelectedItem;
+    this.setDropdown();
+  }
   setDropdown() {
-    const dropdown = document.querySelector('.dropdown');
+    const dropdown = document.querySelector(".dropdown");
     console.log(dropdown);
-    if(dropdown != null)
-      dropdown.classList.toggle('is-active');
+    if (dropdown != null) dropdown.classList.toggle("is-active");
   }
 
-  description = '';
+  description = "";
   errors: string[] = [];
 
   async submit() {
+    console.log("hey");
     this.errors = [];
     if (!this.title) {
       this.errors.push("title cannot be empty");
@@ -111,16 +141,14 @@ export default class NewListing extends Vue {
       });
       if (resp && resp["errors"]) {
         this.errors = ["An error occured"];
-
       }
     }
   }
 }
-
 </script>
 
 <style>
-  textarea.input {
-    height: 200px;
-  }
+textarea.input {
+  height: 200px;
+}
 </style>

@@ -9,6 +9,7 @@ class BusinessReviewsManager(models.Manager):
     def get_reviews(self):
         return super().get_queryset()
 
+
 class BusinessReviews(models.Model):
     user_id = models.IntegerField(null=False)
     business_id = models.IntegerField(null=False)
