@@ -68,6 +68,7 @@ class BusinessManager(models.Manager):
         return super().get_queryset()
 
 class Business(User):
+    is_cbo = models.BooleanField(null=False, default=False)
     contact_name = models.CharField(null=True, max_length=128)
     work_tags = models.CharField(null=True, max_length=256)
     description = models.CharField(null=True, max_length=256)
