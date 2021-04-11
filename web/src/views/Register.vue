@@ -5,29 +5,69 @@
         <div class="columns is-centered">
           <div class="column is-5-tablet is-4-desktop is-3-widescreen">
             <form class="box">
-              <div class="field">
-                <label class="label">Name</label>
-                <div class="control">
-                  <input
-                    v-model="name"
-                    class="input"
-                    type="text"
-                    placeholder="Full Name"
-                  />
+              <div class="field" id="choose_accounttype">
+                <label class="label">Account Type</label>
+                <div class="dropdown">
+                  <div class="dropdown-trigger">
+                    <button
+                      class="button is-fullwidth"
+                      aria-haspopup="true"
+                      aria-controls="dropdown-menu"
+                      @click="setDropdown()"
+                    >
+                      <span>{{ selectedItem }}</span>
+                      <span class="icon is-medium">
+                        <i class="fas fa-angle-down" aria-hidden="true"></i>
+                      </span>
+                    </button>
+                    <div
+                      class="dropdown-menu"
+                      id="dropdown-menu-vfor"
+                      role="menu"
+                    >
+                      <div
+                        class="dropdown-content"
+                        v-for="a in accountTypes"
+                        v-bind:key="a"
+                      >
+                        <div class="dropdown-item is-fullwidth">
+                          <button
+                            class="button is-fullwidth is-inverted"
+                            @click="
+                              () => {
+                                selectedCategory = a;
+                                setDropdown();
+                              }
+                            "
+                          >
+                            {{ a }}
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div class="field">
+              <div class="field" id="select_isCBO" v-if="selectedAccount=='Business'">
+                <input
+                v-model="isCBO"
+                class="checkbox"
+                type="checkbox"
+                />
+                This business is a Community-Based Organisation
+              </div>
+              <div class="field" id="input_username">
                 <label class="label">Username</label>
                 <div class="control">
                   <input
-                    v-model="username"
-                    class="input"
-                    type="text"
-                    placeholder="Username"
+                  v-model="username"
+                  class="input"
+                  type="text"
+                  placeholder="Username"
                   />
                 </div>
               </div>
-              <div class="field">
+              <div class="field" id="input_password">
                 <label class="label">Password</label>
                 <div class="control">
                   <input
@@ -38,7 +78,26 @@
                   />
                 </div>
               </div>
-              <div class="field">
+              <div class="field" id="input_name">
+                <label class="label">Name</label>
+                <div class="control">
+                  <input
+                    v-if="selectedAccount=='User'"
+                    v-model="name"
+                    class="input"
+                    type="text"
+                    placeholder="Full Name"
+                  />
+                  <input
+                    v-if="selectedAccount=='Business'"
+                    v-model="username"
+                    class="input"
+                    type="text"
+                    placeholder="Business Name"
+                  />
+                </div>
+              </div>
+              <div class="field" id="input_phonenumber">
                 <label class="label">Phone Number</label>
                 <div class="control">
                   <input
@@ -49,15 +108,52 @@
                   />
                 </div>
               </div>
-              <div class="field">
-                <label class="label">Bio</label>
-                <div class="control">
-                  <textarea
+              <div v-if="selectedAccount=='Business'">
+                <div class="field" id="input_contactname">
+                  <label class="label">Contact Name</label>
+                  <div class="control">
+                    <input
+                    v-model="contactName"
+                    class="input"
+                    type="text"
+                    placeholder="Contact Name"
+                    />
+                  </div>
+                </div>
+                <div class="field" id="input_worktags">
+                  <label class="label">Work Tags</label>
+                  <div class="control">
+                    <input
+                    v-model="workTags"
+                    class="input"
+                    type="text"
+                    placeholder="Electrical, Sewing, ..."
+                    />
+                  </div>
+                </div>
+              </div>
+              <div id="input_textarea">
+                <div class="field" id="input_bio" v-if="selectedAccount=='User'">
+                  <label class="label">Bio</label>
+                  <div class="control">
+                    <textarea
                     v-model="bio"
                     class="input is-fullwidth"
                     type="text"
                     placeholder="Your bio..."
-                  />
+                    />
+                  </div>
+                </div>
+                <div class="field" id="input_description" v-if="selectedAccount=='Business'">
+                  <label class="label">Description</label>
+                  <div class="control">
+                    <textarea
+                    v-model="description"
+                    class="input is-fullwidth"
+                    type="text"
+                    placeholder="Business Description"
+                    />
+                  </div>
                 </div>
               </div>
               <div v-if="errors.length" class="mb-3">
@@ -69,7 +165,7 @@
                   </div>
                 </article>
               </div>
-              <div class="is-fullwidth">
+              <div class="is-fullwidth" id="submit_button">
                 <button
                   type="button"
                   class="button is-primary is-fullwidth"
@@ -95,11 +191,36 @@ import store from "@/store";
   computed: {},
 })
 export default class Register extends Vue {
+  accountTypes = ["User", "Business"];
+  selectedAccount = "Business";
+  get selectedItem() {
+    return this.selectedAccount;
+  }
+  set selectedItem(newSelectedItem: string) {
+    this.selectedAccount = newSelectedItem;
+    this.setDropdown();
+  }
+  setDropdown() {
+    const dropdown = document.querySelector(".dropdown");
+    console.log(dropdown);
+    if (dropdown != null) dropdown.classList.toggle("is-active");
+  }
+
   username = "";
   password = "";
   name = "";
   phone = "";
   bio = "";
+
+  isCBO = false;
+  contactName = "";
+  workTags = "";
+  description = "";
+  startTime = 0;
+  endTime = 0;
+
+
+
   errors: string[] = [];
 
   async register() {

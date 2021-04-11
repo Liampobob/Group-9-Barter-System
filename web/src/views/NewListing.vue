@@ -16,7 +16,7 @@
                   />
                 </div>
               </div>
-              <div class="field">
+              <div class="field" id="choose_category">
                 <label class="label">Category</label>
                 <div class="dropdown">
                   <div class="dropdown-trigger">
