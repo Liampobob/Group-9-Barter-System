@@ -92,7 +92,7 @@ const userStore: Module<UserState, RootState> = {
         return { error: 'An error occured.' }
       }
     },
-    async patchUser({ commit }, payload: { username: string, bio: string, phone_number: string | number | undefined, name: string }) {
+    async patchUser({ commit }, payload: { username: string; bio: string; phone_number: string | number | undefined; name: string }) {
       try {
         const { data } = await axios.patch(`me`, payload);
         commit(UserActions.LOAD_ME, data['user']);
