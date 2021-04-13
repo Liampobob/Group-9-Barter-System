@@ -79,10 +79,11 @@ class Business(User):
     def to_dict(self):
         d = {
             'name': self.name,
+            'is_cbo' : self.is_cbo,
             'contact_name': self.contact_name,
+            'phone_number': self.phone_number,
             'work_tags': self.work_tags,
             'description': self.description,
-            'phone_number': self.phone_number,
             'working_days': self.working_days,
             'start_time': self.start_time,
             'end_time': self.end_time

@@ -48,7 +48,7 @@
                   </div>
                 </div>
               </div>
-              <div class="field" id="select_isCBO" v-if="selectedAccount=='Business'">
+              <div class="field" id="select_isCBO" v-if="selectedAccount==='Business'">
                 <input
                 v-model="isCBO"
                 class="checkbox"
@@ -82,14 +82,14 @@
                 <label class="label">Name</label>
                 <div class="control">
                   <input
-                    v-if="selectedAccount=='User'"
+                    v-if="selectedAccount==='User'"
                     v-model="name"
                     class="input"
                     type="text"
                     placeholder="Full Name"
                   />
                   <input
-                    v-if="selectedAccount=='Business'"
+                    v-if="selectedAccount==='Business'"
                     v-model="username"
                     class="input"
                     type="text"
@@ -108,7 +108,7 @@
                   />
                 </div>
               </div>
-              <div v-if="selectedAccount=='Business'">
+              <div v-if="selectedAccount==='Business'">
                 <div class="field" id="input_contactname">
                   <label class="label">Contact Name</label>
                   <div class="control">
@@ -133,7 +133,7 @@
                 </div>
               </div>
               <div id="input_textarea">
-                <div class="field" id="input_bio" v-if="selectedAccount=='User'">
+                <div class="field" id="input_bio" v-if="selectedAccount==='User'">
                   <label class="label">Bio</label>
                   <div class="control">
                     <textarea
@@ -144,7 +144,7 @@
                     />
                   </div>
                 </div>
-                <div class="field" id="input_description" v-if="selectedAccount=='Business'">
+                <div class="field" id="input_description" v-if="selectedAccount==='Business'">
                   <label class="label">Description</label>
                   <div class="control">
                     <textarea
@@ -216,8 +216,6 @@ export default class Register extends Vue {
   contactName = "";
   workTags = "";
   description = "";
-  startTime = 0;
-  endTime = 0;
 
 
 
@@ -244,14 +242,31 @@ export default class Register extends Vue {
       const name = this.name.trim();
       /* eslint-disable @typescript-eslint/camelcase */
       const phone_number = this.phone.trim();
-      const bio = this.bio.trim();
-      const resp = await store.dispatch("userStore/register", {
-        username,
-        password,
-        name,
-        bio,
-        phone_number,
-      });
+      if (this.selectedAccount === "User") {
+        const bio = this.bio.trim();
+        const resp = await store.dispatch("userStore/register", {
+          username,
+          password,
+          name,
+          phone_number,
+          bio,
+        });
+      } else {
+        const is_cbo = this.isCBO;
+        const contact_name = this.contactName.trim();
+        const work_tags = this.workTags.trim();
+        const description = this.description;
+        const resp = await store.dispatch("userStore/resgister", {
+          username,
+          password,
+          name,
+          phone_number,
+          is_cbo,
+          contact_name,
+          work_tags,
+          description,
+        })
+      }
       if (resp && resp["errors"]) {
         this.errors = resp["errors"].includes("403")
           ? ["Username already taken"]

@@ -110,16 +110,35 @@ class RegisterAPI(generics.CreateAPIView):
             return JsonResponse({'errors': 'Username already taken!'},
                                 status=status_codes.HTTP_403_FORBIDDEN)
         except User.DoesNotExist:
-            pass
+            try:
+                Business.objects.get(username=clean_data['username'])
+                return JsonResponse({'errors': 'Username already taken!'},
+                                status=status_codes.HTTP_403_FORBIDDEN)
+            except Business.DoesNotExist:
+                pass
 
-        model = User(username=clean_data['username'],
-                     password=clean_data['password'],
-                     name=clean_data['name'],
-                     phone_number=clean_data['phone_number'],
-                     latitude=clean_data['latitude'],
-                     longitude=clean_data['longitude'],
-                     bio=clean_data['bio'],
-                     isBusiness=False)
+        try:
+            bio=clean_data['bio']
+            model = User(username=clean_data['username'],
+                         password=clean_data['password'],
+                         name=clean_data['name'],
+                         phone_number=clean_data['phone_number'],
+                         latitude=clean_data['latitude'],
+                         longitude=clean_data['longitude'],
+                         bio=clean_data['bio'])
+        except:
+            model = Business(username=clean_data['username'],
+                             password=clean_data['password'],
+                             name=clean_data['name'],
+                             phone_number=clean_data['phone_number'],
+                             latitude=clean_data['latitude'],
+                             longitude=clean_data['longitude'],
+                             is_cbo=clean_data['is_cbo'],
+                             contact_name=clean_data['contact_name'],
+                             work_tags=clean_data['work_tags'],
+                             description=clean_data['description'],
+                             start_time=clean_data['start_time'],
+                             end_time=clean_data['end_time'])
 
         model.save()
 
