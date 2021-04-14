@@ -32,7 +32,14 @@ const listingsStore: Module<ListingsState, RootState> = {
         category:string;
         description:string
     }) {
-      //
+      try {
+        const { data } = await axios.post('', payload);
+        //commit(, {})
+        //
+      } catch (err) {
+        return { errors: err.message}
+      }
+
     },
     async searchListings({ commit }, searchInfo: {terms: string; category: string}) {
       const { data } = await axios.post('search', searchInfo);
