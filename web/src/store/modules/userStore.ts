@@ -65,7 +65,13 @@ const userStore: Module<UserState, RootState> = {
     errorLogin({ commit }) {
       commit(UserActions.ERROR_LOGIN, { error: "Facebook login failed!" });
     },
-    async register({ commit }, payload: { username: string; password: string; phone_number: string; bio: string; name: string }) {
+    async registerUser({ commit }, payload: {
+        username:string;
+        password:string;
+        name:string;
+        phone_number:string;
+        bio:string
+    }) {
       try {
         const { data } = await axios.post('register', payload);
         commit(UserActions.LOGIN, { user: data['user'], token: data['token'] });
@@ -73,7 +79,27 @@ const userStore: Module<UserState, RootState> = {
         return null;
       } catch (err) {
         commit(UserActions.ERROR_LOGIN, { error: 'Error in request' });
-        return { errors: err.message }
+        return { errors: err.message };
+      }
+    },
+    async registerBusiness({ commit }, payload: {
+        username:string;
+        password:string;
+        name:string;
+        phone_number:string;
+        is_cbo:boolean;
+        contact_name:string;
+        work_tags:string;
+        description:string
+    }) {
+      try {
+        const { data } = await axios.post('register', payload);
+        commit(UserActions.LOGIN, {user: data['user'], token: data['token'] });
+        router.push({ name.ROUTE_NAMES.LISTINGS });
+        return null;
+      } catch (err) {
+        commit(UserActions.ERROR_LOGIN, { error: 'Error in request' });
+        return { errors: err.message };
       }
     },
     async getWorker({ commit }, payload: { username: string }) {

@@ -244,7 +244,7 @@ export default class Register extends Vue {
       const phone_number = this.phone.trim();
       if (this.selectedAccount === "User") {
         const bio = this.bio.trim();
-        const resp = await store.dispatch("userStore/register", {
+        const resp = await store.dispatch("userStore/registerUser", {
           username,
           password,
           name,
@@ -256,7 +256,7 @@ export default class Register extends Vue {
         const contact_name = this.contactName.trim();
         const work_tags = this.workTags.trim();
         const description = this.description;
-        const resp = await store.dispatch("userStore/resgister", {
+        const resp = await store.dispatch("userStore/resgisterBusiness", {
           username,
           password,
           name,
