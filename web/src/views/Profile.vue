@@ -143,7 +143,7 @@ export default class MyProfile extends Vue {
       username: this.editedProfile!.username,
       name: this.editedProfile!.name,
       bio: this.editedProfile?.bio ?? "",
-      phoneNumber: this.editedProfile?.phone_number ?? undefined,
+      phone_number: this.editedProfile?.phone_number ?? undefined,
     });
     if (status.error) {
       this.error = "An error occured.";
