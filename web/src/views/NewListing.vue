@@ -134,7 +134,7 @@ export default class NewListing extends Vue {
       const title = this.title;
       const category = this.selectedCategory;
       const description = this.description;
-      const resp = await store.dispatch("", {
+      const resp = await store.dispatch("listingsStore/createListing", {
         title,
         category,
         description,
