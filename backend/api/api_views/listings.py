@@ -32,7 +32,7 @@ mockdb = [
      'description': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam at pulvinar nisl, in lacinia metus. Aenean non pulvinar dui. Vestibulum viverra at lectus sit amet aliquet. Ut luctus fringilla lacus, sit amet tempor mauris. Nulla cursus magna vel ipsum vestibulum, at gravida purus condimentum. In lobortis, quam eu dignissim ornare, elit odio rutrum lacus, sit amet gravida augue libero id est. Fusce dictum dui sed est vulputate, ac facilisis est varius. Pellentesque viverra purus id nisl dictum, id blandit nunc ornare. Ut vehicula tempor ipsum, iaculis aliquam nulla auctor nec. Morbi tincidunt ipsum in nisi pretium tempus. Proin eleifend eleifend urna, eu vehicula justo. Suspendisse aliquet fringilla tortor. Sed tempor, augue sit amet porta imperdiet, metus dui dapibus augue, id interdum felis velit quis elit. Integer ligula diam, accumsan pellentesque lacus at, tristique sodales turpis. Nulla condimentum vitae mauris at bibendum. Etiam sed odio volutpat, efficitur libero ut, ultricies magna. '}
 ]
 
-categories = { "Job":'J', "Classes":'C', "To Buy":'B', "To Sell":'S', "CBOs":'O'};
+categories = { "Job":'J', "Classes":'C', "To Buy":'B', "To Sell":'S', "CBO":'O'};
 
 class CreateListingAPI(generics.CreateAPIView):
     """Create Mock Jobs API Class"""

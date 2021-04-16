@@ -11,7 +11,7 @@ const listingsStore: Module<ListingsState, RootState> = {
   },
   mutations: {
     ["Set"](state: ListingsState, newListings: Listing[]) {
-      state.listings = newListings; // TODO : pass tokens to server
+      state.listings = newListings; 
     },
   },
   actions: {
@@ -22,9 +22,10 @@ const listingsStore: Module<ListingsState, RootState> = {
     async searchListings({ commit }, searchInfo: {terms: string; category: string}) {
       const { data } = await axios.post('search', searchInfo);
       commit("Set", data['data'].map((a: {title: string; description: string}) => { return {title: a.title, description: a.description};}));
+      console.log(data);
       router.push({ name: ROUTE_NAMES.LISTINGS });
     },
-    async createListing({ }, searchInfo: {terms: string; category: string, description: string}) {
+    async createListing({ }, searchInfo: {terms: string; category: string; description: string}) {
       const { data } = await axios.post('createListing', searchInfo);
       router.push({ name: ROUTE_NAMES.NEW_LISTING });
     },

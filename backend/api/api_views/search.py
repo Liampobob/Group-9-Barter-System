@@ -44,10 +44,15 @@ class SearchAPI(generics.CreateAPIView):
         category = data.get('category', None)
         listings = []
         if(category == 'All'):
-            listings = Listing.objects.filter(title__icontains=terms);
+            listings = list(map(lambda x: x.to_dict(), Listing.objects.filter(category='O', title__icontains=terms)))
+            listings.extend(list(map(lambda x: x.to_dict(), Listing.objects.filter(title__icontains=terms).exclude(category='O'))))
         else:
-            listings = Listing.objects.filter(category=categories[category], title__icontains=terms);
-        return JsonResponse({'data': list(map(lambda x: x.to_dict(), listings))}, status=status_codes.HTTP_200_OK)
+            listings = list(map(lambda x: x.to_dict(), Listing.objects.filter(category=categories[category], title__icontains=terms))) 
+
+        print(len(listings))
+        print(listings)
+
+        return JsonResponse({'data': listings}, status=status_codes.HTTP_200_OK)
 
 
 class CreateJobsAPI(generics.CreateAPIView):
