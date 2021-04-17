@@ -27,20 +27,6 @@ const listingsStore: Module<ListingsState, RootState> = {
         commit("SetFeaturedListing", newListing);
         router.push({ name: ROUTE_NAMES.LISTINGS });
     },
-    async createListing({ commit }, payload: {
-        title:string;
-        category:string;
-        description:string
-    }) {
-      try {
-        const { data } = await axios.post('', payload);
-        //commit(, {})
-        //
-      } catch (err) {
-        return { errors: err.message}
-      }
-
-    },
     async searchListings({ commit }, searchInfo: {terms: string; category: string}) {
       const { data } = await axios.post('search', searchInfo);
       commit("SetListings", data['listings'].map((a: {title: string; category: string; description: string; owner: string}) => { return {title: a.title, category: a.category, description: a.description, owner: a.owner};}));
