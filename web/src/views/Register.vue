@@ -198,6 +198,7 @@ export default class Register extends Vue {
   }
   set selectedItem(newSelectedItem: string) {
     this.selectedAccount = newSelectedItem;
+    this.isBusiness = (this.selectedAccount === "Business");
     this.setDropdown();
   }
   setDropdown() {
@@ -211,7 +212,7 @@ export default class Register extends Vue {
   name = "";
   phone = "";
   bio = "";
-
+  isBusiness = "";
   isCBO = false;
   contactName = "";
   workTags = "";
@@ -242,31 +243,24 @@ export default class Register extends Vue {
       const name = this.name.trim();
       /* eslint-disable @typescript-eslint/camelcase */
       const phone_number = this.phone.trim();
-      if (this.selectedAccount === "User") {
-        const bio = this.bio.trim();
-        const resp = await store.dispatch("userStore/registerUser", {
-          username,
-          password,
-          name,
-          phone_number,
-          bio,
-        });
-      } else {
-        const is_cbo = this.isCBO;
-        const contact_name = this.contactName.trim();
-        const work_tags = this.workTags.trim();
-        const description = this.description;
-        const resp = await store.dispatch("userStore/resgisterBusiness", {
-          username,
-          password,
-          name,
-          phone_number,
-          is_cbo,
-          contact_name,
-          work_tags,
-          description,
-        })
-      }
+      const bio = this.bio.trim();
+      const is_business = this.isBusiness;
+      const is_cbo = this.isCBO;
+      const contact_name = this.contactName.trim();
+      const work_tags = this.workTags.trim();
+      const description = this.description;
+      const resp = await store.dispatch("userStore/register", {
+        username,
+        password,
+        name,
+        phone_number,
+        bio,
+        is_business,
+        is_cbo,
+        contact_name,
+        work_tags,
+        description,
+      });
       if (resp && resp["errors"]) {
         this.errors = resp["errors"].includes("403")
           ? ["Username already taken"]

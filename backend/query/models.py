@@ -41,6 +41,16 @@ class User(auth.models.User):
     latitude = models.FloatField(null=True)
     longitude = models.FloatField(null=True)
     bio = models.CharField(null=True, max_length=256)
+    # business-specific fields (nullable)
+    is_business = models.BooleanField(null=False, default=False)
+    is_cbo = models.BooleanField(null=True, default=False)
+    contact_name = models.CharField(null=True, max_length=128)
+    work_tags = models.CharField(null=True, max_length=256)
+    description = models.CharField(null=True, max_length=256)
+    working_days = models.CharField(null=True, max_length=128)
+    start_time = models.IntegerField(null=True)
+    end_time = models.IntegerField(null=True)
+
 
     def __str__(self):
         return self.username
@@ -54,40 +64,23 @@ class User(auth.models.User):
             'username': self.username,
             'name': self.name,
             'phone_number': self.phone_number,
-            'bio': self.bio,
+            'is_business': self.is_business,
             'facebook_id': self.facebook_id,
             'location': {
                 'latitude': self.latitude,
                 'longitude': self.longitude,
             },
         }
-        return d
-
-class BusinessManager(models.Manager):
-    def get_businesses(self):
-        return super().get_queryset()
-
-class Business(User):
-    is_cbo = models.BooleanField(null=False, default=False)
-    contact_name = models.CharField(null=True, max_length=128)
-    work_tags = models.CharField(null=True, max_length=256)
-    description = models.CharField(null=True, max_length=256)
-    working_days = models.CharField(null=True, max_length=128)
-    start_time = models.IntegerField(null=True)
-    end_time = models.IntegerField(null=True)
-
-    def to_dict(self):
-        d = {
-            'name': self.name,
-            'is_cbo' : self.is_cbo,
-            'contact_name': self.contact_name,
-            'phone_number': self.phone_number,
-            'work_tags': self.work_tags,
-            'description': self.description,
-            'working_days': self.working_days,
-            'start_time': self.start_time,
-            'end_time': self.end_time
-        }
+        if self.is_business:
+            d['bio'] = self.bio;
+        else:
+            d['is_cbo'] = self.is_cbo
+            d['contact_name'] = self.contact_name
+            d['work_tags'] = self.work_tags
+            d['description'] = self.description
+            d['working_days'] = self.working_days
+            d['start_time'] = self.start_time
+            d['end_time'] = self.end_time
         return d
 
 class Listing(models.Model):
