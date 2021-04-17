@@ -3,7 +3,7 @@ from rest_framework import status as status_codes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import generics
 from api.serializers import ReviewSerializer
-from query.models import Business, BusinessReviews
+from query.models import User, BusinessReviews
 import json
 
 
