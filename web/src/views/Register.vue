@@ -33,12 +33,7 @@
                         <div class="dropdown-item is-fullwidth">
                           <button
                             class="button is-fullwidth is-inverted"
-                            @click="
-                              () => {
-                                selectedCategory = a;
-                                setDropdown();
-                              }
-                            "
+                            @click="() => { selectedCategory = a; setDropdown(); }"
                           >
                             {{ a }}
                           </button>
@@ -192,7 +187,7 @@ import store from "@/store";
 })
 export default class Register extends Vue {
   accountTypes = ["User", "Business"];
-  selectedAccount = "Business";
+  selectedAccount = "User";
   get selectedItem() {
     return this.selectedAccount;
   }
@@ -223,6 +218,7 @@ export default class Register extends Vue {
   errors: string[] = [];
 
   async register() {
+    console.log(this);
     this.errors = [];
     if (!this.username) {
       this.errors.push("username cannot be empty");
