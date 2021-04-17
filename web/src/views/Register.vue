@@ -33,7 +33,7 @@
                         <div class="dropdown-item is-fullwidth">
                           <button
                             class="button is-fullwidth is-inverted"
-                            @click="() => { selectedCategory = a; setDropdown(); }"
+                            @click="() => { selectedAccount = a; setDropdown(); }"
                           >
                             {{ a }}
                           </button>
