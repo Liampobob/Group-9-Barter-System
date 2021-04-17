@@ -27,7 +27,7 @@ const listingsStore: Module<ListingsState, RootState> = {
         commit("SetFeaturedListing", newListing);
         router.push({ name: ROUTE_NAMES.LISTINGS });
     },
-    async addListing({ commit }, payload: {
+    async createListing({ commit }, payload: {
         title:string;
         category:string;
         description:string
