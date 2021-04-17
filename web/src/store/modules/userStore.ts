@@ -71,6 +71,7 @@ const userStore: Module<UserState, RootState> = {
         name:string;
         phone_number:string;
         bio:string;
+        is_business:boolean;
         is_cbo:boolean;
         contact_name:string;
         work_tags:string;
