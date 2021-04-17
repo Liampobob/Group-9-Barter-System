@@ -90,7 +90,7 @@
                   />
                   <input
                     v-if="selectedAccount==='Business'"
-                    v-model="username"
+                    v-model="name"
                     class="input"
                     type="text"
                     placeholder="Business Name"
@@ -212,7 +212,7 @@ export default class Register extends Vue {
   name = "";
   phone = "";
   bio = "";
-  isBusiness = "";
+  isBusiness = (this.selectedAccount === "Business");
   isCBO = false;
   contactName = "";
   workTags = "";
