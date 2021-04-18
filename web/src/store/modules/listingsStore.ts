@@ -21,11 +21,11 @@ const listingsStore: Module<ListingsState, RootState> = {
     },
     async searchListings({ commit }, searchInfo: {terms: string; category: string}) {
       const { data } = await axios.post('search', searchInfo);
-      commit("Set", data['data'].map((a: {title: string; description: string}) => { return {title: a.title, description: a.description};}));
+      commit("Set", data['data'].map((a: {title: string; category: string; description: string; owner: string}) => { return {title: a.title, category: a.category, description: a.description, owner: a.owner};}));
       console.log(data);
       router.push({ name: ROUTE_NAMES.LISTINGS });
     },
-    async createListing({ }, searchInfo: {terms: string; category: string; description: string}) {
+    async createListing({ }, searchInfo: {terms: string; category: string; description: string; username: string}) {
       const { data } = await axios.post('createListing', searchInfo);
       router.push({ name: ROUTE_NAMES.NEW_LISTING });
     },

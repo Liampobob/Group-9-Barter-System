@@ -134,10 +134,12 @@ export default class NewListing extends Vue {
       const title = this.title;
       const category = this.selectedCategory;
       const description = this.description;
+      const username = store.getters["userStore/user"].username;
       const resp = await store.dispatch("listingsStore/createListing", {
         title,
         category,
         description,
+        username,
       });
       if (resp && resp["errors"]) {
         this.errors = ["An error occured"];

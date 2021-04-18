@@ -9,7 +9,7 @@
   width: 100%;
   }
   .dropdown-content {
-  width: 100%;
+    width: 100%;
   }
   .dropdown-item {
     width: 100%;
@@ -35,7 +35,7 @@
                   <div class="dropdown-menu" id="dropdown-menu-vfor" role="menu">
                     <div class="dropdown-content" v-for="c in categories" v-bind:key="c">
                       <div class="dropdown-item is-fullwidth">
-                        <button class="button is-fullwidth is-inverted" @click="() => {selectedCategory = c; setDropdown();}">
+                        <button class="button is-fullwidth is-text" @click="() => {selectedCategory = c; setDropdown();}">
                           {{ c }}
                         </button>
                       </div>
@@ -65,7 +65,7 @@ export default class Search extends Vue {
   get searchTerms() {return this.terms;}
   set searchTerms(terms) {this.terms = terms;}
 
-  categories = [ "All", "Jobs", "Classes", "To Buy", "To Sell", "CBOs"];
+  categories = [ "All", "Businesses", "Jobs", "Classes", "To Buy", "To Sell", "CBOs"];
   selectedCategory = 'All';
   get selectedItem() {return this.selectedCategory;}
   set selectedItem(newSelectedItem: string) {this.selectedCategory = newSelectedItem; this.setDropdown()}
