@@ -4,6 +4,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework import generics
 from query.models import Listing, User
 import json
+from random import randint;
 
 mockdb = [
     {'title': 'Looking for English Tutor',
@@ -49,7 +50,11 @@ class SearchAPI(generics.CreateAPIView):
         else:
             listings = list(map(lambda x: x.to_dict(), Listing.objects.filter(category=categories[category], title__icontains=terms))) 
 
-        return JsonResponse({'data': listings}, status=status_codes.HTTP_200_OK)
+        count = Listing.objects.count()
+
+        featuredListing = Listing.objects.all()[randint(0, count-1)].to_dict()
+
+        return JsonResponse({'listings': listings, 'featured': featuredListing}, status=status_codes.HTTP_200_OK)
 
 class CreateJobsAPI(generics.CreateAPIView):
     """Create Mock Jobs API Class"""

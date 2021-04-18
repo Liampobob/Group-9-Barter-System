@@ -8,30 +8,40 @@ const listingsStore: Module<ListingsState, RootState> = {
   namespaced: true,
   state: {
     listings: [],
+    featuredListing: {title: '', category:'', description: '', owner: ''},
   },
   mutations: {
-    ["Set"](state: ListingsState, newListings: Listing[]) {
+    ["SetListings"](state: ListingsState, newListings: Listing[]) {
       state.listings = newListings; 
+    },
+    ["SetFeaturedListing"](state: ListingsState, newListing: Listing) {
+      state.featuredListing = newListing; 
     },
   },
   actions: {
     setListings({ commit }, newListings: Listing[]) {
-        commit("Set", newListings);
+        commit("SetListings", newListings);
+        router.push({ name: ROUTE_NAMES.LISTINGS });
+    },
+    setFeaturedListing({ commit }, newListing: Listing) {
+        commit("SetFeaturedListing", newListing);
         router.push({ name: ROUTE_NAMES.LISTINGS });
     },
     async searchListings({ commit }, searchInfo: {terms: string; category: string}) {
       const { data } = await axios.post('search', searchInfo);
-      commit("Set", data['data'].map((a: {title: string; category: string; description: string; owner: string}) => { return {title: a.title, category: a.category, description: a.description, owner: a.owner};}));
+      commit("SetListings", data['listings'].map((a: {title: string; category: string; description: string; owner: string}) => { return {title: a.title, category: a.category, description: a.description, owner: a.owner};}));
+      commit("SetFeaturedListing", {title: data['featured'].title, category: data['featured'].category, description: data['featured'].description, owner: data['featured'].owner});
       console.log(data);
       router.push({ name: ROUTE_NAMES.LISTINGS });
     },
-    async createListing({ }, searchInfo: {terms: string; category: string; description: string; username: string}) {
+    async createListing({ commit }, searchInfo: {terms: string; category: string; description: string; username: string}) {
       const { data } = await axios.post('createListing', searchInfo);
       router.push({ name: ROUTE_NAMES.NEW_LISTING });
     },
   },
   getters: {
     getListings: (state) => state.listings,
+    getFeaturedListing: (state) => state.featuredListing,
   },
 };
 

@@ -16,4 +16,5 @@ export interface UserState {
 
 export interface ListingsState {
   listings: Listing[];
+  featuredListing: Listing;
 }

@@ -5,11 +5,15 @@
         <div class="columns is-centered">
           <div class="column is-5-tablet is-4-desktop is-3-widescreen">
               <div class="box">
-                  <h1>Title: {{theListing.title}}</h1>
-                  <button class="button is-fullwidth is-text" @click="gotoOwner()">
+                  <div class="column">
+                    <h1>Title: {{theListing.title}}</h1>
+                  </div>
+                  <button class="button is-text" @click="gotoOwner()">
                     <h3>Owner: {{theListing.owner}}</h3>
                   </button>
-                  <h3>Description: {{theListing.description}}</h3>
+                  <div class="column">
+                    <h3>Description: {{theListing.description}}</h3>
+                  </div>
               </div>
           </div>
         </div>
@@ -41,17 +45,21 @@ export default class Listings extends Vue {
 
     async mounted() {
         this.title = (this.$route.params["title"] as string) ?? "";
-        let resp;
-        if (this.title) {
-            resp = store.getters["listingsStore/getListings"];
-        }
-        if (resp?.["error"]) {
-        this.error = resp["error"];
-        }
-        for(const listing of resp) {
-            if(listing.title == this.title) {
-                this.listing = listing;
-            }
+        let resp = store.getters["listingsStore/getFeaturedListing"];
+        if(this.title && this.title === resp.title){
+          this.listing = resp;
+        } else {
+          if (this.title) {
+              resp = store.getters["listingsStore/getListings"];
+          }
+          if (resp?.["error"]) {
+          this.error = resp["error"];
+          }
+          for(const listing of resp) {
+              if(listing.title === this.title) {
+                  this.listing = listing;
+              }
+          }
         }
     }
 }
