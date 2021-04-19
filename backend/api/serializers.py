@@ -5,7 +5,7 @@ import re
 
 sorted_days_of_week = ['monday', 'tuesday', 'wednesday',
                        'thursday', 'friday', 'saturday', 'sunday']
-listing_categories = ['J', 'C', 'B', 'S']
+listing_categories = { "Job":'J', "Classes":'C', "To Buy":'B', "To Sell":'S'};
 
 class ListingSerializer(serializers.Serializer):
     title = serializers.CharField(required=True, max_length=128)
@@ -25,8 +25,12 @@ class ListingSerializer(serializers.Serializer):
 
         if not data['category']:
             raise serializers.ValidationError("category cannot be empty")
-        elif data['category'] not in listing_categories:
-            raise serializers.ValidationError("category must have value 'J', 'C', 'B', or 'S'")
+        else:
+            data_category = data['category']
+            if not listing_categories[data_category]:
+                raise serializers.ValidationError("category must have value 'J', 'C', 'B', or 'S'")
+            else:
+                data['category'] = listing_categories[data_category]
 
         return data
 
