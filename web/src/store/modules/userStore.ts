@@ -66,16 +66,16 @@ const userStore: Module<UserState, RootState> = {
       commit(UserActions.ERROR_LOGIN, { error: "Facebook login failed!" });
     },
     async register({ commit }, payload: {
-        username:string;
-        password:string;
-        name:string;
-        phone_number:string;
-        bio:string;
-        is_business:boolean;
-        is_cbo:boolean;
-        contact_name:string;
-        work_tags:string;
-        description:string
+        username: string
+        password: string
+        name: string
+        phone_number: string
+        bio: string
+        is_business: boolean
+        is_cbo: boolean
+        contact_name: string
+        work_tags: string
+        description: string
     }) {
       try {
         const { data } = await axios.post('register', payload);
