@@ -6,15 +6,30 @@ import re
 sorted_days_of_week = ['monday', 'tuesday', 'wednesday',
                        'thursday', 'friday', 'saturday', 'sunday']
 
+class ListingSerializer(serializers.Serializer):
+    title = serializers.CharField(required=True, max_length=128)
+    category = serializers.CharField(required=True, max_length=1)
+    description = serializers.CharField(required=True, max_length=1024)
+    date_posted = serializers.DateTimeField(required=True)
+
+    def validate(self, data):
+        """
+        Check that the model is valid
+        """
+        if not data['title']:
+            raise serializers.ValidationError("title cannot be empty")
+
+        if not data['description']:
+            raise serializers.ValidationError("description cannot be empty")
 
 class UserSerializer(serializers.Serializer):
+    username = serializers.CharField(required=True, max_length=128)
+    password = serializers.CharField(required=True, max_length=128)
     name = serializers.CharField(required=True, max_length=128)
     phone_number = serializers.CharField(required=True, max_length=128)
     latitude = serializers.FloatField(required=False, default=None)
     longitude = serializers.FloatField(required=False, default=None)
     bio = serializers.CharField(required=False, max_length=256, default='')
-    username = serializers.CharField(required=True, max_length=128)
-    password = serializers.CharField(required=True, max_length=128)
 
     def validate(self, data):
         """
