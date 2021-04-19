@@ -65,6 +65,15 @@
                   />
                 </div>
               </div>
+              <div v-if="errors.length" class="mb-3">
+                <article class="message is-danger">
+                  <div class="message-header">
+                    <p v-for="error of errors" v-bind:key="error">
+                      {{ error }}
+                    </p>
+                  </div>
+                </article>
+              </div>
               <div class="is-fullwidth" id="submit_button">
                 <button
                   class="button is-primary is-fullwidth"
@@ -136,6 +145,7 @@ export default class NewListing extends Vue {
         description,
         username,
       });
+      //console.log(resp);
       if (resp && resp["errors"]) {
         this.errors = ["An error occured"];
       }
