@@ -5,11 +5,13 @@ import re
 
 sorted_days_of_week = ['monday', 'tuesday', 'wednesday',
                        'thursday', 'friday', 'saturday', 'sunday']
-listing_categories = { "Job":'J', "Classes":'C', "To Buy":'B', "To Sell":'S'};
+listing_categories = {"Job": 'J', "Classes": 'C',
+                      "To Buy": 'B', "To Sell": 'S'}
+
 
 class ListingSerializer(serializers.Serializer):
     title = serializers.CharField(required=True, max_length=128)
-    category = serializers.CharField(required=True, max_length=1)
+    category = serializers.CharField(required=True, max_length=10)
     description = serializers.CharField(required=True, max_length=1024)
     date_posted = serializers.DateTimeField(required=False)
 
@@ -23,12 +25,13 @@ class ListingSerializer(serializers.Serializer):
         if not data['description']:
             raise serializers.ValidationError("description cannot be empty")
 
-        if not data['category']:
+        if "category" not in data:
             raise serializers.ValidationError("category cannot be empty")
         else:
             data_category = data['category']
             if not listing_categories[data_category]:
-                raise serializers.ValidationError("category must have value 'J', 'C', 'B', or 'S'")
+                raise serializers.ValidationError(
+                    "category must have value 'J', 'C', 'B', or 'S'")
             else:
                 data['category'] = listing_categories[data_category]
 
@@ -70,11 +73,14 @@ class UserSerializer(serializers.Serializer):
         is_business = data['is_business']
         if is_business:
             if not data['work_tags']:
-                raise serializers.ValidationError("businesses must enter work tags")
+                raise serializers.ValidationError(
+                    "businesses must enter work tags")
             if not data['contact_name']:
-                raise serializers.ValidationError("businesses must enter a contact name")
+                raise serializers.ValidationError(
+                    "businesses must enter a contact name")
             if not data['description']:
-                raise serializers.ValidationError("businesses must enter a description")
+                raise serializers.ValidationError(
+                    "businesses must enter a description")
             """
             Check that the start date and the end date are valid (<24), if included
             """
@@ -95,12 +101,14 @@ class UserSerializer(serializers.Serializer):
             if not data['start_time'] or not data['end_time']:
                 pass
             elif data['start_time'] >= data['end_time']:
-                    raise serializers.ValidationError("start_time must be before end_time")
+                raise serializers.ValidationError(
+                    "start_time must be before end_time")
 
             """
             Check that the working_days is a csv of days.
             """
-            if not data['working_days']:
+            if not "working_days" in data:
+                data['working_days'] = None
                 pass
             else:
                 working_days = re.sub(
@@ -117,6 +125,7 @@ class UserSerializer(serializers.Serializer):
                     sorted(working_days, key=sorted_days_of_week.index))
 
         return data
+
 
 class ReviewSerializer(serializers.Serializer):
     business_id = serializers.IntegerField(required=True)

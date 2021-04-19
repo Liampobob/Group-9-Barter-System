@@ -71,8 +71,8 @@ class User(auth.models.User):
                 'longitude': self.longitude,
             },
         }
-        if self.is_business:
-            d['bio'] = self.bio;
+        if not self.is_business:
+            d['bio'] = self.bio
         else:
             d['is_cbo'] = self.is_cbo
             d['contact_name'] = self.contact_name
@@ -102,7 +102,7 @@ class Listing(models.Model):
 
     def to_dict(self):
         d = {
-            'posted_by': self.posted_by,
+            'posted_by': self.posted_by.to_dict(),
             'date_posted': self.date_posted,
             'title': self.title,
             'description': self.description,
