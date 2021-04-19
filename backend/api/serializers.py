@@ -5,12 +5,13 @@ import re
 
 sorted_days_of_week = ['monday', 'tuesday', 'wednesday',
                        'thursday', 'friday', 'saturday', 'sunday']
+listing_categories = ['J', 'C', 'B', 'S']
 
 class ListingSerializer(serializers.Serializer):
     title = serializers.CharField(required=True, max_length=128)
     category = serializers.CharField(required=True, max_length=1)
     description = serializers.CharField(required=True, max_length=1024)
-    date_posted = serializers.DateTimeField(required=True)
+    date_posted = serializers.DateTimeField(required=False)
 
     def validate(self, data):
         """
@@ -21,6 +22,14 @@ class ListingSerializer(serializers.Serializer):
 
         if not data['description']:
             raise serializers.ValidationError("description cannot be empty")
+
+        if not data['category']:
+            raise serializers.ValidationError("category cannot be empty")
+        elif data['category'] not in listing_categories:
+            raise serializers.ValidationError("category must have value 'J', 'C', 'B', or 'S'")
+
+        return data
+
 
 class UserSerializer(serializers.Serializer):
     username = serializers.CharField(required=True, max_length=128)
