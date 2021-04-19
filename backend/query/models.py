@@ -95,7 +95,6 @@ class Listing(models.Model):
     title = models.CharField(max_length=128, null=False)
     category = models.CharField(max_length=1, null=False, choices=CATEGORIES)
     description = models.CharField(max_length=1024, null=False)
-    owner = models.CharField(max_length=80, null=False)
 
     def __str__(self):
         return self.title
@@ -107,6 +106,5 @@ class Listing(models.Model):
             'title': self.title,
             'description': self.description,
             'category': self.category,
-            'owner': self.owner
         }
         return d
