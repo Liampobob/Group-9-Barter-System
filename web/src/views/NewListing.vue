@@ -16,7 +16,7 @@
                   />
                 </div>
               </div>
-              <div class="field">
+              <div class="field" id="choose_category">
                 <label class="label">Category</label>
                 <div class="dropdown">
                   <div class="dropdown-trigger">
@@ -44,12 +44,7 @@
                         <div class="dropdown-item is-fullwidth">
                           <button
                             class="button is-fullwidth is-inverted"
-                            @click="
-                              () => {
-                                selectedCategory = c;
-                                setDropdown();
-                              }
-                            "
+                            @click="() => { selectedCategory = c; setDropdown(); }"
                           >
                             {{ c }}
                           </button>
@@ -69,6 +64,15 @@
                     placeholder="Description"
                   />
                 </div>
+              </div>
+              <div v-if="errors.length" class="mb-3">
+                <article class="message is-danger">
+                  <div class="message-header">
+                    <p v-for="error of errors" v-bind:key="error">
+                      {{ error }}
+                    </p>
+                  </div>
+                </article>
               </div>
               <div class="is-fullwidth" id="submit_button">
                 <button
@@ -99,7 +103,7 @@ import store from "@/store";
 export default class NewListing extends Vue {
   title = "";
 
-  categories = ["Job", "Class", "To Buy", "To Sell", "CBO"];
+  categories = ["Job", "Class", "To Buy", "To Sell"];
   selectedCategory = "Job";
   get selectedItem() {
     return this.selectedCategory;
@@ -141,6 +145,7 @@ export default class NewListing extends Vue {
         description,
         username,
       });
+      //console.log(resp);
       if (resp && resp["errors"]) {
         this.errors = ["An error occured"];
       }

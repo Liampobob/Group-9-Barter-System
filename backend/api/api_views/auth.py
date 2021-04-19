@@ -112,15 +112,30 @@ class RegisterAPI(generics.CreateAPIView):
         except User.DoesNotExist:
             pass
 
-        model = User(username=clean_data['username'],
-                     password=clean_data['password'],
-                     name=clean_data['name'],
-                     phone_number=clean_data['phone_number'],
-                     latitude=clean_data['latitude'],
-                     longitude=clean_data['longitude'],
-                     bio=clean_data['bio'],
-                     isBusiness=False)
-
+        if not clean_data['is_business']:
+            model = User(username=clean_data['username'],
+                         password=clean_data['password'],
+                         name=clean_data['name'],
+                         phone_number=clean_data['phone_number'],
+                         latitude=clean_data['latitude'],
+                         longitude=clean_data['longitude'],
+                         bio=clean_data['bio'],
+                         is_business=clean_data['is_business'])
+        else:
+            model = User(username=clean_data['username'],
+                         password=clean_data['password'],
+                         name=clean_data['name'],
+                         phone_number=clean_data['phone_number'],
+                         latitude=clean_data['latitude'],
+                         longitude=clean_data['longitude'],
+                         is_cbo=clean_data['is_cbo'],
+                         contact_name=clean_data['contact_name'],
+                         work_tags=clean_data['work_tags'],
+                         description=clean_data['description'],
+                         start_time=clean_data['start_time'],
+                         end_time=clean_data['end_time'],
+                         is_business=clean_data['is_business'],
+                         working_days=clean_data['working_days'])
         model.save()
 
         # Set auth cookie to request & get / generate auth token

@@ -30,20 +30,27 @@ class BusinessReviews(models.Model):
         }
         return d
 
-
 class UserManager(models.Manager):
     def get_users(self):
         return super().get_queryset()
 
-
 class User(auth.models.User):
     facebook_id = models.CharField(max_length=32, null=True)
-    name = models.CharField(max_length=80, null=True)
+    name = models.CharField(max_length=128, null=True)
     phone_number = models.CharField(max_length=20, null=True)
     latitude = models.FloatField(null=True)
     longitude = models.FloatField(null=True)
-    isBusiness = models.BooleanField(default=False)
-    bio = models.TextField(null=True)
+    bio = models.CharField(null=True, max_length=256)
+    # business-specific fields (nullable)
+    is_business = models.BooleanField(null=False, default=False)
+    is_cbo = models.BooleanField(null=True, default=False)
+    contact_name = models.CharField(null=True, max_length=128)
+    work_tags = models.CharField(null=True, max_length=256)
+    description = models.CharField(null=True, max_length=256)
+    working_days = models.CharField(null=True, max_length=128)
+    start_time = models.IntegerField(null=True)
+    end_time = models.IntegerField(null=True)
+
 
     def __str__(self):
         return self.username
@@ -57,16 +64,24 @@ class User(auth.models.User):
             'username': self.username,
             'name': self.name,
             'phone_number': self.phone_number,
-            'is_business': self.isBusiness,
-            'bio': self.bio,
+            'is_business': self.is_business,
             'facebook_id': self.facebook_id,
             'location': {
                 'latitude': self.latitude,
                 'longitude': self.longitude,
             },
         }
+        if not self.is_business:
+            d['bio'] = self.bio
+        else:
+            d['is_cbo'] = self.is_cbo
+            d['contact_name'] = self.contact_name
+            d['work_tags'] = self.work_tags
+            d['description'] = self.description
+            d['working_days'] = self.working_days
+            d['start_time'] = self.start_time
+            d['end_time'] = self.end_time
         return d
-
 
 class Listing(models.Model):
     CATEGORIES = (
@@ -74,91 +89,22 @@ class Listing(models.Model):
         ('C', 'Class'),
         ('B', 'toBuy'),
         ('S', 'toSell'),
-        ('O', 'CBO'),
     )
-    title = models.CharField(max_length=80, null=False)
+    posted_by = models.ForeignKey( User, null=True, on_delete=models.SET_NULL )
+    date_posted = models.DateTimeField(default=dt.now(), null=False)
+    title = models.CharField(max_length=128, null=False)
     category = models.CharField(max_length=1, null=False, choices=CATEGORIES)
     description = models.CharField(max_length=1024, null=False)
-    owner = models.CharField(max_length=80, null=False)
 
     def __str__(self):
         return self.title
 
     def to_dict(self):
         d = {
+            'posted_by': self.posted_by.to_dict(),
+            'date_posted': self.date_posted,
             'title': self.title,
             'description': self.description,
             'category': self.category,
-            'owner': self.owner
         }
         return d
-
-
-class BusinessManager(models.Manager):
-    def get_businesses(self):
-        return super().get_queryset()
-
-    def get_user_business(self, user_id):
-        return super().get_queryset().filter(user_id=user_id)
-
-
-class Business(models.Model):
-    user_id = models.IntegerField(null=False)
-    business_name = models.CharField(null=True, max_length=128)
-    working_days = models.CharField(null=True, max_length=128)
-    work_tags = models.CharField(null=True, max_length=256)
-    description = models.CharField(null=True, max_length=256)
-    contact = models.CharField(null=True, max_length=128)
-    start_time = models.IntegerField(null=True)
-    end_time = models.IntegerField(null=True)
-
-    def to_dict(self):
-        d = {
-            'user_id': self.user_id,
-            'business_name': self.business_name,
-            'working_days': self.working_days,
-            'work_tags': self.work_tags,
-            'description': self.description,
-            'contact': self.contact,
-            'start_time': self.start_time,
-            'end_time': self.end_time
-        }
-        return d
-
-
-"""
-# not part of MVP
-class JobManager(models.Manager):
-	def get_jobs_with_client(self, username):
-		return super().get_queryset().filter(client_username=username)
-
-	def get_all_OpenUrgent_jobs(self):
-		return super().get_queryset().filter(
-			(status=Job.Status.OPEN)
-			| (status=Job.Status.URGENT)
-		)
-
-class Job(models.Model):
-	class Status(models.TextChoices):
-		OPEN = "O", _('Open')
-		URGENT = "U", _('Urgent')
-		IN_PROGRESS = "P", _('In Progress')
-		COMPLETE = "C", _('Complete')
-		CANCELLED = "X", _('Cancelled')
-
-	job_id = models.IntegerField(primary_key=True)
-	client_username = models.ForeignKey(
-		User,
-		on_delete=models.SET_NULL
-	)
-	date_posted = models.DateTimeField(default=dt.now())
-	title = models.CharField(max_length=100)
-	job_description = models.TextField(max_length=1000)
-	status = models.CharField(
-		max_length=1,
-		choices=Status.choices,
-		default=Status.OPEN
-	)
-	date_closed = models.DateField(null=True, blank=True)
-	worker_usernames = models.ManyToManyField(User)
-"""
