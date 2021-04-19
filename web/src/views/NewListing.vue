@@ -103,7 +103,7 @@ import store from "@/store";
 export default class NewListing extends Vue {
   title = "";
 
-  categories = ["Job", "Class", "To Buy", "To Sell", "CBO"];
+  categories = ["Job", "Class", "To Buy", "To Sell"];
   selectedCategory = "Job";
   get selectedItem() {
     return this.selectedCategory;

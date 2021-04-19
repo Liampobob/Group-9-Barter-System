@@ -89,7 +89,6 @@ class Listing(models.Model):
         ('C', 'Class'),
         ('B', 'toBuy'),
         ('S', 'toSell'),
-        ('O', 'CBO'),
     )
     posted_by = models.ForeignKey( User, null=True, on_delete=models.SET_NULL )
     date_posted = models.DateTimeField(default=dt.now(), null=False)
