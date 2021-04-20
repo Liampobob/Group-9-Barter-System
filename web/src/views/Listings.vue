@@ -15,6 +15,9 @@
                         {{ getFeaturedListing.title }}
                   </button>
                 </div>
+                <div class="column" v-if="getListings.length === 0">
+                  <h3>No Results Found</h3>
+                </div>
                 <ul v-if="getListings.length != 0" id="listings">
                   <div class="column">
                     <h3>Results</h3>
@@ -58,12 +61,5 @@ export default class Listings extends Vue {
   openBusiness(username: string) {
     this.$router.push("/worker/" + username);
   }
-
-  async mounted() {
-    const resp = store.getters["listingsStore/getListings"];
-    if(resp.length == 0) {
-          store.dispatch("listingsStore/searchListings", {terms: "", category:"All"});
-    }
-}
 }
 </script>

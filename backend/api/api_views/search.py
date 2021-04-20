@@ -74,14 +74,14 @@ class CreateJobsAPI(generics.CreateAPIView):
 
     def get(self, request):
 
-        u = User(username=str(self.x),
-                 password='test',
-                 name='test',
-                 phone_number='test',
-                 latitude='test',
-                 longitude='test',
-                 bio='test',
-                 isBusiness=False)
+        u = User(username='jdoe',
+                 password='password',
+                 name='John Doe',
+                 phone_number='620-234-8921',
+                 latitude=0,
+                 longitude=0,
+                 bio= 'Lorem ipsum dolor sit amet',
+                 is_business=False)
 
         u.save()
 

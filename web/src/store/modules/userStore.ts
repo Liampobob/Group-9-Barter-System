@@ -57,13 +57,13 @@ const userStore: Module<UserState, RootState> = {
       const { data } = await axios.post('fb_auth', { accessToken: payload.accessToken });
       // TODO - get email from facebook if possible
       commit(UserActions.LOGIN, { user: data['user'], token: data['token'] });
-      router.push({ name: ROUTE_NAMES.LISTINGS });
+      router.push({ name: ROUTE_NAMES.SEARCH });
     },
     async auth({ commit }, payload: { username: string; password: string }) {
       try {
         const { data } = await axios.post('auth', payload);
         commit(UserActions.LOGIN, { user: data['user'], token: data['token'] });
-        router.push({ name: ROUTE_NAMES.LISTINGS });
+        router.push({ name: ROUTE_NAMES.SEARCH });
       } catch (err) {
         commit(UserActions.ERROR_LOGIN, { error: 'No user match the provided credentials' });
       }
@@ -104,7 +104,7 @@ const userStore: Module<UserState, RootState> = {
           is_business: payload.is_business,
         });
         commit(UserActions.LOGIN, { user: data['user'], token: data['token'] });
-        router.push({ name: ROUTE_NAMES.LISTINGS });
+        router.push({ name: ROUTE_NAMES.SEARCH });
         return null;
       } catch (err) {
         commit(UserActions.ERROR_LOGIN, { error: 'Error in request' });

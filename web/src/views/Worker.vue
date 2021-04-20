@@ -69,8 +69,8 @@
                     <p>{{ selectedUser.working_days }}</p>
                   </div>
                   <br />
-                  <label class="label">Reviews</label>
-                  <div class="control has-icons-left">
+                  <label class="label" v-if="selectedUser.is_business">Reviews</label>
+                  <div class="control has-icons-left" v-if="selectedUser.is_business">
                     <input
                       type="number"
                       class="input"
@@ -89,7 +89,7 @@
                       </div>
                     </article>
                   </div>
-                  <div class="control">
+                  <div class="control" v-if="selectedUser.is_business">
                     <textarea
                       v-model="review"
                       class="input is-fullwidth"
@@ -107,6 +107,7 @@
                   <button
                     class="button is-info is-fullwidth"
                     @click="submitReview"
+                    v-if="selectedUser.is_business"
                   >
                     Submit
                   </button>
