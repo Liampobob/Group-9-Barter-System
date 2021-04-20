@@ -107,8 +107,8 @@ const userStore: Module<UserState, RootState> = {
     },
     async getWorker({ commit }, payload: { username: string }) {
       try {
-        const { data } = await axios.get(`worker?username=${payload.username}`);
-        commit(UserActions.LOAD_USER, data['user']);
+        const { data } = await axios.get<{ user: User }>(`worker?username=${payload.username}`);
+        commit(UserActions.LOAD_USER, data.user);
       } catch (err) {
         return { error: 'An error occured.' }
       }
