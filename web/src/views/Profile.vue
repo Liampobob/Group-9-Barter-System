@@ -1,123 +1,125 @@
 <template>
-  <section class="hero is-primary is-fullheight">
+  <div>
     <navbar/>
-    <div class="hero-body">
-      <div class="container">
-        <div class="columns is-centered">
-          <div class="column is-5-tablet is-4-desktop is-3-widescreen">
-            <div class="box has-text-centered">
-              <div v-if="!editing">
-                <div v-if="selectedUser">
+    <section class="hero is-primary is-fullheight-with-navbar">
+      <div class="hero-body">
+        <div class="container">
+          <div class="columns is-centered">
+            <div class="column is-5-tablet is-4-desktop is-3-widescreen">
+              <div class="box has-text-centered">
+                <div v-if="!editing">
+                  <div v-if="selectedUser">
+                    <div class="message-header">
+                      <p>My Profile</p>
+                      <button aria-label="delete" @click="edit(true)">
+                        <span class="icon is-small">
+                          <i class="fas fa-edit"></i>
+                        </span>
+                        <span>Edit</span>
+                      </button>
+                    </div>
+                    <div class="field">
+                      <label class="label">Name</label>
+                      <p>{{ selectedUser.name }}</p>
+                    </div>
+                    <div class="field">
+                      <label class="label">Username</label>
+                      <p>{{ selectedUser.username }}</p>
+                    </div>
+                    <div class="field">
+                      <label class="label">Phone</label>
+                      <p>{{ selectedUser.phone_number }}</p>
+                    </div>
+                    <div class="field">
+                      <label class="label">Location</label>
+                      <p>{{ selectedUser.location?.latitude }}</p>
+                      <p>{{ selectedUser.location?.longitude }}</p>
+                    </div>
+                    <div class="field">
+                      <label class="label">Bio</label>
+                      <p>{{ selectedUser.bio }}</p>
+                    </div>
+                  </div>
+                </div>
+                <div v-if="editing">
                   <div class="message-header">
                     <p>My Profile</p>
-                    <button aria-label="delete" @click="edit(true)">
-                      <span class="icon is-small">
-                        <i class="fas fa-edit"></i>
-                      </span>
-                      <span>Edit</span>
-                    </button>
                   </div>
                   <div class="field">
                     <label class="label">Name</label>
-                    <p>{{ selectedUser.name }}</p>
+                    <input
+                      class="input"
+                      type="text"
+                      placeholder="Name"
+                      v-model="editedProfile.name"
+                    />
                   </div>
                   <div class="field">
                     <label class="label">Username</label>
-                    <p>{{ selectedUser.username }}</p>
+                    <input
+                      class="input"
+                      type="text"
+                      placeholder="Username"
+                      v-model="editedProfile.username"
+                    />
                   </div>
                   <div class="field">
                     <label class="label">Phone</label>
-                    <p>{{ selectedUser.phone_number }}</p>
-                  </div>
-                  <div class="field">
-                    <label class="label">Location</label>
-                    <p>{{ selectedUser.location?.latitude }}</p>
-                    <p>{{ selectedUser.location?.longitude }}</p>
+                    <input
+                      class="input"
+                      type="text"
+                      placeholder="Phone Number"
+                      v-model="editedProfile.phone_number"
+                    />
                   </div>
                   <div class="field">
                     <label class="label">Bio</label>
-                    <p>{{ selectedUser.bio }}</p>
+                    <input
+                      class="input"
+                      type="text"
+                      placeholder="Bio"
+                      v-model="editedProfile.bio"
+                    />
                   </div>
-                </div>
-              </div>
-              <div v-if="editing">
-                <div class="message-header">
-                  <p>My Profile</p>
-                </div>
-                <div class="field">
-                  <label class="label">Name</label>
-                  <input
-                    class="input"
-                    type="text"
-                    placeholder="Name"
-                    v-model="editedProfile.name"
-                  />
-                </div>
-                <div class="field">
-                  <label class="label">Username</label>
-                  <input
-                    class="input"
-                    type="text"
-                    placeholder="Username"
-                    v-model="editedProfile.username"
-                  />
-                </div>
-                <div class="field">
-                  <label class="label">Phone</label>
-                  <input
-                    class="input"
-                    type="text"
-                    placeholder="Phone Number"
-                    v-model="editedProfile.phone_number"
-                  />
-                </div>
-                <div class="field">
-                  <label class="label">Bio</label>
-                  <input
-                    class="input"
-                    type="text"
-                    placeholder="Bio"
-                    v-model="editedProfile.bio"
-                  />
-                </div>
-                <div class="buttons is-centered">
-                  <button class="button is-success" @click="saveEditFields()">
-                    <span class="icon is-small">
-                      <i class="fas fa-check"></i>
-                    </span>
-                    <span>Save</span>
-                  </button>
-                  <button
-                    class="button is-danger is-outlined"
-                    @click="edit(false)"
-                  >
-                    <span>Cancel</span>
-                    <span class="icon is-small">
-                      <i class="fas fa-times"></i>
-                    </span>
-                  </button>
-                </div>
-                <div v-if="error">
-                  <article class="message is-danger">
-                    <div class="message-body">
-                      {{ error }}
-                    </div>
-                  </article>
+                  <div class="buttons is-centered">
+                    <button class="button is-success" @click="saveEditFields()">
+                      <span class="icon is-small">
+                        <i class="fas fa-check"></i>
+                      </span>
+                      <span>Save</span>
+                    </button>
+                    <button
+                      class="button is-danger is-outlined"
+                      @click="edit(false)"
+                    >
+                      <span>Cancel</span>
+                      <span class="icon is-small">
+                        <i class="fas fa-times"></i>
+                      </span>
+                    </button>
+                  </div>
+                  <div v-if="error">
+                    <article class="message is-danger">
+                      <div class="message-body">
+                        {{ error }}
+                      </div>
+                    </article>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
+  </div>
 </template>
 
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
 import { User } from "@/types/User";
-import Navbar from "./Navbar.vue";
+import Navbar from "../components/Navbar.vue";
 
 @Options({
   components: {Navbar},

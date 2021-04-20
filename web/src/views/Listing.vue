@@ -1,26 +1,28 @@
 <template>
-  <section class="hero is-primary is-fullheight">
+  <div>
     <navbar/>
-    <div class="hero-body">
-      <div class="container">
-        <div class="columns is-centered">
-          <div class="column is-5-tablet is-4-desktop is-3-widescreen">
-            <div class="box">
-              <div class="column">
-                <h1>Title: {{ theListing.title }}</h1>
-              </div>
-              <button class="button is-text" @click="gotoOwner()">
-                <h3>Owner: {{ theListing.posted_by?.name }}</h3>
-              </button>
-              <div class="column">
-                <h3>Description: {{ theListing.description }}</h3>
+    <section class="hero is-primary is-fullheight-with-navbar">
+      <div class="hero-body">
+        <div class="container">
+          <div class="columns is-centered">
+            <div class="column is-5-tablet is-4-desktop is-3-widescreen">
+              <div class="box">
+                <div class="column">
+                  <h1>Title: {{ theListing.title }}</h1>
+                </div>
+                <button class="button is-text" @click="gotoOwner()">
+                  <h3>Owner: {{ theListing.posted_by?.name }}</h3>
+                </button>
+                <div class="column">
+                  <h3>Description: {{ theListing.description }}</h3>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
+  </div>
 </template>
 
 <script lang="ts">
@@ -28,7 +30,7 @@ import { Options, Vue } from "vue-class-component";
 import { Listing } from "@/types/Listing";
 import { ROUTE_NAMES, router } from "@/router";
 import store from "@/store"; 
-import Navbar from "./Navbar.vue";
+import Navbar from "../components/Navbar.vue";
 @Options({
   components: {Navbar},
   computed: {},

@@ -18,49 +18,51 @@
 
 
 <template>
-  <section class="hero is-primary is-fullheight">
+  <div>
     <navbar/>
-    <div class="hero-body">
-      <div class="container">
-        <div class="columns is-centered">
-          <div class="column is-5-tablet is-4-desktop is-3-widescreen">
-            <div class="has-text-centered">
-              <div class="dropdown">
-                <div class="dropdown-trigger">
-                  <button class="button is-fullwidth" aria-haspopup="true" aria-controls="dropdown-menu" @click="setDropdown()">
-                    <span>{{ selectedItem }}</span>
-                    <span class="icon is-medium">
-                      <i class="fas fa-angle-down" aria-hidden="true"></i>
-                    </span>
-                  </button>
-                  <div class="dropdown-menu" id="dropdown-menu-vfor" role="menu">
-                    <div class="dropdown-content" v-for="c in categories" v-bind:key="c">
-                      <div class="dropdown-item is-fullwidth">
-                        <button class="button is-fullwidth is-text" @click="() => {selectedCategory = c; setDropdown();}">
-                          {{ c }}
-                        </button>
+    <section class="hero is-primary is-fullheight-with-navbar">
+      <div class="hero-body">
+        <div class="container">
+          <div class="columns is-centered">
+            <div class="column is-5-tablet is-4-desktop is-3-widescreen">
+              <div class="has-text-centered">
+                <div class="dropdown">
+                  <div class="dropdown-trigger">
+                    <button class="button is-fullwidth" aria-haspopup="true" aria-controls="dropdown-menu" @click="setDropdown()">
+                      <span>{{ selectedItem }}</span>
+                      <span class="icon is-medium">
+                        <i class="fas fa-angle-down" aria-hidden="true"></i>
+                      </span>
+                    </button>
+                    <div class="dropdown-menu" id="dropdown-menu-vfor" role="menu">
+                      <div class="dropdown-content" v-for="c in categories" v-bind:key="c">
+                        <div class="dropdown-item is-fullwidth">
+                          <button class="button is-fullwidth is-text" @click="() => {selectedCategory = c; setDropdown();}">
+                            {{ c }}
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
+                <input ref="searchBar is-large is-rounded  " class="input" type="text" v-model="searchTerms" placeholder="Search for listings">
+                <button class="button is-fullwidth" @click="searchForListings">
+                  Search
+                </button>
               </div>
-              <input ref="searchBar is-large is-rounded  " class="input" type="text" v-model="searchTerms" placeholder="Search for listings">
-              <button class="button is-fullwidth" @click="searchForListings">
-                Search
-              </button>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
+  </div>
 </template>
 
 <script lang="ts">
 
 import { Options, Vue } from "vue-class-component";
 import store from "@/store";
-import Navbar from "./Navbar.vue";
+import Navbar from "../components/Navbar.vue";
 
 @Options({
   components: {Navbar},

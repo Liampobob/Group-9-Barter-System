@@ -1,5 +1,7 @@
 <template>
-  <section class="hero is-primary is-fullheight">
+  <div>
+    <navbar/>
+    <section class="hero is-primary is-fullheight-with-navbar">
     <div class="hero-body">
       <div class="container">
         <div class="columns is-centered">
@@ -11,17 +13,16 @@
       </div>
     </div>
   </section>
+  </div>
 </template>
 
 <script lang="ts">
-import HelloWorld from "@/components/HelloWorld.vue";
 import { Options, Vue } from "vue-class-component";
-import { mapActions } from "vuex";
-import axios from "@/shared/axios";
+import Navbar from "../components/Navbar.vue";
 
 @Options({
   components: {
-    HelloWorld,
+    Navbar
   },
   computed: {
   },

@@ -1,70 +1,72 @@
 <template>
-  <section class="hero is-primary is-fullheight"> 
+  <div>
     <navbar/>
-    <div class="hero-body">
-      <div class="container">
-        <div class="columns is-centered">
-          <div class="column is-5-tablet is-4-desktop is-3-widescreen">
-            <div class="box has-text-centered">
-              <div class="field">
-                <label class="label">Username</label>
-                <div class="control has-icons-left">
-                  <input
-                    class="input"
-                    type="text"
-                    placeholder="Username"
-                    v-model="username"
-                  />
-                  <span class="icon is-small is-left">
-                    <i class="fas fa-user"></i>
-                  </span>
-                </div>
-              </div>
-              <div class="field">
-                <label class="label">Password</label>
-                <div class="control has-icons-left">
-                  <input
-                    class="input"
-                    type="password"
-                    placeholder="Password"
-                    v-model="password"
-                  />
-                  <span class="icon is-small is-left">
-                    <i class="fas fa-key"></i>
-                  </span>
-                </div>
-              </div>
-              <div v-if="errors.length" class="mb-3">
-                <article class="message is-danger">
-                  <div class="message-header">
-                    <p v-for="error of errors" v-bind:key="error">
-                      {{ error }}
-                    </p>
+    <section class="hero is-primary is-fullheight"> 
+      <div class="hero-body">
+        <div class="container">
+          <div class="columns is-centered">
+            <div class="column is-5-tablet is-4-desktop is-3-widescreen">
+              <div class="box has-text-centered">
+                <div class="field">
+                  <label class="label">Username</label>
+                  <div class="control has-icons-left">
+                    <input
+                      class="input"
+                      type="text"
+                      placeholder="Username"
+                      v-model="username"
+                    />
+                    <span class="icon is-small is-left">
+                      <i class="fas fa-user"></i>
+                    </span>
                   </div>
-                </article>
+                </div>
+                <div class="field">
+                  <label class="label">Password</label>
+                  <div class="control has-icons-left">
+                    <input
+                      class="input"
+                      type="password"
+                      placeholder="Password"
+                      v-model="password"
+                    />
+                    <span class="icon is-small is-left">
+                      <i class="fas fa-key"></i>
+                    </span>
+                  </div>
+                </div>
+                <div v-if="errors.length" class="mb-3">
+                  <article class="message is-danger">
+                    <div class="message-header">
+                      <p v-for="error of errors" v-bind:key="error">
+                        {{ error }}
+                      </p>
+                    </div>
+                  </article>
+                </div>
+                <div class="buttons are-medium">
+                  <button class="button is-grey is-fullwidth" @click="login">
+                    <i class="fas fa-sign-in-alt mr-1"></i>
+                    Login
+                  </button>
+                </div>
+                <div class="buttons are-medium">
+                  <button class="button is-info is-fullwidth" @click="logInWithFacebook">
+                    <i class="fab fa-facebook-f mr-1"></i>
+                    Login with Facebook
+                  </button>
+                </div>
+                <p class="help is-danger is-size-6">{{ error?.error }}</p>
+                <router-link class="has-text-link" :to="{ path: '/register' }"
+                  >Register</router-link
+                >
               </div>
-              <div class="buttons are-medium">
-                <button class="button is-grey is-fullwidth" @click="login">
-                  <i class="fas fa-sign-in-alt mr-1"></i>
-                  Login
-                </button>
-              </div>
-              <div class="buttons are-medium">
-                <button class="button is-info is-fullwidth" @click="logInWithFacebook">
-                  <i class="fab fa-facebook-f mr-1"></i>
-                  Login with Facebook
-                </button>
-              </div>
-              <p class="help is-danger is-size-6">{{ error?.error }}</p>
-              <router-link class="has-text-link" :to="{ path: '/register' }"
-                >Register</router-link
-              >
             </div>
           </div>
         </div>
       </div>
+    </section>
     </div>
-  </section>
 </template>
 
 <script lang="ts">
@@ -73,7 +75,7 @@
 
 import { Options, Vue } from "vue-class-component";
 import { mapGetters } from "vuex";
-import  Navbar from "./Navbar.vue";
+import  Navbar from "../components/Navbar.vue";
 
 @Options({
   components: {Navbar},
