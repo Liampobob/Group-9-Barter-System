@@ -1,6 +1,8 @@
+import { User } from "./User";
+
 export interface Listing {
     title: string;
     category: string;
     description: string;
-    owner: string;
+    posted_by: User;
   }

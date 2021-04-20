@@ -66,19 +66,37 @@ const userStore: Module<UserState, RootState> = {
       commit(UserActions.ERROR_LOGIN, { error: "Facebook login failed!" });
     },
     async register({ commit }, payload: {
-        username: string
-        password: string
-        name: string
-        phone_number: string
-        bio: string
-        is_business: boolean
-        is_cbo: boolean
-        contact_name: string
-        work_tags: string
-        description: string
+      username: string
+      password: string
+      name: string
+      phone_number: string
+      bio: string
+      is_business: boolean
+      is_cbo: boolean
+      contact_name: string
+      work_tags: string
+      description: string
     }) {
       try {
-        const { data } = await axios.post('register', payload);
+        const { data } = await axios.post('register', payload.is_business ? {
+          username: payload.username,
+          password: payload.password,
+          name: payload.name,
+          phone_number: payload.phone_number,
+          is_business: payload.is_business,
+          is_cbo: payload.is_cbo,
+          contact_name: payload.contact_name,
+          work_tags: payload.work_tags,
+          description: payload.description
+          // TODO : add start / end working hours
+        } : {
+          username: payload.username,
+          password: payload.password,
+          name: payload.name,
+          phone_number: payload.phone_number,
+          bio: payload.bio,
+          is_business: payload.is_business,
+        });
         commit(UserActions.LOGIN, { user: data['user'], token: data['token'] });
         router.push({ name: ROUTE_NAMES.LISTINGS });
         return null;

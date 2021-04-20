@@ -8,35 +8,38 @@ const listingsStore: Module<ListingsState, RootState> = {
   namespaced: true,
   state: {
     listings: [],
-    featuredListing: {title: '', category:'', description: '', owner: ''},
+    featuredListing: { title: '', category: '', description: '', owner: '' },
   },
   mutations: {
     ["SetListings"](state: ListingsState, newListings: Listing[]) {
-      state.listings = newListings; 
+      state.listings = newListings;
     },
     ["SetFeaturedListing"](state: ListingsState, newListing: Listing) {
-      state.featuredListing = newListing; 
+      state.featuredListing = newListing;
     },
+    ["AddListing"](state: ListingsState, newListing: Listing) {
+      state.listings.push(newListing);
+    }
   },
   actions: {
     setListings({ commit }, newListings: Listing[]) {
-        commit("SetListings", newListings);
-        router.push({ name: ROUTE_NAMES.LISTINGS });
-    },
-    setFeaturedListing({ commit }, newListing: Listing) {
-        commit("SetFeaturedListing", newListing);
-        router.push({ name: ROUTE_NAMES.LISTINGS });
-    },
-    async searchListings({ commit }, searchInfo: {terms: string; category: string}) {
-      const { data } = await axios.post('search', searchInfo);
-      commit("SetListings", data['listings'].map((a: {title: string; category: string; description: string; owner: string}) => { return {title: a.title, category: a.category, description: a.description, owner: a.owner};}));
-      commit("SetFeaturedListing", {title: data['featured'].title, category: data['featured'].category, description: data['featured'].description, owner: data['featured'].owner});
-      console.log(data);
+      commit("SetListings", newListings);
       router.push({ name: ROUTE_NAMES.LISTINGS });
     },
-    async createListing({ commit }, searchInfo: {terms: string; category: string; description: string; username: string}) {
+    setFeaturedListing({ commit }, newListing: Listing) {
+      commit("SetFeaturedListing", newListing);
+      router.push({ name: ROUTE_NAMES.LISTINGS });
+    },
+    async searchListings({ commit }, searchInfo: { terms: string; category: string }) {
+      const { data } = await axios.post('search', searchInfo);
+      commit("SetListings", data['listings']);
+      commit("SetFeaturedListing", { ...data['featured'] });
+      router.push({ name: ROUTE_NAMES.LISTINGS });
+    },
+    async createListing({ commit }, searchInfo: { title: string; category: string; description: string; }) {
       const { data } = await axios.post('createListing', searchInfo);
-      router.push({ name: ROUTE_NAMES.NEW_LISTING });
+      commit("AddListing", data['listing'])
+      router.push({ name: ROUTE_NAMES.LISTING, params: { title: data['listing']['title'] ?? '' } });
     },
   },
   getters: {

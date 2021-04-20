@@ -111,7 +111,6 @@ class RegisterAPI(generics.CreateAPIView):
                                 status=status_codes.HTTP_403_FORBIDDEN)
         except User.DoesNotExist:
             pass
-
         if not clean_data['is_business']:
             model = User(username=clean_data['username'],
                          password=clean_data['password'],

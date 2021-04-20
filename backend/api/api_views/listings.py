@@ -6,7 +6,8 @@ from query.models import Listing, User
 from api.serializers import ListingSerializer
 import json
 
-categories = { "Job":'J', "Class":'C', "To Buy":'B', "To Sell":'S', "CBO":'O'}
+categories = {"Job": 'J', "Class": 'C',
+              "To Buy": 'B', "To Sell": 'S', "CBO": 'O'}
 mockdb = [
     {'title': 'Looking for English Tutor',
      'category': 'J',
@@ -52,7 +53,6 @@ class CreateListingAPI(generics.CreateAPIView):
         if not user:
             return JsonResponse({'errors': 'An error occured, could not retrieve user associated with auth token.'},
                                 status=status_codes.HTTP_403_FORBIDDEN)
-
         model = Listing(
             posted_by=user,
             title=clean_data['title'],

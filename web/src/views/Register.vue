@@ -33,7 +33,12 @@
                         <div class="dropdown-item is-fullwidth">
                           <button
                             class="button is-fullwidth is-inverted"
-                            @click="() => { selectedAccount = a; setDropdown(); }"
+                            @click="
+                              () => {
+                                selectedAccount = a;
+                                setDropdown();
+                              }
+                            "
                           >
                             {{ a }}
                           </button>
@@ -44,22 +49,22 @@
                 </div>
               </div>
               <form>
-                <div class="field" id="select_isCBO" v-if="selectedAccount==='Business'">
-                  <input
-                  v-model="isCBO"
-                  class="checkbox"
-                  type="checkbox"
-                  />
+                <div
+                  class="field"
+                  id="select_isCBO"
+                  v-if="selectedAccount === 'Business'"
+                >
+                  <input v-model="isCBO" class="checkbox" type="checkbox" />
                   This business is a Community-Based Organisation
                 </div>
                 <div class="field" id="input_username">
                   <label class="label">Username</label>
                   <div class="control">
                     <input
-                    v-model="username"
-                    class="input"
-                    type="text"
-                    placeholder="Username"
+                      v-model="username"
+                      class="input"
+                      type="text"
+                      placeholder="Username"
                     />
                   </div>
                 </div>
@@ -78,14 +83,14 @@
                   <label class="label">Name</label>
                   <div class="control">
                     <input
-                      v-if="selectedAccount==='User'"
+                      v-if="selectedAccount === 'User'"
                       v-model="name"
                       class="input"
                       type="text"
                       placeholder="Full Name"
                     />
                     <input
-                      v-if="selectedAccount==='Business'"
+                      v-if="selectedAccount === 'Business'"
                       v-model="name"
                       class="input"
                       type="text"
@@ -104,15 +109,15 @@
                     />
                   </div>
                 </div>
-                <div v-if="selectedAccount==='Business'">
+                <div v-if="selectedAccount === 'Business'">
                   <div class="field" id="input_contactname">
                     <label class="label">Contact Name</label>
                     <div class="control">
                       <input
-                      v-model="contactName"
-                      class="input"
-                      type="text"
-                      placeholder="Contact Name"
+                        v-model="contactName"
+                        class="input"
+                        type="text"
+                        placeholder="Contact Name"
                       />
                     </div>
                   </div>
@@ -120,34 +125,42 @@
                     <label class="label">Work Tags</label>
                     <div class="control">
                       <input
-                      v-model="workTags"
-                      class="input"
-                      type="text"
-                      placeholder="Electrical, Sewing, ..."
+                        v-model="workTags"
+                        class="input"
+                        type="text"
+                        placeholder="Electrical, Sewing, ..."
                       />
                     </div>
                   </div>
                 </div>
                 <div id="input_textarea">
-                  <div class="field" id="input_bio" v-if="selectedAccount==='User'">
+                  <div
+                    class="field"
+                    id="input_bio"
+                    v-if="selectedAccount === 'User'"
+                  >
                     <label class="label">Bio</label>
                     <div class="control">
                       <textarea
-                      v-model="bio"
-                      class="input is-fullwidth"
-                      type="text"
-                      placeholder="Your bio..."
+                        v-model="bio"
+                        class="input is-fullwidth"
+                        type="text"
+                        placeholder="Your bio..."
                       />
                     </div>
                   </div>
-                  <div class="field" id="input_description" v-if="selectedAccount==='Business'">
+                  <div
+                    class="field"
+                    id="input_description"
+                    v-if="selectedAccount === 'Business'"
+                  >
                     <label class="label">Description</label>
                     <div class="control">
                       <textarea
-                      v-model="description"
-                      class="input is-fullwidth"
-                      type="text"
-                      placeholder="Business Description"
+                        v-model="description"
+                        class="input is-fullwidth"
+                        type="text"
+                        placeholder="Business Description"
                       />
                     </div>
                   </div>
@@ -181,7 +194,6 @@
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
-import store from "@/store";
 
 @Options({
   components: {},
@@ -195,12 +207,12 @@ export default class Register extends Vue {
   }
   set selectedItem(newSelectedItem: string) {
     this.selectedAccount = newSelectedItem;
-    this.isBusiness = (this.selectedAccount === "Business");
+    this.isBusiness = this.selectedAccount === "Business";
+    console.log(this.isBusiness);
     this.setDropdown();
   }
   setDropdown() {
     const dropdown = document.querySelector(".dropdown");
-    console.log(dropdown);
     if (dropdown != null) dropdown.classList.toggle("is-active");
   }
 
@@ -209,13 +221,11 @@ export default class Register extends Vue {
   name = "";
   phone = "";
   bio = "";
-  isBusiness = (this.selectedAccount === "Business");
+  isBusiness = this.selectedAccount === "Business";
   isCBO = false;
   contactName = "";
   workTags = "";
   description = "";
-
-
 
   errors: string[] = [];
 
@@ -242,12 +252,12 @@ export default class Register extends Vue {
       /* eslint-disable @typescript-eslint/camelcase */
       const phone_number = this.phone.trim();
       const bio = this.bio.trim();
-      const is_business = this.isBusiness;
+      const is_business = this.selectedAccount === "Business";
       const is_cbo = this.isCBO;
       const contact_name = this.contactName.trim();
       const work_tags = this.workTags.trim();
       const description = this.description;
-      const resp = await store.dispatch("userStore/register", {
+      const resp = await this.$store.dispatch("userStore/register", {
         username,
         password,
         name,

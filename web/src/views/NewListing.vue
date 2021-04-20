@@ -44,7 +44,12 @@
                         <div class="dropdown-item is-fullwidth">
                           <button
                             class="button is-fullwidth is-inverted"
-                            @click="() => { selectedCategory = c; setDropdown(); }"
+                            @click="
+                              () => {
+                                selectedCategory = c;
+                                setDropdown();
+                              }
+                            "
                           >
                             {{ c }}
                           </button>
@@ -94,7 +99,6 @@
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
-import { Listing } from "@/types/Listing";
 import store from "@/store";
 @Options({
   components: {},
@@ -122,7 +126,6 @@ export default class NewListing extends Vue {
   errors: string[] = [];
 
   async submit() {
-    console.log("hey");
     this.errors = [];
     if (!this.title) {
       this.errors.push("title cannot be empty");
@@ -138,13 +141,12 @@ export default class NewListing extends Vue {
       const title = this.title;
       const category = this.selectedCategory;
       const description = this.description;
-      const username = store.getters["userStore/user"].username;
       const resp = await store.dispatch("listingsStore/createListing", {
         title,
         category,
         description,
-        username,
       });
+
       //console.log(resp);
       if (resp && resp["errors"]) {
         this.errors = ["An error occured"];

@@ -84,22 +84,20 @@ class UserSerializer(serializers.Serializer):
             """
             Check that the start date and the end date are valid (<24), if included
             """
-            if not data['start_time']:
-                pass
-            elif data['start_time'] > 24:
+            if "start_time" in data and data['start_time'] > 24:
                 raise serializers.ValidationError(
                     "start_time must be between 0 and 24")
 
-            if not data['end_time']:
-                pass
-            elif data['end_time'] > 24:
+            if "end_time" in data and data['end_time'] > 24:
                 raise serializers.ValidationError(
                     "end_time must be between 0 and 24")
             """
             Check that the start date is before the end date.
             """
-            if not data['start_time'] or not data['end_time']:
-                pass
+
+            if "start_time" not in data and "end_time" not in data:
+                data['start_time'] = None
+                data['end_time'] = None
             elif data['start_time'] >= data['end_time']:
                 raise serializers.ValidationError(
                     "start_time must be before end_time")

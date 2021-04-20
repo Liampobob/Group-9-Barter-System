@@ -4,7 +4,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework import generics
 from query.models import Listing, User
 import json
-from random import randint;
+from random import randint
 
 mockdb = [
     {'title': 'Looking for English Tutor',
@@ -33,7 +33,9 @@ mockdb = [
      'description': 'Lorem ipsum dolor sit amet '}
 ]
 
-categories = { "Jobs":'J', "Classes":'C', "To Buy":'B', "To Sell":'S', "CBOs":'O'};
+categories = {"Jobs": 'J', "Classes": 'C',
+              "To Buy": 'B', "To Sell": 'S', "CBOs": 'O'}
+
 
 class SearchAPI(generics.CreateAPIView):
     """Search API Class"""
@@ -45,16 +47,20 @@ class SearchAPI(generics.CreateAPIView):
         category = data.get('category', None)
         listings = []
         if(category == 'All'):
-            listings = list(map(lambda x: x.to_dict(), Listing.objects.filter(category='O', title__icontains=terms)))
-            listings.extend(list(map(lambda x: x.to_dict(), Listing.objects.filter(title__icontains=terms).exclude(category='O'))))
+            listings = list(map(lambda x: x.to_dict(), Listing.objects.filter(
+                category='O', title__icontains=terms)))
+            listings.extend(list(map(lambda x: x.to_dict(), Listing.objects.filter(
+                title__icontains=terms).exclude(category='O'))))
         else:
-            listings = list(map(lambda x: x.to_dict(), Listing.objects.filter(category=categories[category], title__icontains=terms))) 
+            listings = list(map(lambda x: x.to_dict(), Listing.objects.filter(
+                category=categories[category], title__icontains=terms)))
 
         count = Listing.objects.count()
 
         featuredListing = Listing.objects.all()[randint(0, count-1)].to_dict()
 
         return JsonResponse({'listings': listings, 'featured': featuredListing}, status=status_codes.HTTP_200_OK)
+
 
 class CreateJobsAPI(generics.CreateAPIView):
     """Create Mock Jobs API Class"""
@@ -63,23 +69,23 @@ class CreateJobsAPI(generics.CreateAPIView):
     x = 0
 
     def get(self, request):
-        
+
         u = User(username=str(self.x),
-                password='test',
-                name='test',
-                phone_number='test',
-                latitude='test',
-                longitude='test',
-                bio='test',
-                isBusiness=False)
+                 password='test',
+                 name='test',
+                 phone_number='test',
+                 latitude='test',
+                 longitude='test',
+                 bio='test',
+                 isBusiness=False)
 
         u.save()
 
         for i in mockdb:
             s = Listing(title=i['title'],
-             category=i['category'],
-             description = i['description'],
-             owner=str(self.x))
+                        category=i['category'],
+                        description=i['description'],
+                        posted_by=u)
             s.save()
 
         self.x = self.x + 1
