@@ -15,6 +15,6 @@ export interface UserState {
 }
 
 export interface ListingsState {
-  listings: Listing[];
+  listings: any[];
   featuredListing: Listing;
 }

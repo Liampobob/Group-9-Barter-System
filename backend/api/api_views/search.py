@@ -49,15 +49,20 @@ class SearchAPI(generics.CreateAPIView):
         if(category == 'All'):
             listings = list(map(lambda x: x.to_dict(), Listing.objects.filter(
                 category='O', title__icontains=terms)))
+            listings.extend(list(map(lambda x : x.to_dict(), User.objects.filter(is_business=True, name__icontains=terms))))
             listings.extend(list(map(lambda x: x.to_dict(), Listing.objects.filter(
                 title__icontains=terms).exclude(category='O'))))
         else:
-            listings = list(map(lambda x: x.to_dict(), Listing.objects.filter(
-                category=categories[category], title__icontains=terms)))
+            if(category == 'Businesses'):
+                listings = list(map(lambda x : x.to_dict(), User.objects.filter(is_business=True, name__icontains=terms)))
+            else:
+                listings = list(map(lambda x: x.to_dict(), Listing.objects.filter(
+                    category=categories[category], title__icontains=terms)))
 
         count = Listing.objects.count()
-
-        featuredListing = Listing.objects.all()[randint(0, count-1)].to_dict()
+        featuredListing = { 'title': '' }
+        if(count >= 1):
+            featuredListing = Listing.objects.all()[randint(0, count-1)].to_dict()
 
         return JsonResponse({'listings': listings, 'featured': featuredListing}, status=status_codes.HTTP_200_OK)
 

@@ -10,7 +10,7 @@
                 <h1>Title: {{ theListing.title }}</h1>
               </div>
               <button class="button is-text" @click="gotoOwner()">
-                <h3>Owner: {{ theListing.posted_by?.username }}</h3>
+                <h3>Owner: {{ theListing.posted_by?.name }}</h3>
               </button>
               <div class="column">
                 <h3>Description: {{ theListing.description }}</h3>

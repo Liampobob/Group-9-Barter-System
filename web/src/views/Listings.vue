@@ -6,7 +6,7 @@
         <div class="columns is-centered">
           <div class="column is-5-tablet is-4-desktop is-3-widescreen">
             <div class="box">
-              <div class="column">
+              <div class="column" v-if="getFeaturedListing.title !==''">
                 <h3>Featured Listing</h3>
               </div>
               <div class="column">
@@ -18,9 +18,12 @@
                 <div class="column">
                   <h3>Results</h3>
                 </div>
-                <div v-for="(listing, index) in getListings" :key="listing.title" class="column">
-                  <button class="button is-fullwidth is-inverted" @click="() => {openListing(listing.title);}">
+                <div v-for="(listing, index) in getListings" :key="index" class="column">
+                  <button class="button is-fullwidth is-inverted" v-if="listing.hasOwnProperty('title')" @click="() => {openListing(listing.title);}">
                       {{index+1}}: {{ listing.title }}
+                  </button>
+                  <button class="button is-fullwidth is-inverted" v-if="listing.hasOwnProperty('name')" @click="() => {openBusiness(listing.username);}">
+                      {{index+1}}: {{ listing.name }}
                   </button>
                 </div>
               </ul>
@@ -49,6 +52,9 @@ import Navbar from "./Navbar.vue"
 export default class Listings extends Vue {
   openListing(title: string) {
     this.$router.push("/listing/" + title);
+  }
+  openBusiness(username: string) {
+    this.$router.push("/worker/" + username);
   }
 
   async mounted() {
