@@ -40,7 +40,7 @@ export default class Listings extends Vue {
     title: "",
     category: "",
     description: "",
-    posted_by: "",
+    posted_by: {location: { lattitude: 0, longitude: 0 }, name: "", username: ""},
   };
 
   get theListing() {

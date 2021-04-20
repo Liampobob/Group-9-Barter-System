@@ -1,6 +1,6 @@
 <template>
   <section class="hero is-primary is-fullheight"> 
-    <navbar></navbar>
+    <navbar/>
     <div class="hero-body">
       <div class="container">
         <div class="columns is-centered">

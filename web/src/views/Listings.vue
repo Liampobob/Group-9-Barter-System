@@ -16,7 +16,7 @@
               </div>
               <ul id="listings">
                 <div class="column">
-                  <h3>Search Results</h3>
+                  <h3>Results</h3>
                 </div>
                 <div v-for="(listing, index) in getListings" :key="listing.title" class="column">
                   <button class="button is-fullwidth is-inverted" @click="() => {openListing(listing.title);}">

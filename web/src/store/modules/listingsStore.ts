@@ -8,7 +8,7 @@ const listingsStore: Module<ListingsState, RootState> = {
   namespaced: true,
   state: {
     listings: [],
-    featuredListing: { title: '', category: '', description: '', owner: '' },
+    featuredListing: { title: '', category: '', description: '', posted_by: {location: { lattitude: 0, longitude: 0 }, name: "", username: ""} },
   },
   mutations: {
     ["SetListings"](state: ListingsState, newListings: Listing[]) {

@@ -1,33 +1,47 @@
-<template>
-    <nav class="navbar is-white" role="navigation" aria-label="main navigation">
-        <div class="navbar-brand">
-            <a class="navbar-item" href="/login">
-            <img src="../imgs/logo.png" width="112" height="28">
-            </a>
-            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample" @click="changeNavbar()">
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-            </a>
-        </div>
+<style>
+  .background {
+    background-color: rgb(255, 255, 255);
+  }
 
-        <div id="navbarBasicExample" class="navbar-menu">
-            <div class="navbar-start">
-            <a class="navbar-item" href="/search">
-                Search
-            </a>
-            <a class="navbar-item" href="/newlisting">
-                Create Listing
-            </a>
-            <a class="navbar-item" href="/profile">
-                Profile
-            </a>
-            <a class="navbar-item" href="/signout">
-                Log Out
-            </a>
+</style>
+
+<template>
+    <div class="background">
+        <nav class="navbar is-white" role="navigation" aria-label="main navigation">
+            <div class="navbar-brand">
+                <a class="navbar-item" href="/login">
+                <img src="../imgs/logo.png" width="112" height="28">
+                </a>
+                <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample" @click="changeNavbar()">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                </a>
             </div>
-        </div>
-    </nav>
+
+            <div class="background">
+                <div id="navbarBasicExample" class="navbar-menu">
+                    <div class="navbar-start">
+                    <a class="navbar-item" href="/listings">
+                        Listings
+                    </a>
+                    <a class="navbar-item" href="/search">
+                        Search
+                    </a>
+                    <a class="navbar-item" href="/newlisting">
+                        Create Listing
+                    </a>
+                    <a class="navbar-item" href="/profile">
+                        Profile
+                    </a>
+                    <a class="navbar-item" href="/signout">
+                        Log Out
+                    </a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
 </template>
 
 <script lang="ts">
