@@ -40,7 +40,6 @@ class UserAPI(generics.CreateAPIView):
         if not username:
             return JsonResponse({'error': 'username not found'}, status=status_codes.HTTP_400_BAD_REQUEST)
         user = User.objects.get(username=username)
-        print(user)
         return JsonResponse({'user': user.to_dict()}, status=status_codes.HTTP_200_OK)
 
     def patch(self, request):

@@ -105,7 +105,6 @@ class Listing(models.Model):
         return self.title
 
     def to_dict(self):
-        print(self.posted_by)
         d = {
             'posted_by': self.posted_by.to_dict() if self.posted_by else None,
             'date_posted': self.date_posted,

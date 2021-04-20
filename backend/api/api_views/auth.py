@@ -52,7 +52,7 @@ class FBAuthAPI(generics.CreateAPIView):
                         facebook_id=userID,
                         name=name,
                         phone_number=None,
-                        isBusiness=False,
+                        is_business=False,
                         bio=None)
             user.save()
 
