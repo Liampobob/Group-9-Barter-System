@@ -19,6 +19,7 @@
 
 <template>
   <section class="hero is-primary is-fullheight">
+    <navbar/>
     <div class="hero-body">
       <div class="container">
         <div class="columns is-centered">
@@ -57,9 +58,14 @@
 
 <script lang="ts">
 
-import { Vue } from "vue-class-component";
+import { Options, Vue } from "vue-class-component";
 import store from "@/store";
+import Navbar from "./Navbar.vue";
 
+@Options({
+  components: {Navbar},
+  computed: {},
+})
 export default class Search extends Vue {
   terms = '';
   get searchTerms() {return this.terms;}

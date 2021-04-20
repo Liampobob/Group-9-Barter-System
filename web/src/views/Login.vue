@@ -1,5 +1,6 @@
 <template>
-  <section class="hero is-primary is-fullheight">
+  <section class="hero is-primary is-fullheight"> 
+    <navbar></navbar>
     <div class="hero-body">
       <div class="container">
         <div class="columns is-centered">
@@ -72,9 +73,10 @@
 
 import { Options, Vue } from "vue-class-component";
 import { mapGetters } from "vuex";
+import  Navbar from "./Navbar.vue";
 
 @Options({
-  components: {},
+  components: {Navbar},
   computed: {
     ...mapGetters("userStore", ["error", "token"]),
   },

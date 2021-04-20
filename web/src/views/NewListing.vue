@@ -1,5 +1,6 @@
 <template>
   <section class="hero is-primary is-fullheight">
+    <navbar/>
     <div class="hero-body">
       <div class="container">
         <div class="columns is-centered">
@@ -100,8 +101,9 @@
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
 import store from "@/store";
+import Navbar from "./Navbar.vue";
 @Options({
-  components: {},
+  components: {Navbar},
   computed: {},
 })
 export default class NewListing extends Vue {

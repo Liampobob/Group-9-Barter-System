@@ -194,9 +194,11 @@
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
+import store from "@/store";
+import Navbar from "./Navbar.vue";
 
 @Options({
-  components: {},
+  components: {Navbar},
   computed: {},
 })
 export default class Register extends Vue {
