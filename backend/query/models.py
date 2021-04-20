@@ -1,6 +1,7 @@
 from django.db import models
 from datetime import datetime as dt
 from django.contrib import auth
+from django.utils import dateparse
 
 # Create your models here.
 
@@ -12,10 +13,11 @@ class BusinessReviewsManager(models.Manager):
 
 class BusinessReviews(models.Model):
     user_id = models.IntegerField(null=False)
-    business_id = models.IntegerField(null=False)
+    user_name = models.CharField(null=False, max_length=256)
+    business_username = models.CharField(null=False, max_length=256)
     review_text = models.CharField(null=False, max_length=256)
     stars = models.PositiveIntegerField(null=False)
-    time = models.TimeField(auto_now=True)
+    time = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.review_text
@@ -23,16 +25,19 @@ class BusinessReviews(models.Model):
     def to_dict(self):
         d = {
             'user_id': self.user_id,
-            'business_id': self.business_id,
+            'business_username': self.business_username,
             'review_text': self.review_text,
             'stars': self.stars,
-            'time': self.time
+            'time': self.time, # dateparse.parse_datetime(self.time).isoformat(),
+            'user_name': self.user_name
         }
         return d
+
 
 class UserManager(models.Manager):
     def get_users(self):
         return super().get_queryset()
+
 
 class User(auth.models.User):
     facebook_id = models.CharField(max_length=32, null=True)
@@ -50,7 +55,6 @@ class User(auth.models.User):
     working_days = models.CharField(null=True, max_length=128)
     start_time = models.IntegerField(null=True)
     end_time = models.IntegerField(null=True)
-
 
     def __str__(self):
         return self.username
@@ -83,6 +87,7 @@ class User(auth.models.User):
             d['end_time'] = self.end_time
         return d
 
+
 class Listing(models.Model):
     CATEGORIES = (
         ('J', 'Job'),
@@ -90,7 +95,7 @@ class Listing(models.Model):
         ('B', 'toBuy'),
         ('S', 'toSell'),
     )
-    posted_by = models.ForeignKey( User, null=True, on_delete=models.SET_NULL )
+    posted_by = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
     date_posted = models.DateTimeField(default=dt.now(), null=False)
     title = models.CharField(max_length=128, null=False)
     category = models.CharField(max_length=1, null=False, choices=CATEGORIES)

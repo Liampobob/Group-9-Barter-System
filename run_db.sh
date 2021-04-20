@@ -13,8 +13,8 @@ sleep 1 # make sure right users are done created
 echo "Listing models from the API to migrate"
 cd backend
 # Note: python needs to be on your path
-python3.9 manage.py makemigrations query
+python manage.py makemigrations query
 echo "Done\n"
 echo "Adding models to the DB\n\n"
-python3.9 manage.py migrate
+python manage.py migrate
 echo "done!"

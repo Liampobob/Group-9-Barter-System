@@ -126,7 +126,7 @@ class UserSerializer(serializers.Serializer):
 
 
 class ReviewSerializer(serializers.Serializer):
-    business_id = serializers.IntegerField(required=True)
+    business_username = serializers.CharField(required=True, max_length=256)
     review_text = serializers.CharField(required=True, max_length=256)
     stars = serializers.IntegerField(required=True, max_value=5, min_value=0)
 
@@ -134,8 +134,8 @@ class ReviewSerializer(serializers.Serializer):
         """
         Check that the model is valid.
         """
-        if not data['business_id']:
-            raise serializers.ValidationError("business_id cannot be empty")
+        if "business_username" not in data:
+            raise serializers.ValidationError("business_username cannot be empty")
         if not data['review_text']:
             raise serializers.ValidationError("review_text cannot be empty")
         if type(data['stars']) != int:

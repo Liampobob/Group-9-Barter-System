@@ -3,6 +3,7 @@ import { RootState, UserState } from "@/types/stores";
 import { ROUTE_NAMES, router } from "@/router";
 import axios from "@/shared/axios";
 import { User } from "@/types/User";
+import { Review } from "@/types/Review";
 
 export enum UserActions {
   LOGIN = "LOGIN",
@@ -18,7 +19,8 @@ const userStore: Module<UserState, RootState> = {
     user: undefined,
     error: "",
     token: localStorage.getItem('token') ?? undefined,
-    selectedUser: undefined
+    selectedUser: undefined,
+    selectedUserReviews: []
   },
   mutations: {
     [UserActions.LOGIN](state: UserState, payload: { user: User; token: string }) {
@@ -38,8 +40,12 @@ const userStore: Module<UserState, RootState> = {
     [UserActions.ERROR_LOGIN](state: UserState, error: string) {
       state.error = error;
     },
-    [UserActions.LOAD_USER](state: UserState, payload: User) {
-      state.selectedUser = payload;
+    [UserActions.LOAD_USER](state: UserState, payload: { user: User, reviews?: Review[] }) {
+      state.selectedUser = payload.user;
+      for (const r of payload?.reviews ?? []) {
+        r.time = new Date(r.time)
+      }
+      state.selectedUserReviews = payload.reviews;
     },
   },
   actions: {
@@ -107,8 +113,8 @@ const userStore: Module<UserState, RootState> = {
     },
     async getWorker({ commit }, payload: { username: string }) {
       try {
-        const { data } = await axios.get<{ user: User }>(`worker?username=${payload.username}`);
-        commit(UserActions.LOAD_USER, data.user);
+        const { data } = await axios.get<{ user: User, reviews?: Review[] }>(`worker?username=${payload.username}`);
+        commit(UserActions.LOAD_USER, { user: data.user, reviews: data.reviews });
       } catch (err) {
         return { error: 'An error occured.' }
       }
@@ -130,6 +136,14 @@ const userStore: Module<UserState, RootState> = {
       } catch (err) {
         return { error: 'An error occured.' }
       }
+    },
+    async submitReview({}, payload: { business_username: string, review_text: string, stars: number }) {
+      try {
+        await axios.post('review', payload);
+        router.go(0);
+      } catch (err) {
+        return { error: 'An error occured.' }
+      }
     }
   },
   getters: {
@@ -137,7 +151,8 @@ const userStore: Module<UserState, RootState> = {
     user: (state) => state.user,
     error: (state) => state.error,
     token: (state) => state.token ?? '',
-    selectedUser: (state) => state.selectedUser
+    selectedUser: (state) => state.selectedUser,
+    selectedUserReviews: (state) => state.selectedUserReviews?.sort((a, b) => b.time - a.time) ?? [],
   },
 };
 

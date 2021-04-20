@@ -2,7 +2,7 @@ from django.http import JsonResponse
 from rest_framework import status as status_codes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import generics
-from query.models import User
+from query.models import User, BusinessReviews
 import json
 
 
@@ -15,8 +15,20 @@ class WorkerAPI(generics.CreateAPIView):
         if not username:
             return JsonResponse({'error': 'username field must be provided'}, status=status_codes.HTTP_400_BAD_REQUEST)
         user = User.objects.get(username=username)
-        print(user)
-        return JsonResponse({'user': user.to_dict()}, status=status_codes.HTTP_200_OK)
+
+        output = {
+            'user': user.to_dict()
+        }
+
+        if user.is_business:
+            try:
+                reviews = BusinessReviews.objects.filter(
+                    business_username=user.username)
+                output['reviews'] = [review.to_dict() for review in reviews]
+            except BusinessReviews.DoesNotExist:
+                pass
+
+        return JsonResponse(output, status=status_codes.HTTP_200_OK)
 
 
 class UserAPI(generics.CreateAPIView):

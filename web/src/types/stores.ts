@@ -1,5 +1,6 @@
 import { User } from "./User";
 import { Listing } from "./Listing";
+import { Review } from "./Review";
 
 export interface RootState { }
 
@@ -12,6 +13,7 @@ export interface UserState {
   token?: string;
   error: String;
   selectedUser?: User;
+  selectedUserReviews?: Review[]
 }
 
 export interface ListingsState {
