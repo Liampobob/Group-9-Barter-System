@@ -48,32 +48,50 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: "/newListing",
     name: ROUTE_NAMES.NEW_LISTING,
-    component: NewListing
+    component: NewListing,
+    meta: {
+      requiresAuth: true,
+    },
   },
   {
     path: "/listings",
     name: ROUTE_NAMES.LISTINGS,
-    component: Listings
+    component: Listings,
+    meta: {
+      requiresAuth: true,
+    },
   },
   {
     path: "/listing/:title",
     name: ROUTE_NAMES.LISTING,
-    component: Listing
+    component: Listing,
+    meta: {
+      requiresAuth: true,
+    },
   },
   {
     path: "/worker/:username",
     name: ROUTE_NAMES.WORKER,
-    component: Worker
+    component: Worker,
+    meta: {
+      requiresAuth: true,
+    },
   },
   {
     path: "/profile",
     name: ROUTE_NAMES.PROFILE,
-    component: Profile
+    component: Profile,
+    meta: {
+      requiresAuth: true,
+    },
   },
   {
     path: "/signout",
     name: ROUTE_NAMES.SIGN_OUT,
-    component: SignOut
+    component: SignOut,
+    meta: {
+      requiresAuth: true,
+    },
   }
 ];
 
